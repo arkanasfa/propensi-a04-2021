@@ -32,4 +32,4 @@ build/
 ### VS Code ###
 .vscode/
 
-si-sdi/src/main/resources/application.properties
+/si-sdi/src/main/resources/application.properties
