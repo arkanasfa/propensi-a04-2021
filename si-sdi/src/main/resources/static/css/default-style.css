@@ -1,0 +1,96 @@
+body{
+    overflow:auto;
+}
+
+h3{
+    text-align: left;
+}
+
+div{
+    font-family: "Hammersmith One";
+}
+
+table {
+    overflow: hidden;
+}
+
+th, td {
+    border-collapse: collapse;
+    border-radius: 3em;
+    background-color:white;
+    color:#83BA70;
+    height:20px;
+}
+
+table.table-bordered{
+    border:10px solid #F6F6F6;
+    margin-top:5px;
+}
+
+table.table-bordered > thead > tr > th{
+    border:10px solid #F6F6F6;
+    background-color: #83BA70;
+    color:white;
+}
+
+table.table-bordered > tbody > tr > td{
+    border:10px solid #F6F6F6;
+}
+
+table.table-bordered > tbody > tr > th{
+    border:10px solid #F6F6F6;
+}
+
+.card-body{
+    background-color:#F6F6F6;
+    margin-left: 250px;
+    border-radius: 20px;
+    margin-right:50px;
+}
+
+.colorPurple{
+    color:#B357D2;
+}
+
+.colorOrange{
+    color: #FAB14A;
+}
+
+.colorGreen{
+    color:#83BA70; !important;
+}
+
+.backgroundGreen{
+    background-color:#83BA70; !important;
+    color:white;
+}
+
+.backgroundGray{
+    background-color:#F6F6F6; !important;
+}
+
+.backgroundOrange{
+    background-color:#FAB14A;
+    color:white;
+}
+
+.backgroundPurple{
+    background-color:#B357D2;
+    color:white;
+}
+
+.btn{
+    border-radius:10px;
+}
+
+
+#pageTitle{
+    margin-top: 20px;
+    background-color: white; !important;
+}
+
+#pageBottom{
+    margin-top: 20px;
+    background-color: white; !important;
+    text-align: right;
+}
