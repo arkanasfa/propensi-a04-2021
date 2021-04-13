@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<!--Head belum ada title page. title masukin di halaman masing masing ya-->
+
+<head th:fragment="cssjs">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+    <link rel="stylesheet" th:href="@{/css/sidebar.css}" />
+    <!-- Our Custom CSS -->
+    <!-- Scrollbar Custom CSS -->
+    <link rel="stylesheet" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{//fonts.googleapis.com/css?family=Hammersmith+One}" />
+    <script th:href="@{https://code.jquery.com/jquery-3.3.1.slim.min.js}" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <!-- Popper.JS -->
+    <script th:href="@{https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js}" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+    <!-- Bootstrap JS -->
+    <script th:href="@{https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js}" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+    <!-- jQuery Custom Scroller CDN -->
+    <script th:href="@{https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js}"></script>
+    <script th:href="@{https://getbootstrap.com/docs/4.1/assets/js/vendor/popper.min.js}"></script>
+    <script th:href="@{/js/bootstrap.min.js}"></script>
+    <link rel="shortcut icon" type="image/x-icon" th:href="@{/images/favicon.ico}" />
+</head>
+
+
+<body>
+<nav th:fragment="sidebar">
+    <div class="wrapper">
+        <!-- Sidebar -->
+        <nav id="sidebar">
+            <!--Bagian sidebar head keatas-->
+            <div class="sidebar-header">
+                <img th:src="@{/images/sidebarHeader.png}"/>
+                <img th:src="@{/images/profpicTemporary.png}"/>
+                <p>Role</p> <!--                Nanti sesuain rolenya-->
+                <img th:src="@{/images/border.png}"/>
+            </div>
+
+            <!--Bagian menu sidebar-->
+            <ul class="list-unstyled components">
+                <li th:id="${Profile}">
+                    <!--Nungguin penamaan yang sesuai-->
+                    <a th:href="@{/}">Profile</a>
+                </li>
+                <li th:id="${Home}">
+                    <!--Nungguin penamaan yang sesuai-->
+                    <a th:href="@{/}">Home</a>
+                </li>
+                <li th:id="${CutiIzin}">
+                    <!--Nungguin penamaan yang sesuai-->
+                    <!--sec:authorize="hasAnyAuthority('Karyawan')"-->
+                    <a th:href="@{/}">Cuti/Izin</a>
+                </li>
+                <li th:id="${LemburInfal}">
+                    <!--Nungguin penamaan yang sesuai-->
+                    <!--sec:authorize="hasAnyAuthority('Karyawan')"-->
+                    <a th:href="@{/}">Lembur/Infal</a>
+                </li>
+                <li th:id="${Pengaduan}">
+                    <!--Nungguin penamaan yang sesuai-->
+                    <!--sec:authorize="hasAnyAuthority('Karyawan', 'Eksternal')"-->
+                    <a th:href="@{/}">Pengaduan</a>
+                </li>
+                <li th:id="${FAQ}">
+                    <!--Nungguin penamaan yang sesuai-->
+                    <!--sec:authorize="hasAnyAuthority('Karyawan', 'Eksternal')"-->
+                    <a th:href="@{/}">FAQ</a>
+                </li>
+                <li th:id="${Penilaian}">
+                    <!--Nungguin penamaan yang sesuai-->
+                    <!--sec:authorize="hasAnyAuthority('Guru')"-->
+                    <!--Ini penilaian dari sisi guru, jadi cuma ngeliat aja-->
+                    <a th:href="@{/}">Penilaian</a>
+                </li>
+                <li th:id="${FAQ}">
+                    <!--Nungguin penamaan yang sesuai-->
+                    <!--sec:authorize="hasAnyAuthority('Manajer SDI')"-->
+                    <a th:href="@{/}">Payroll</a>
+                </li>
+                <li>
+                    <img th:src="@{/images/logout.png}" th:href="@{/}"/>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</nav>
+</body>
+
+
+
+</html>
