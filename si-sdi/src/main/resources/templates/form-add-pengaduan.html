@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <!--    Jangan Lupa diisi!-->
+    <title>Ajukan Pengaduan</title>
+    <object th:include="fragments/fragment :: cssjs" th:remove="tag"></object>
+    <!--    Default Style untuk semua page-->
+    <link rel="stylesheet" th:href="@{/css/default-style.css}" />
+
+
+</head>
+<body>
+<div class="container-fluid" >
+    <div class="col-auto" >
+        <!--    formatnya: sidebar([NamaHalaman] = 'highlight'). Buat nge highlight sidebar kalo lagi di halaman itu-->
+        <!--                Kecuali buat cuti izin dan lembur infal. gak pake garing karena jadi eror kalo pake garing-->
+        <object th:replace="fragments/fragment :: sidebar(Pengaduan = 'highlight')" th:remove="tag"></object>
+    </div>
+</div>
+
+<!--    Container untuk bagian sebelum abu abu-->
+<div class="container-fluid">
+    <div class="row">
+        <div class="card-body" id="pageTitle">
+            <h3 class="colorGreen">Buat Pengajuan Pengaduan</h3>
+        </div>
+    </div>
+</div>
+
+<!--    Dalem abu-abu-->
+<div class="container-fluid">
+    <div class="row">
+        <div class="card-body">
+            <table class="rounded table table-bordered">
+                <thead >
+                <tr>
+                    <th scope="col" >#</th>
+                    <th scope="col">First</th>
+                    <th scope="col">Last</th>
+                    <th scope="col">Handle</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <th scope="row">1</th>
+                    <td>Mark</td>
+                    <td>Otto</td>
+                    <td>@mdo</td>
+                </tr>
+                <tr>
+                    <th scope="row">2</th>
+                    <td>Jacob</td>
+                    <td>Thornton</td>
+                    <td>@fat</td>
+                </tr>
+                <tr>
+                    <th scope="row">3</th>
+                    <td colspan="2">Larry the Bird</td>
+                    <td>@twitter</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!--    Container untuk bagian setelah abu abu-->
+<div class="container-fluid">
+    <div class="row">
+        <div class="card-body" id="pageBottom">
+            <div class="pull-right">
+                <button type="button" class="btn backgroundPurple ">Ungu</button>
+                <button type="button" class="btn backgroundOrange ">Oren</button>
+                <button type="button" class="btn backgroundGreen ">Hijau</button>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

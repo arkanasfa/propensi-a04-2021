@@ -36,43 +36,95 @@ public class SiswaModel implements Serializable{
     @OneToOne(mappedBy = "id_siswa")
     private OrangTuaModel orangTuaModel;
 
+    @OneToMany(mappedBy = "idSiswa_pengadu", fetch = FetchType.LAZY)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore
+    private List<PengaduanModel> listPengaduan;
+
+    
+
+    /**
+     * @return Long return the id
+     */
     public Long getId() {
         return id;
     }
 
+    /**
+     * @param id the id to set
+     */
     public void setId(Long id) {
         this.id = id;
     }
 
+    /**
+     * @return String return the namaSiswa
+     */
     public String getNamaSiswa() {
         return namaSiswa;
     }
 
+    /**
+     * @param namaSiswa the namaSiswa to set
+     */
     public void setNamaSiswa(String namaSiswa) {
         this.namaSiswa = namaSiswa;
     }
 
+    /**
+     * @return Integer return the jenisKelamin
+     */
     public Integer getJenisKelamin() {
         return jenisKelamin;
     }
 
+    /**
+     * @param jenisKelamin the jenisKelamin to set
+     */
     public void setJenisKelamin(Integer jenisKelamin) {
         this.jenisKelamin = jenisKelamin;
     }
 
+    /**
+     * @return String return the kelas
+     */
     public String getKelas() {
         return kelas;
     }
 
+    /**
+     * @param kelas the kelas to set
+     */
     public void setKelas(String kelas) {
         this.kelas = kelas;
     }
 
+    /**
+     * @return OrangTuaModel return the orangTuaModel
+     */
     public OrangTuaModel getOrangTuaModel() {
         return orangTuaModel;
     }
 
+    /**
+     * @param orangTuaModel the orangTuaModel to set
+     */
     public void setOrangTuaModel(OrangTuaModel orangTuaModel) {
         this.orangTuaModel = orangTuaModel;
     }
+
+    /**
+     * @return List<PengaduanModel> return the listPengaduan
+     */
+    public List<PengaduanModel> getListPengaduan() {
+        return listPengaduan;
+    }
+
+    /**
+     * @param listPengaduan the listPengaduan to set
+     */
+    public void setListPengaduan(List<PengaduanModel> listPengaduan) {
+        this.listPengaduan = listPengaduan;
+    }
+
 }

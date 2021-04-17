@@ -117,6 +117,11 @@ public class KaryawanModel implements Serializable{
     @OneToOne(mappedBy = "id_infal")
     private LemburModel infal;
 
+    @OneToMany(mappedBy = "idKarya_pengadu", fetch = FetchType.LAZY)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore
+    private List<PengaduanModel> listPengaduan;
+
     public Long getId() {
         return id;
     }
@@ -323,5 +328,13 @@ public class KaryawanModel implements Serializable{
 
     public void setInfal(LemburModel infal) {
         this.infal = infal;
+    }
+    
+    public List<PengaduanModel> getListPengaduan() {
+        return listPengaduan;
+    }
+
+    public void setListPengaduan(List<PengaduanModel> listPengaduan) {
+        this.listPengaduan = listPengaduan;
     }
 }

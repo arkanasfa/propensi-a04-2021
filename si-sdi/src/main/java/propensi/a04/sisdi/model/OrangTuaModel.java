@@ -35,35 +35,81 @@ public class OrangTuaModel implements Serializable{
         @JsonIgnore
         private SiswaModel id_siswa;
 
-        public Long getId() {
-                return id;
-        }
+        @OneToMany(mappedBy = "idOrtu_pengadu", fetch = FetchType.LAZY)
+        @OnDelete(action = OnDeleteAction.CASCADE)
+        @JsonIgnore
+        private List<PengaduanModel> listPengaduan;
 
-        public void setId(Long id) {
-                this.id = id;
-        }
+        
 
-        public String getNamaOrangTua() {
-                return namaOrangTua;
-        }
+    /**
+     * @return Long return the id
+     */
+    public Long getId() {
+        return id;
+    }
 
-        public void setNamaOrangTua(String namaOrangTua) {
-                this.namaOrangTua = namaOrangTua;
-        }
+    /**
+     * @param id the id to set
+     */
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-        public Integer getJenisKelamin() {
-                return jenisKelamin;
-        }
+    /**
+     * @return String return the namaOrangTua
+     */
+    public String getNamaOrangTua() {
+        return namaOrangTua;
+    }
 
-        public void setJenisKelamin(Integer jenisKelamin) {
-                this.jenisKelamin = jenisKelamin;
-        }
+    /**
+     * @param namaOrangTua the namaOrangTua to set
+     */
+    public void setNamaOrangTua(String namaOrangTua) {
+        this.namaOrangTua = namaOrangTua;
+    }
 
-        public SiswaModel getId_siswa() {
-                return id_siswa;
-        }
+    /**
+     * @return Integer return the jenisKelamin
+     */
+    public Integer getJenisKelamin() {
+        return jenisKelamin;
+    }
 
-        public void setId_siswa(SiswaModel id_siswa) {
-                this.id_siswa = id_siswa;
-        }
+    /**
+     * @param jenisKelamin the jenisKelamin to set
+     */
+    public void setJenisKelamin(Integer jenisKelamin) {
+        this.jenisKelamin = jenisKelamin;
+    }
+
+    /**
+     * @return SiswaModel return the id_siswa
+     */
+    public SiswaModel getId_siswa() {
+        return id_siswa;
+    }
+
+    /**
+     * @param id_siswa the id_siswa to set
+     */
+    public void setId_siswa(SiswaModel id_siswa) {
+        this.id_siswa = id_siswa;
+    }
+
+    /**
+     * @return List<PengaduanModel> return the listPengaduan
+     */
+    public List<PengaduanModel> getListPengaduan() {
+        return listPengaduan;
+    }
+
+    /**
+     * @param listPengaduan the listPengaduan to set
+     */
+    public void setListPengaduan(List<PengaduanModel> listPengaduan) {
+        this.listPengaduan = listPengaduan;
+    }
+
 }
