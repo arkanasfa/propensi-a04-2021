@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <!--    Jangan Lupa diisi!-->
+    <title>Detail Lembur</title>
+    <object th:include="fragments/fragment :: cssjs" th:remove="tag"></object>
+    <!--    Default Style untuk semua page-->
+    <link rel="stylesheet" th:href="@{/css/default-style.css}" />
+
+
+</head>
+<body>
+<div class="container-fluid" >
+    <div class="col-auto" >
+        <!--    formatnya: sidebar([NamaHalaman] = 'highlight'). Buat nge highlight sidebar kalo lagi di halaman itu-->
+        <!--                Kecuali buat cuti izin dan lembur infal. gak pake garing karena jadi eror kalo pake garing-->
+        <object th:replace="fragments/fragment :: sidebar(LemburInfal = 'highlight')" th:remove="tag"></object>
+    </div>
+</div>
+
+<!--    Container untuk bagian sebelum abu abu-->
+<div class="container-fluid">
+    <div class="row">
+        <div class="card-body" id="pageTitle">
+            <h3 class="colorGreen">Detail Lembur</h3>
+        </div>
+    </div>
+</div>
+
+<!--    Dalem abu-abu-->
+<div class="container-fluid">
+    <div class="row">
+        <div class="card-body">
+            <div  class="container d-flex justify-content-center align-middle">
+                <div class="row">
+                    <div class="w-100"></div>
+                    <a th:href="@{/lembur/ubah(id=${lembur.id})}" class="btn backgroundGreen">Edit</a>
+                    <a th:href="@{/lembur/delete(id=${lembur.id})}" class="btn backgroundPurple">Delete</a>
+                </div>
+            </div>
+            <br>
+            <h2  class="col d-flex justify-content-center mb-3"> Detail Lembur: </h2>
+            <br>
+            <div class="col d-flex justify-content-center">
+                <h5 class="col d-flex justify-content-center" th:text="'Kode Lembur: ' + ${lembur.kode_lembur}"></h5>
+            </div>
+            <br>
+            <div class="col d-flex justify-content-center">
+                <h5 class="col d-flex justify-content-center" th:text="'Nama Pengaju: ' + ${lembur.id_karyawan.karyawan}"></h5>
+            </div>
+            <br>
+            <div class="col d-flex justify-content-center">
+                <h5 class="col d-flex justify-content-center" th:text="'Nomor Karyawan: ' + ${lembur.id_karyawan.noKaryawan}"></h5>
+            </div>
+            <br>
+            <div class="col d-flex justify-content-center">
+                <h5 class="col d-flex justify-content-center" th:text="'Tanggal Pengajuan: ' + ${lembur.tanggalRequest}"></h5>
+            </div>
+            <br>
+            <div class="col d-flex justify-content-center">
+                <h5 class="col d-flex justify-content-center" th:text="'Tanggal Lembur/Infal: ' + ${lembur.tanggalLembur}"></h5>
+            </div>
+            <br>
+            <div class="col d-flex justify-content-center">
+                <h5 class="col d-flex justify-content-center" th:text="'Durasi: ' + ${durasi} + ' Jam'"></h5>
+            </div>
+            <br>
+            <div class="col d-flex justify-content-center">
+                <h5 class="col d-flex justify-content-center" th:text="'Alasan: ' + ${lembur.alasan}"></h5>
+            </div>
+            <br>
+            <div class="col d-flex justify-content-center">
+                <h5  class="col d-flex justify-content-center" th:text="'Status: ' + ${lembur.id_status.status}"></h5>
+            </div>
+            <br>
+        </div>
+    </div>
+</div>
+
+<!--    Container untuk bagian setelah abu abu-->
+<div class="container-fluid">
+    <div class="row">
+        <div class="card-body" id="pageBottom">
+            <div class="pull-right">
+                <a type="button" class="btn backgroundOrange " th:href="@{/lembur/list}">Back</a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
