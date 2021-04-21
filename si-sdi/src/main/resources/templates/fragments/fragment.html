@@ -19,6 +19,8 @@
     <script th:href="@{https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js}"></script>
     <script th:href="@{https://getbootstrap.com/docs/4.1/assets/js/vendor/popper.min.js}"></script>
     <script th:href="@{/js/bootstrap.min.js}"></script>
+    <script th:href="@{https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js}"></script>
+    <script th:href="@{https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js}"></script>
     <link rel="shortcut icon" type="image/x-icon" th:href="@{/images/favicon.ico}" />
 </head>
 
@@ -72,12 +74,13 @@
                     <!--Ini penilaian dari sisi guru, jadi cuma ngeliat aja-->
                     <a th:href="@{/}">Penilaian</a>
                 </li>
-                <li th:id="${FAQ}">
+                <li th:id="${Payroll}">
                     <!--Nungguin penamaan yang sesuai-->
                     <!--sec:authorize="hasAnyAuthority('Manajer SDI')"-->
                     <a th:href="@{/}">Payroll</a>
                 </li>
                 <li>
+                    <br><br>
                     <img th:src="@{/images/logout.png}" th:href="@{/}"/>
                 </li>
             </ul>
