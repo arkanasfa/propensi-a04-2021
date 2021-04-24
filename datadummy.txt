@@ -1,0 +1,3 @@
+ 
+
+ id | pph | absensi | infal | keluarga | lembur | tpph | tunjangan_prestasi | uang_snack | gol1ac | gol1d2a | gol2b | gol2cd | gol3a | gol3bc | gol3d4ab | gol4cd | gol5ad

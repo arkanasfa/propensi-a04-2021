@@ -6,6 +6,9 @@
 <head th:fragment="cssjs">
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
     <link rel="stylesheet" th:href="@{/css/sidebar.css}" />
+    <link rel="stylesheet" th:href="@{/css/popUp-style.css}" />
+    <link rel="stylesheet" th:href="@{/js/popUp-script.js}" />
+    <link rel="stylesheet" th:href="@{/css/default-style.css}" />
     <!-- Our Custom CSS -->
     <!-- Scrollbar Custom CSS -->
     <link rel="stylesheet" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css}">
@@ -77,7 +80,7 @@
                 <li th:id="${Payroll}">
                     <!--Nungguin penamaan yang sesuai-->
                     <!--sec:authorize="hasAnyAuthority('Manajer SDI')"-->
-                    <a th:href="@{/}">Payroll</a>
+                    <a th:href="@{/payroll}">Payroll</a>
                 </li>
                 <li>
                     <br><br>
