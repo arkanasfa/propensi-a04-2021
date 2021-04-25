@@ -27,9 +27,7 @@ public class LemburServiceImpl implements LemburService{
             targetLembur.setJamSelesai(lembur.getJamSelesai());
             targetLembur.setTanggalLembur(lembur.getTanggalLembur());
             targetLembur.setJenis(lembur.getJenis());
-            if(lembur.getId_infal()!=null){
-                targetLembur.setId_infal(lembur.getId_infal());
-            }
+            targetLembur.setId_infal(lembur.getId_infal());
             targetLembur.setKode_lembur(lembur.getKode_lembur());
             lemburDB.save(targetLembur);
             return targetLembur;
@@ -58,11 +56,8 @@ public class LemburServiceImpl implements LemburService{
     @Override
     public Integer generateDurasi(LemburModel lembur){
         Integer durasiMulai = lembur.getJamMulai().getHours();
-        System.out.println(durasiMulai);
         Integer durasiSelesai = lembur.getJamSelesai().getHours();
-        System.out.println(durasiSelesai);
         Integer durasiAkhir = durasiSelesai-durasiMulai;
-        System.out.println(durasiAkhir);
         return durasiAkhir;
     }
     @Override

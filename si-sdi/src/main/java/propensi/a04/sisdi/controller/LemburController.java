@@ -84,7 +84,9 @@ public class LemburController {
             Long idInfal = Long.valueOf(request.getParameter("infalID"));
             KaryawanModel id_karyawanInfal = karyawanDB.findById(idInfal).get();
             lembur.setId_infal(id_karyawanInfal);
-            System.out.println(lembur.getId_infal().getKaryawan());
+        }
+        if (infalID.equals("NULL")==true) {
+            lembur.setId_infal(null);
         }
         String kode_lembur = lemburService.generateKodeLembur(lembur);
         lembur.setKode_lembur(kode_lembur);
