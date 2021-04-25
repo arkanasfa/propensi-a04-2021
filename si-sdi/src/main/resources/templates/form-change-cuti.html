@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <!--    Jangan Lupa diisi!-->
+    <title>Form Ubah Pengajuan Cuti/Izin</title>
+    <object th:include="fragments/fragment :: cssjs" th:remove="tag"></object>
+    <!--    Default Style untuk semua page-->
+    <link rel="stylesheet" th:href="@{/css/default-style.css}" />
+
+
+</head>
+<body>
+<div class="container-fluid" >
+    <div class="col-auto" >
+        <!--    formatnya: sidebar([NamaHalaman] = 'highlight'). Buat nge highlight sidebar kalo lagi di halaman itu-->
+        <!--                Kecuali buat cuti izin dan lembur infal. gak pake garing karena jadi eror kalo pake garing-->
+        <object th:replace="fragments/fragment :: sidebar(CutiIzin= 'highlight')" th:remove="tag"></object>
+    </div>
+</div>
+
+<!--    Container untuk bagian sebelum abu abu-->
+<div class="container-fluid">
+    <div class="row">
+        <div class="card-body" id="pageTitle">
+            <h3 class="colorGreen">Ubah Pengajuan Cuti/Izin</h3>
+        </div>
+    </div>
+</div>
+
+<!--    Dalem abu-abu-->
+<div class="container-fluid">
+    <div class="row">
+        <div class="card-body">
+            <form th:action="@{/cuti/edit}" th:object="${cuti}" method="POST">
+                <input type="hidden" th:field="${cuti.id}"/>
+                <br>
+                <div class="form-row">
+                    <div class="form-group row">
+                        <label class="col-2 col-form-label">Tanggal Mulai: </label>
+                        <div class="col-10">
+                            <input class="form-control" type="date" th:field="*{tanggalMulai}" placeholder="yyyy/MM/dd">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group row">
+                        <label class="col-2 col-form-label">Tanggal Selesai: </label>
+                        <div class="col-10">
+                            <input class="form-control" type="date" th:field="*{tanggalSelesai}" placeholder="yyyy/MM/dd">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    //jenis
+                </div>
+                <div class="form-row">
+                    <div class="form-group row">
+                        <label for="formGroupExampleInput">Keterangan</label>
+                        <input type="text" class="form-control" id="formGroupExampleInput" th:field="*{keterangan}">
+                    </div>
+                </div>
+                <a type="button" class="btn backgroundOrange " th:href="@{/keterangan}">Back</a>
+                <button type="submit" class="btn backgroundGreen ">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!--    Container untuk bagian setelah abu abu-->
+</body>
+</html>

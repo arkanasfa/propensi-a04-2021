@@ -52,6 +52,27 @@ public class PengajuanCutiModel implements Serializable{
     @JsonIgnore
     private StatusModel id_status;
 
+    public UserModel getUser() {
+        return user;
+    }
+
+    public void setUser(UserModel user) {
+        this.user = user;
+    }
+
+    @OneToOne
+    @JoinColumn(name = "uuidUser", referencedColumnName = "idUser")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private UserModel user;
+
+    public String getKode_cuti() {
+        return kode_cuti;
+    }
+
+    public void setKode_cuti(String kode_cuti) {
+        this.kode_cuti = kode_cuti;
+    }
+
     @NotNull
     @Column(name="jenis",nullable = false)
     private Integer jenis;
@@ -60,6 +81,10 @@ public class PengajuanCutiModel implements Serializable{
     @Size(max=200)
     @Column(name="keterangan",nullable = false)
     private String keterangan;
+
+    @NotNull
+    @Column(name="kode_cuti",nullable = false)
+    private String kode_cuti;
 
     public Long getId() {
         return id;
