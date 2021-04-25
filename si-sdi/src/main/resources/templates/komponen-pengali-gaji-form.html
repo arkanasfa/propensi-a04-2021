@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Ubah Komponen Pengali Gaji</title>
+    <object th:include="fragments/fragment :: cssjs" th:remove="tag"></object>
+</head>
+
+<body>
+
+<style>
+    #buttons{
+        margin-top: 20px;
+        text-align: right; !important;
+        background-color:#F6F6F6;
+    }
+
+    .card-group .card-body{
+        border-radius:0px;
+        margin-left:0px;
+        margin-right:0px;
+        text-align: left; !important;
+    }
+
+    .card-group .card-body p{
+        text-align: left; !important;
+        line-height:80%;
+    }
+
+    tbody td{
+        text-align: left;
+    }
+</style>
+
+<div class="container-fluid" >
+    <div class="col-auto" >
+        <object th:replace="fragments/fragment :: sidebar(Payroll = 'highlight')" th:remove="tag"></object>
+    </div>
+</div>
+
+<!--    Container untuk bagian sebelum abu abu-->
+<div class="container-fluid">
+    <div class="row">
+        <div class="card-body" id="pageTitle">
+            <h3 class="colorGreen">Ubah Komponen Pengali Gaji</h3>
+        </div>
+    </div>
+</div>
+
+<!--    Dalem abu-abu-->
+<form th:action="@{/payroll/komponenGaji/ubah}" th:object="${komponenGaji}" method="POST">
+<div class="container-fluid">
+    <div class="row">
+        <div class="card-body">
+                <table class="rounded table table-bordered">
+                    <input type="hidden" th:field="${komponenGaji.id}"/>
+                    <thead>
+                    <tr>
+                        <th>No.</th>
+                        <th>Komponen</th>
+                        <th>Jumlah</th>
+                        <th>Satuan</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <th>1</th>
+                        <td>Lembur</td>
+                        <th><input class="form-control" type="number" th:field="*{lembur}"></th>
+                        <th>per Jam</th>
+                    </tr>
+                    <tr>
+                        <th>2</th>
+                        <td>Infal</td>
+                        <th><input class="form-control" type="number" th:field="*{infal}"></th>
+                        <th>per Jam</th>
+                    </tr>
+                    <tr>
+                        <th>3</th>
+                        <td>Tunjangan Keluarga</td>
+                        <th><input class="form-control" type="number" th:field="*{keluarga}"></th>
+                        <th>per Kepala</th>
+                    </tr>
+                    <tr>
+                        <th>4</th>
+                        <td>PPH</td>
+                        <th><input class="form-control" type="number" th:field="*{PPH}"></th>
+                        <th></th>
+                    </tr>
+                    <tr>
+                        <th>5</th>
+                        <td>Uang Snack</td>
+                        <th><input class="form-control" type="number" th:field="*{uangSnack}"></th>
+                        <th>per Hari</th>
+                    </tr>
+                    <tr>
+                        <th>6</th>
+                        <td>Absensi</td>
+                        <th><input class="form-control" type="number" th:field="*{absensi}"></th>
+                        <th>per Hari</th>
+                    </tr>
+                    <tr>
+                        <th>7</th>
+                        <td>T.pph</td>
+                        <th><input class="form-control" type="number" th:field="*{tPPH}"></th>
+                        <th></th>
+                    </tr>
+                    <tr>
+                        <th>8</th>
+                        <td>Tunjangan Prestasi</td>
+                        <th><input class="form-control" type="number" th:field="*{tunjanganPrestasi}"></th>
+                        <th>per Prestasi</th>
+                    </tr>
+                    <tr>
+                        <th>9</th>
+                        <td>Golongan I A-C</td>
+                        <th><input class="form-control" type="number" th:field="*{gol1AC}"></th>
+                        <th></th>
+                    </tr>
+                    <tr>
+                        <th>10</th>
+                        <td>Golongan I D dan II A</td>
+                        <th><input class="form-control" type="number" th:field="*{gol1D2A}"></th>
+                        <th></th>
+                    </tr>
+                    <tr>
+                        <th>11</th>
+                        <td>Golongan II B</td>
+                        <th><input class="form-control" type="number" th:field="*{gol2B}"></th>
+                        <th></th>
+                    </tr>
+                    <tr>
+                        <th>12</th>
+                        <td>Golongan II C-D</td>
+                        <th><input class="form-control" type="number" th:field="*{gol2CD}"></th>
+                        <th></th>
+                    </tr>
+                    <tr>
+                        <th>13</th>
+                        <td>Golongan III A</td>
+                        <th><input class="form-control" type="number" th:field="*{gol3A}"></th>
+                        <th></th>
+                    </tr>
+                    <tr>
+                        <th>14</th>
+                        <td>Golongan III B-C</td>
+                        <th><input class="form-control" type="number" th:field="*{gol3BC}"></th>
+                        <th></th>
+                    </tr>
+                    <tr>
+                        <th>15</th>
+                        <td>Golongan III D dan IV A-B</td>
+                        <th><input class="form-control" type="number" th:field="*{gol3D4AB}"></th>
+                        <th></th>
+                    </tr>
+                    <tr>
+                        <th>16</th>
+                        <td>Golongan IV C-D</td>
+                        <th><input class="form-control" type="number" th:field="*{gol4CD}"></th>
+                        <th></th>
+                    </tr>
+                    <tr>
+                        <th>17</th>
+                        <td>Golongan V A-D</td>
+                        <th><input class="form-control" type="number" th:field="*{gol5AD}"></th>
+                        <th></th>
+                    </tr>
+                </table>
+
+            <br><br>
+            <!--            Buttons-->
+            <div class="pull-right" id="buttons">
+                <button onclick="document.getElementById('popUp').style.display='block'"  type="button" class="btn backgroundPurple" th:attrappend="data-target=${komponenGaji.id}">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--    Container untuk bagian setelah abu abu-->
+<div class="container-fluid">
+    <div class="row">
+        <div class="card-body" id="pageBottom">
+            <div class="pull-right">
+                <a type="button" class="btn backgroundOrange" th:href="@{/payrol/komponenGaji}">Back</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Ini section yang bakal popup. Copy dari sini buat setiap halaman yang ada pop up-->
+<div id="popUp" class="modal">
+    <span onclick="document.getElementById('popup').style.display='none'"  title="Close Modal">×</span>
+    <!--    Ini jangan lupa diisi actionnya-->
+    <div class="modal-content">
+        <div class="container">
+            <img th:src="@{/images/warning.png}"/>
+            <br><br>
+            <!--            custom sendiri yaa-->
+            <p>Apakah anda yakin mengubah komponen pengali gaji?</p>
+            <div class="clearfix">
+                <button type="button" onclick="document.getElementById('popUp').style.display='none'" class="btn backgroundOrange">Cancel</button>
+                <!--                ini juga custom!-->
+                <button type="submit" onclick="document.getElementById('popUP').style.display='none'" class="btn backgroundPurple">Ubah</button>
+            </div>
+        </div>
+    </div>
+</div>
+</form>
+
+</body>
+</html>
