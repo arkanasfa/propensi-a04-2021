@@ -52,19 +52,6 @@ public class PengajuanCutiModel implements Serializable{
     @JsonIgnore
     private StatusModel id_status;
 
-    public UserModel getUser() {
-        return user;
-    }
-
-    public void setUser(UserModel user) {
-        this.user = user;
-    }
-
-    @OneToOne
-    @JoinColumn(name = "uuidUser", referencedColumnName = "idUser")
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    private UserModel user;
-
     public String getKode_cuti() {
         return kode_cuti;
     }

@@ -53,12 +53,19 @@
                 </div>
                 <div class="form-row">
                     <div class="form-group-row">
-                        //jenis
+                    <label for="jenis" >Jenis Cuti:</label>
+                    <select id="jenis" th:field="*{jenis}" class="form-control" required>
+                        <option value="1">Cuti Tahunan</option>
+                        <option value="2">Cuti Sakit</option>
+                        <option value="3">Cuti Ibadah Haji</option>
+                        <option value="4">Cuti Ibadah Umrah</option>
+                        <option value="5">Cuti Bersalin</option>
+                    </select>
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group row">
-                        <label for="formGroupExampleInput">Keterangan</label>
+                        <label for="formGroupExampleInput">Keterangan:</label>
                         <input type="text" class="form-control" id="formGroupExampleInput" th:field="*{keterangan}">
                     </div>
                 </div>
@@ -78,7 +85,8 @@
             </div>
         </div>
     </div>
-</div><!--Ini section yang bakal popup. Copy dari sini buat setiap halaman yang ada pop up-->
+</div>
+<!--Ini section yang bakal popup. Copy dari sini buat setiap halaman yang ada pop up-->
 <div id="popUp" class="modal">
     <span onclick="document.getElementById('popup').style.display='none'"  title="Close Modal">×</span>
     <!--    Ini jangan lupa diisi actionnya-->
@@ -91,7 +99,7 @@
             <div class="clearfix">
                 <button type="button" onclick="document.getElementById('popUp').style.display='none'" class="btn backgroundOrange">Cancel</button>
                 <!--                ini juga custom!-->
-                <button type="submit" onclick="document.getElementById('popUP').style.display='none'" class="btn backgroundPurple">Ubah</button>
+                <button type="submit" onclick="document.getElementById('popUP').style.display='none'" class="btn backgroundPurple">Ajukan</button>
             </div>
         </div>
     </div>

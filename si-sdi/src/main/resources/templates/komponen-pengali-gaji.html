@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Komponen Pengali Gaji</title>
+    <object th:include="fragments/fragment :: cssjs" th:remove="tag"></object>
+    <link rel="stylesheet" th:href="@{/css/default-style.css}" />
+</head>
+
+<body>
+
+<style>
+    #buttons{
+        margin-top: 20px;
+        text-align: right; !important;
+        background-color:#F6F6F6;
+    }
+
+    .card-group .card-body{
+        border-radius:0px;
+        margin-left:0px;
+        margin-right:0px;
+        text-align: left; !important;
+    }
+
+    .card-group .card-body p{
+        text-align: left; !important;
+        line-height:80%;
+    }
+
+    tbody td{
+        text-align: left;
+    }
+</style>
+
+<div class="container-fluid" >
+    <div class="col-auto" >
+        <object th:replace="fragments/fragment :: sidebar(Payroll = 'highlight')" th:remove="tag"></object>
+    </div>
+</div>
+
+<!--    Container untuk bagian sebelum abu abu-->
+<div class="container-fluid">
+    <div class="row">
+        <div class="card-body" id="pageTitle">
+            <h3 class="colorGreen">Komponen Pengali Gaji</h3>
+        </div>
+    </div>
+</div>
+
+<!--    Dalem abu-abu-->
+<div class="container-fluid">
+    <div class="row">
+        <div class="card-body">
+            <table class="rounded table table-bordered">
+                <thead>
+                    <tr>
+                        <th>No.</th>
+                        <th>Komponen</th>
+                        <th>Jumlah</th>
+                        <th>Satuan</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th>1</th>
+                        <td>Lembur</td>
+                        <th
+                        th:text="'Rp. ' + ${#numbers.formatDecimal(komponenGaji.lembur, 0, 'POINT', 2, 'COMMA')}"></th>
+                        <th>per Jam</th>
+                    </tr>
+                    <tr>
+                        <th>2</th>
+                        <td>Infal</td>
+                        <th
+                                th:text="'Rp. ' + ${#numbers.formatDecimal(komponenGaji.infal, 0, 'POINT', 2, 'COMMA')}"></th>
+                        <th>per Jam</th>
+                    </tr>
+                    <tr>
+                        <th>3</th>
+                        <td>Tunjangan Keluarga</td>
+                        <th
+                                th:text="'Rp. ' + ${#numbers.formatDecimal(komponenGaji.keluarga, 0, 'POINT', 2, 'COMMA')}"></th>
+                        <th>per Kepala</th>
+                    </tr>
+                    <tr>
+                        <th>4</th>
+                        <td>PPH</td>
+                        <th
+                                th:text="'Rp. ' + ${#numbers.formatDecimal(komponenGaji.PPH, 0, 'POINT', 2, 'COMMA')}"></th>
+                        <th></th>
+                    </tr>
+                    <tr>
+                        <th>5</th>
+                        <td>Uang Snack</td>
+                        <th
+                                th:text="'Rp. ' + ${#numbers.formatDecimal(komponenGaji.uangSnack, 0, 'POINT', 2, 'COMMA')}"></th>
+                        <th>per Hari</th>
+                    </tr>
+                    <tr>
+                        <th>6</th>
+                        <td>Absensi</td>
+                        <th
+                                th:text="'Rp. ' + ${#numbers.formatDecimal(komponenGaji.absensi, 0, 'POINT', 2, 'COMMA')}"></th>
+                        <th>per Hari</th>
+                    </tr>
+                    <tr>
+                        <th>7</th>
+                        <td>T.pph</td>
+                        <th
+                                th:text="'Rp. ' + ${#numbers.formatDecimal(komponenGaji.tPPH, 0, 'POINT', 2, 'COMMA')}"></th>
+                        <th></th>
+                    </tr>
+                    <tr>
+                        <th>8</th>
+                        <td>Tunjangan Prestasi</td>
+                        <th
+                                th:text="'Rp. ' + ${#numbers.formatDecimal(komponenGaji.tunjanganPrestasi, 0, 'POINT', 2, 'COMMA')}"></th>
+                        <th>per Prestasi</th>
+                    </tr>
+                    <tr>
+                        <th>9</th>
+                        <td>Golongan I A-C</td>
+                        <th
+                                th:text="'Rp. ' + ${#numbers.formatDecimal(komponenGaji.gol1AC, 0, 'POINT', 2, 'COMMA')}"></th>
+                        <th></th>
+                    </tr>
+                    <tr>
+                        <th>10</th>
+                        <td>Golongan I D dan II A</td>
+                        <th
+                                th:text="'Rp. ' + ${#numbers.formatDecimal(komponenGaji.gol1D2A, 0, 'POINT', 2, 'COMMA')}"></th>
+                        <th></th>
+                    </tr>
+                    <tr>
+                        <th>11</th>
+                        <td>Golongan II B</td>
+                        <th
+                                th:text="'Rp. ' + ${#numbers.formatDecimal(komponenGaji.gol2B, 0, 'POINT', 2, 'COMMA')}"></th>
+                        <th></th>
+                    </tr>
+                    <tr>
+                        <th>12</th>
+                        <td>Golongan II C-D</td>
+                        <th
+                                th:text="'Rp. ' + ${#numbers.formatDecimal(komponenGaji.gol2CD, 0, 'POINT', 2, 'COMMA')}"></th>
+                        <th></th>
+                    </tr>
+                    <tr>
+                        <th>13</th>
+                        <td>Golongan III A</td>
+                        <th
+                                th:text="'Rp. ' + ${#numbers.formatDecimal(komponenGaji.gol3A, 0, 'POINT', 2, 'COMMA')}"></th>
+                        <th></th>
+                    </tr>
+                    <tr>
+                        <th>14</th>
+                        <td>Golongan III B-C</td>
+                        <th
+                                th:text="'Rp. ' + ${#numbers.formatDecimal(komponenGaji.gol3BC, 0, 'POINT', 2, 'COMMA')}"></th>
+                        <th></th>
+                    </tr>
+                    <tr>
+                        <th>15</th>
+                        <td>Golongan III D dan IV A-B</td>
+                        <th
+                                th:text="'Rp. ' + ${#numbers.formatDecimal(komponenGaji.gol3D4AB, 0, 'POINT', 2, 'COMMA')}"></th>
+                        <th></th>
+                    </tr>
+                    <tr>
+                        <th>16</th>
+                        <td>Golongan IV C-D</td>
+                        <th
+                                th:text="'Rp. ' + ${#numbers.formatDecimal(komponenGaji.gol4CD, 0, 'POINT', 2, 'COMMA')}"></th>
+                        <th></th>
+                    </tr>
+                    <tr>
+                        <th>17</th>
+                        <td>Golongan V A-D</td>
+                        <th
+                                th:text="'Rp. ' + ${#numbers.formatDecimal(komponenGaji.gol5AD, 0, 'POINT', 2, 'COMMA')}"></th>
+                        <th></th>
+                    </tr>
+            </table>
+
+            <br><br>
+            <!--            Buttons-->
+            <div class="pull-right" id="buttons">
+                <a type="button" class="btn backgroundPurple" th:href="@{/payroll/komponenGaji/ubah(id=${komponenGaji.id})}">Edit</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--    Container untuk bagian setelah abu abu-->
+<div class="container-fluid">
+    <div class="row">
+        <div class="card-body" id="pageBottom">
+            <div class="pull-right">
+                <a type="button" class="btn backgroundOrange" th:href="@{/payroll}">Back</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

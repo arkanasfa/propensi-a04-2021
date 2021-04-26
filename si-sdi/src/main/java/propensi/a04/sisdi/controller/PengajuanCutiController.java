@@ -1,7 +1,5 @@
 package propensi.a04.sisdi.controller;
 
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +10,7 @@ import propensi.a04.sisdi.model.PengajuanCutiModel;
 
 import propensi.a04.sisdi.model.StatusModel;
 import propensi.a04.sisdi.model.UserModel;
+import propensi.a04.sisdi.repository.StatusDB;
 import propensi.a04.sisdi.service.PengajuanCutiService;
 import propensi.a04.sisdi.service.KaryawanService;
 
@@ -25,6 +24,9 @@ public class PengajuanCutiController {
 
     @Autowired
     KaryawanService karyawanService;
+
+    @Autowired
+    StatusDB statusDb;
 
     @RequestMapping("/cuti")
     public String viewAllCuti(Model model, UserModel user){
@@ -58,7 +60,7 @@ public class PengajuanCutiController {
             cuti.setId_karyawan(karyawan);
             String kodeCuti = pengajuanCutiService.generateKodeCuti(cuti);
             cuti.setKode_cuti(kodeCuti);
-            StatusModel id_status = statusDb.findById(Long.valueOf(1).get());
+            StatusModel id_status = statusDb.findById(Long.valueOf(1)).get();
             cuti.setId_status(id_status);
             Date date = new Date();
             cuti.setTanggalRequest(date);

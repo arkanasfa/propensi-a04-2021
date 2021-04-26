@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Detail Gaji</title>
+    <object th:include="fragments/fragment :: cssjs" th:remove="tag"></object>
+    <link rel="stylesheet" th:href="@{/css/default-style.css}" />
+</head>
+
+<body>
+
+<style>
+    #buttons{
+        margin-top: 20px;
+        text-align: right; !important;
+        background-color:#F6F6F6;
+    }
+
+    .colorWhite{
+        color:white;
+    }
+
+    .card-group .card-body{
+        border-radius:0px;
+        margin-left:0px;
+        margin-right:0px;
+        text-align: left; !important;
+    }
+
+    .card-group .card-body p{
+        text-align: left; !important;
+        font-size:10px;
+        line-height:80%;
+    }
+
+    .container-fluid{
+        font-size:10px;
+    }
+
+    .btn{
+        font-size:10px;
+    }
+
+    tbody td{
+        text-align: left;
+    }
+</style>
+
+<div class="container-fluid" >
+    <div class="col-auto" >
+        <object th:replace="fragments/fragment :: sidebar(Payroll = 'highlight')" th:remove="tag"></object>
+    </div>
+</div>
+
+<!--    Container untuk bagian sebelum abu abu-->
+<div class="container-fluid">
+    <div class="row">
+        <div class="card-body" id="pageTitle">
+            <h3 class="colorGreen">Detail Gaji</h3>
+        </div>
+    </div>
+</div>
+
+<!--    Container untuk bagian sebelum abu abu-->
+<div class="container-fluid">
+    <div class="card-body backgroundGreen">
+        <div class="card-group text-left">
+            <div class="card-body text-left backgroundGreen" id="leftCard">
+                <p class="card-text">Periode: [Periode]</p>
+                <p class="card-text">Nama: [Nama]</p>
+                <p class="card-text">Unit Kerja: [Unit Kerja]</p>
+                <p class="card-text">Jabatan/Fungsi: [Jabatan/Fungsi]</p>
+                <p class="card-text">Status: [status kepegawaian]</p>
+                <p class="card-text">Tahun Pengangkatan: [tahun]</p>
+                <p class="card-text">Masa Keja Pegawai Tetap: [tahun] Tahun</p>
+                <p class="card-text">Golognan: [Golongan]</p>
+            </div>
+            <div class="card-body text-left backgroundGreen" id="rightCard">
+                <p class="card-text">Sakit: [xx] Hari</p>
+                <p class="card-text">Ijin: [xx] Hari</p>
+                <p class="card-text">Alpa: [xx] Hari</p>
+                <p class="card-text">Cuti: [xx] Hari</p>
+                <p class="card-text"></p>
+                <p class="card-text">Jumlah Hari Efektif: [xx] Hari</p>
+                <p class="card-text">Jumlah Hari Kehadiran: [xx] Hari</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<br>
+
+<!--    Dalem abu-abu-->
+<div class="container-fluid">
+    <div class="row">
+        <div class="card-body">
+            <table class="rounded table table-bordered">
+                <thead >
+                    <tr>
+                        <th colspan="4" scope="col" >PERINCIAN GAJI</th>
+                    </tr>
+                    <tr>
+                        <th>No.</th>
+                        <th colspan="2">Uraian</th>
+                        <th>Jumlah</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th>1</th>
+                        <td colspan="2">Gaji Pokok</td>
+                        <th>Rp. [xx]</th>
+                    </tr>
+                    <tr>
+                        <th>2</th>
+                        <td colspan="2">Tunjangan Jabatan</td>
+                        <th>Rp. [xx]</th>
+                    </tr>
+                    <tr>
+                        <th>3</th>
+                        <td colspan="2">Tunjangan Fungsional</td>
+                        <th>Rp. [xx]</th>
+                    </tr>
+                    <tr>
+                        <th>4</th>
+                        <td colspan="2">Tunjangan Transport</td>
+                        <th>Rp. [xx]</th>
+                    </tr>
+                    <tr>
+                        <th>5</th>
+                        <td colspan="2">Tunjangan Keluarga</td>
+                        <th>Rp. [xx]</th>
+                    </tr>
+                    <tr>
+                        <th>6</th>
+                        <td colspan="2">Tunjangan Kesehatan</td>
+                        <th>Rp. [xx]</th>
+                    </tr>
+                    <tr>
+                        <th>7</th>
+                        <td colspan="2">Tunjangan Perintis</td>
+                        <th>Rp. [xx]</th>
+                    </tr>
+                    <tr>
+                        <th colspan="3" class="backgroundGreen">Total Fix Cost</th>
+                        <th class="backgroundGreen">Rp. [xx]</th>
+                    </tr>
+                </tbody>
+                <thead >
+                    <tr>
+                        <th colspan="4" scope="col" >TLP, TP, dan INFAL</th>
+                    </tr>
+                    <tr>
+                        <th>No.</th>
+                        <th colspan="2">Uraian</th>
+                        <th>Jumlah</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th>1</th>
+                        <td colspan="2">T.pph (50%)</td>
+                        <th>Rp. [xx]</th>
+                    </tr>
+                    <tr>
+                        <th>2</th>
+                        <td colspan="2">Uang Snack</td>
+                        <th>Rp. [xx]</th>
+                    </tr>
+                    <tr>
+                        <th>3</th>
+                        <td colspan="2">Tunjangan Prestasi</td>
+                        <th>Rp. [xx]</th>
+                    </tr>
+                    <tr>
+                        <th>4</th>
+                        <td colspan="2">Lembur</td>
+                        <th>Rp. [xx]</th>
+                    </tr>
+                    <tr>
+                        <th>5</th>
+                        <td colspan="2">Infal</td>
+                        <th>Rp. [xx]</th>
+                    </tr>
+                    <tr>
+                        <th colspan="3" class="backgroundGreen">Total Variable Cost</th>
+                        <th class="backgroundGreen">Rp. [xx]</th>
+                    </tr>
+                    <tr>
+                        <th colspan="3" class="backgroundGreen">Total Gaji</th>
+                        <th class="backgroundGreen">Rp. [xx]</th>
+                    </tr>
+                </tbody>
+                <thead >
+                    <tr>
+                        <th colspan="4" scope="col" >POTONGAN</th>
+                    </tr>
+                    <tr>
+                        <th>No.</th>
+                        <th colspan="2">Uraian</th>
+                        <th>Jumlah</th>
+                    </tr>
+                </thead>
+                    <tbody>
+                    <tr>
+                        <th>1</th>
+                        <td colspan="2">Simpanan wajib koperasi pegawai</td>
+                        <th>Rp. [xx]</th>
+                    </tr>
+                    <tr>
+                        <th>2</th>
+                        <td>Angsuran koperasi pegawai</td>
+                        <td>Ke [x]</td>
+                        <th>Rp. [xx]</th>
+                    </tr>
+                    <tr>
+                        <th>3</th>
+                        <td colspan="2">Angsuran Bank</td>
+                        <th>Rp. [xx]</th>
+                    </tr>
+                    <tr>
+                        <th>4</th>
+                        <td colspan="2">Potongan Absensi</td>
+                        <th>Rp. [xx]</th>
+                    </tr>
+                    <tr>
+                        <th>5</th>
+                        <td colspan="2">PPH (100%)</td>
+                        <th>Rp. [xx]</th>
+                    </tr>
+                    <tr>
+                        <th>6</th>
+                        <td>Angsuran Yayasan</td>
+                        <td>Ke [x]</td>
+                        <th>Rp. [xx]</th>
+                    </tr>
+                </tbody>
+            </table>
+
+            <br><br>
+            <!--            Buttons-->
+            <div class="pull-right" id="buttons">
+                <button type="button" class="btn backgroundPurple ">Edit</button>
+                <button type="button" class="btn backgroundPurple ">Download PDF</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--    Container untuk bagian setelah abu abu-->
+<div class="container-fluid">
+    <div class="row">
+        <div class="card-body" id="pageBottom">
+            <div class="pull-right">
+                <button type="button" class="btn backgroundOrange ">Back</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

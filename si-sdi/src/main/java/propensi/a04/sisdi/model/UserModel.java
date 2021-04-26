@@ -40,6 +40,17 @@ public class UserModel implements Serializable{
     @JsonIgnore
     private RoleModel id_role;
 
+    public KaryawanModel getKaryawan() {
+        return karyawan;
+    }
+
+    public void setKaryawan(KaryawanModel karyawan) {
+        this.karyawan = karyawan;
+    }
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private KaryawanModel karyawan;
+
     public String getId() {
         return id;
     }
