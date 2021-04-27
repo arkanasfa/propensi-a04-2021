@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Mengajukan Payroll</title>
+    <object th:include="fragments/fragment :: cssjs" th:remove="tag"></object>
+    <link rel="stylesheet" th:href="@{/css/default-style.css}" />
+</head>
+
+<body>
+<style>
+    .collapsible {
+        background-color: white;
+        cursor: pointer;
+        width: 100%;
+        height: 20%;
+        border-width: 2px;
+        border-color: #83BA70;
+        text-align: center;
+        border-radius: 20px;
+        height:30px;
+    }
+
+    collapsible:hover {
+        background-color: #83BA70;
+        color:white;
+        border-width: 2px;
+        border-color: white;
+    }
+
+    .collapsible:after {
+        content: '\25BC';
+        color: #83BA70;
+        float: right;
+    }
+
+    .active{
+        background-color: white;
+        color: #83BA70;
+        border-width: 2px;
+        border-color: #83BA70;
+    }
+
+    .active:after {
+        content: "\25B2";
+        color: #83BA70;
+    }
+
+    .content {
+        padding: 0 18px;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.2s ease-out;
+    }
+
+    #buttons{
+        margin-top: 20px;
+        text-align: right; !important;
+        background-color:#F6F6F6;
+    }
+
+    .colorWhite{
+        color:white;
+    }
+</style>
+
+<div class="container-fluid" >
+    <div class="col-auto" >
+        <object th:replace="fragments/fragment :: sidebar(Payroll = 'highlight')" th:remove="tag"></object>
+    </div>
+</div>
+
+<!--    Container untuk bagian sebelum abu abu-->
+<div class="container-fluid">
+    <div class="row">
+        <div class="card-body" id="pageTitle">
+            <h3 class="colorGreen">Mengajukan Payroll</h3>
+            <h4 class="colorGreen" style="text-align: left">Total Anggaran - [Bulan-Tahun]</h4>
+        </div>
+    </div>
+</div>
+
+<!--    Dalem abu-abu-->
+<div class="container-fluid">
+    <div class="row">
+        <div class="card-body">
+            <table class="rounded table table-bordered">
+                <thead >
+                <tr>
+                    <th scope="col" >No.</th>
+                    <th scope="col">Unit</th>
+                    <th scope="col">Anggaran</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <th scope="row">1</th>
+                    <td>[Nama Unit]</td>
+                    <td>[Anggaran Unit]</td>
+                    <td>[Status]</td>
+                    <td>[Action]</td>
+                </tr>
+                <tr>
+                    <td colspan="4" class="backgroundGreen colorWhite">Total Anggaran</td>
+                    <td>[anggaran]</td>
+                </tr>
+                </tbody>
+            </table>
+<!--            Collapsible untuk bulan bulan yang udah lewat-->
+            <button type="button" class="collapsible colorGreen">[Month and Year]</button>
+            <div class="content">
+                <table class="rounded table table-bordered">
+                    <thead >
+                    <tr>
+                        <th scope="col" >No.</th>
+                        <th scope="col">Unit</th>
+                        <th scope="col">Anggaran</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>[Nama Unit]</td>
+                        <td>[Anggaran Unit]</td>
+                        <td>[Status]</td>
+                        <td>[Action]</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+<!--            Buttons-->
+            <br><br><br>
+            <div class="pull-right" id="buttons">
+                <button type="button" class="btn backgroundPurple ">Lihat Pengali Gaji</button>
+                <button type="button" class="btn backgroundPurple ">Ajukan</button>
+                <button type="button" class="btn backgroundPurple ">Download PDF</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--    Container untuk bagian setelah abu abu-->
+<div class="container-fluid">
+    <div class="row">
+        <div class="card-body" id="pageBottom">
+            <div class="pull-right">
+                <button type="button" class="btn backgroundOrange ">Back</button>
+                <button type="button" class="btn backgroundGreen ">Next</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var coll = document.getElementsByClassName("collapsible");
+    var i;
+
+    for (i = 0; i < coll.length; i++) {
+        coll[i].addEventListener("click", function() {
+            this.classList.toggle("active");
+            var content = this.nextElementSibling;
+            if (content.style.maxHeight){
+                content.style.maxHeight = null;
+            } else {
+                content.style.maxHeight = content.scrollHeight + "px";
+            }
+        });
+    }
+</script>
+
+</body>
+</html>

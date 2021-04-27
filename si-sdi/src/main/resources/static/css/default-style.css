@@ -114,3 +114,9 @@ table.table-bordered > tbody > tr > th{
     color: #fff !important;
     font-size: 20px;
 }
+#buttonUP{
+    margin-top: 20px;
+    background-color: white; !important;
+    text-align: right;
+
+}

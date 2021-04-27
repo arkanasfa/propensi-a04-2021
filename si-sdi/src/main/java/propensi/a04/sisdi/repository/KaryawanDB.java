@@ -10,3 +10,4 @@ public interface KaryawanDB extends JpaRepository<KaryawanModel,Integer>{
     Optional<KaryawanModel> findById(Long id_karyawan);
     Optional<KaryawanModel> findByNoKaryawan(Long no_karyawan);
 }
+
