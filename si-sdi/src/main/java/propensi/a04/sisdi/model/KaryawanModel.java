@@ -117,6 +117,7 @@ public class KaryawanModel implements Serializable{
     @OneToOne(mappedBy = "id_infal")
     private LemburModel infal;
 
+
     public Long getId() {
         return id;
     }
@@ -324,4 +325,5 @@ public class KaryawanModel implements Serializable{
     public void setInfal(LemburModel infal) {
         this.infal = infal;
     }
+
 }
