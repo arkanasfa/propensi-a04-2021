@@ -6,11 +6,8 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
-import javax.persistence.criteria.CriteriaBuilder;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.util.Date;
-import java.util.List;
 
 
 @Entity
@@ -34,11 +31,6 @@ public class OrangTuaModel implements Serializable{
         @OnDelete(action = OnDeleteAction.CASCADE)
         @JsonIgnore
         private SiswaModel id_siswa;
-
-        @OneToMany(mappedBy = "idOrtu_pengadu", fetch = FetchType.LAZY)
-        @OnDelete(action = OnDeleteAction.CASCADE)
-        @JsonIgnore
-        private List<PengaduanModel> listPengaduan;
 
         
 
@@ -97,19 +89,4 @@ public class OrangTuaModel implements Serializable{
     public void setId_siswa(SiswaModel id_siswa) {
         this.id_siswa = id_siswa;
     }
-
-    /**
-     * @return List<PengaduanModel> return the listPengaduan
-     */
-    public List<PengaduanModel> getListPengaduan() {
-        return listPengaduan;
-    }
-
-    /**
-     * @param listPengaduan the listPengaduan to set
-     */
-    public void setListPengaduan(List<PengaduanModel> listPengaduan) {
-        this.listPengaduan = listPengaduan;
-    }
-
 }

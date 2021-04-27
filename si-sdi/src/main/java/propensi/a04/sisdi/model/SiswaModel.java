@@ -34,14 +34,7 @@ public class SiswaModel implements Serializable{
     private String kelas;
 
     @OneToOne(mappedBy = "id_siswa")
-    private OrangTuaModel orangTuaModel;
-
-    @OneToMany(mappedBy = "idSiswa_pengadu", fetch = FetchType.LAZY)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIgnore
-    private List<PengaduanModel> listPengaduan;
-
-    
+    private OrangTuaModel orangTuaModel;    
 
     /**
      * @return Long return the id
@@ -113,18 +106,5 @@ public class SiswaModel implements Serializable{
         this.orangTuaModel = orangTuaModel;
     }
 
-    /**
-     * @return List<PengaduanModel> return the listPengaduan
-     */
-    public List<PengaduanModel> getListPengaduan() {
-        return listPengaduan;
-    }
-
-    /**
-     * @param listPengaduan the listPengaduan to set
-     */
-    public void setListPengaduan(List<PengaduanModel> listPengaduan) {
-        this.listPengaduan = listPengaduan;
-    }
 
 }

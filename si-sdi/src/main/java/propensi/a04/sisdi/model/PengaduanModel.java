@@ -10,6 +10,7 @@ import javax.persistence.*;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -27,39 +28,38 @@ public class PengaduanModel implements Serializable{
     @JsonIgnore
     private KaryawanModel no_karyawan;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "idOrtu_pengadu", referencedColumnName = "id", nullable = false)
+    /* @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "idUser_pengadu", referencedColumnName = "id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
-    private OrangTuaModel idOrtu_pengadu;
+    private UserModel idUser_pengadu; */
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "idSiswa_pengadu", referencedColumnName = "id", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIgnore
-    private SiswaModel idSiswa_pengadu;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "idKarya_pengadu", referencedColumnName = "id", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIgnore
-    private KaryawanModel idKarya_pengadu;
 
     @NotNull
     @Size(max=250)
     @Column(name="detailPengaduan",nullable = false)
     private String detailPengaduan;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @NotNull
+    @Column(name = "statusPengaduan", nullable = false)
+    private Integer statusPengaduan;
+    
+
+/*     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_status", referencedColumnName = "id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
-    private StatusModel id_status;
+    private StatusModel id_status; */
 
     @NotNull
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name="tanggalPengaduan",nullable = false)
-    private Date tanggalPengaduan;
+    private LocalDate tanggalPengaduan;
+
+    @NotNull
+    @Column(name="kode_pengaduan",nullable = false)
+    private String kode_pengaduan;
 
     
 
@@ -91,47 +91,8 @@ public class PengaduanModel implements Serializable{
         this.no_karyawan = no_karyawan;
     }
 
-    /**
-     * @return OrangTuaModel return the idOrtu_pengadu
-     */
-    public OrangTuaModel getIdOrtu_pengadu() {
-        return idOrtu_pengadu;
-    }
+    
 
-    /**
-     * @param idOrtu_pengadu the idOrtu_pengadu to set
-     */
-    public void setIdOrtu_pengadu(OrangTuaModel idOrtu_pengadu) {
-        this.idOrtu_pengadu = idOrtu_pengadu;
-    }
-
-    /**
-     * @return SiswaModel return the idSiswa_pengadu
-     */
-    public SiswaModel getIdSiswa_pengadu() {
-        return idSiswa_pengadu;
-    }
-
-    /**
-     * @param idSiswa_pengadu the idSiswa_pengadu to set
-     */
-    public void setIdSiswa_pengadu(SiswaModel idSiswa_pengadu) {
-        this.idSiswa_pengadu = idSiswa_pengadu;
-    }
-
-    /**
-     * @return KaryawanModel return the idKarya_pengadu
-     */
-    public KaryawanModel getIdKarya_pengadu() {
-        return idKarya_pengadu;
-    }
-
-    /**
-     * @param idKarya_pengadu the idKarya_pengadu to set
-     */
-    public void setIdKarya_pengadu(KaryawanModel idKarya_pengadu) {
-        this.idKarya_pengadu = idKarya_pengadu;
-    }
 
     /**
      * @return String return the detailPengaduan
@@ -148,31 +109,58 @@ public class PengaduanModel implements Serializable{
     }
 
     /**
-     * @return StatusModel return the id_status
-     */
-    public StatusModel getId_status() {
-        return id_status;
-    }
-
-    /**
-     * @param id_status the id_status to set
-     */
-    public void setId_status(StatusModel id_status) {
-        this.id_status = id_status;
-    }
-
-    /**
      * @return Date return the tanggalPengaduan
      */
-    public Date getTanggalPengaduan() {
+    public LocalDate getTanggalPengaduan() {
         return tanggalPengaduan;
     }
 
     /**
-     * @param tanggalPengaduan the tanggalPengaduan to set
+     * @param localDate the tanggalPengaduan to set
      */
-    public void setTanggalPengaduan(Date tanggalPengaduan) {
-        this.tanggalPengaduan = tanggalPengaduan;
+    public void setTanggalPengaduan(LocalDate localDate) {
+        this.tanggalPengaduan = localDate;
+    }
+    
+
+
+/* 
+    public UserModel getUser() {
+        return user;
+    }
+
+    public void setUser(UserModel user) {
+        this.user = user;
+    } */
+
+
+    /**
+     * @return String return the kode_pengaduan
+     */
+    public String getKode_pengaduan() {
+        return kode_pengaduan;
+    }
+
+    /**
+     * @param kode_pengaduan the kode_pengaduan to set
+     */
+    public void setKode_pengaduan(String kode_pengaduan) {
+        this.kode_pengaduan = kode_pengaduan;
+    }
+
+
+    /**
+     * @return Integer return the statusPengaduan
+     */
+    public Integer getStatusPengaduan() {
+        return statusPengaduan;
+    }
+
+    /**
+     * @param statusPengaduan the statusPengaduan to set
+     */
+    public void setStatusPengaduan(Integer statusPengaduan) {
+        this.statusPengaduan = statusPengaduan;
     }
 
 }

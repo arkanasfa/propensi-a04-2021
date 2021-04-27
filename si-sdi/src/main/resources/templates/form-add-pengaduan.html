@@ -4,13 +4,41 @@
     <meta charset="UTF-8">
     <!--    Jangan Lupa diisi!-->
     <title>Ajukan Pengaduan</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
+
+
     <object th:include="fragments/fragment :: cssjs" th:remove="tag"></object>
     <!--    Default Style untuk semua page-->
     <link rel="stylesheet" th:href="@{/css/default-style.css}" />
-
-
+    
 </head>
 <body>
+
+    <style>
+        #buttons{
+            margin-top: 20px;
+            text-align: right;
+            background-color:#F6F6F6;
+        }
+    
+        .card-group .card-body{
+            border-radius:0px;
+            margin-left:0px;
+            margin-right:0px;
+            text-align: left;
+        }
+    
+        .card-group .card-body p{
+            text-align: left; 
+            line-height:80%;
+        }
+    
+        tbody td{
+            text-align: left;
+        }
+    </style>
+
 <div class="container-fluid" >
     <div class="col-auto" >
         <!--    formatnya: sidebar([NamaHalaman] = 'highlight'). Buat nge highlight sidebar kalo lagi di halaman itu-->
@@ -32,50 +60,75 @@
 <div class="container-fluid">
     <div class="row">
         <div class="card-body">
-            <table class="rounded table table-bordered">
-                <thead >
-                <tr>
-                    <th scope="col" >#</th>
-                    <th scope="col">First</th>
-                    <th scope="col">Last</th>
-                    <th scope="col">Handle</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                </tr>
-                <tr>
-                    <th scope="row">2</th>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
-                </tr>
-                <tr>
-                    <th scope="row">3</th>
-                    <td colspan="2">Larry the Bird</td>
-                    <td>@twitter</td>
-                </tr>
-                </tbody>
-            </table>
+            <form th:action="@{/pengaduan/add/}" th:object="${pengaduan}" method="POST">
+                <input type="hidden" th:field="*{id}"/>
+                <br>
+                <div class="container">
+                    <!-- <div class=" form-group row">
+                        <label class="col-sm-2 col-form-label">Nama Karyawan yang diadukan</label>
+                        <div class="col-sm-10">
+                            <select name="no_karyawan"  class="form-control" style="background-color:#c8e5be;">
+                                <option selected value="">Pilih nama karyawan</option>
+                                <option th:each="karyawan : ${listKaryawan}" th:value="${karyawan.noKaryawan}"
+                                th:text="${karyawan.karyawan}"></option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <br> -->
+                    <div class=" form-group row">
+                        <label class="col-sm-2 col-form-label">Nama Karyawan yang diadukan</label>
+                        <div class="col-sm-10">
+                            <select name="no_karyawan" data-live-search="true" data-live-search-style="startsWith" data-style="btn backgroundGreentea" class="selectpicker form-control">
+                                <option selected value="">Pilih nama karyawan</option>
+                                <option th:each="karyawan : ${listKaryawan}" th:value="${karyawan.noKaryawan}"
+                                th:text="${karyawan.karyawan}"></option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <br>
+                    <div class="form-group row">
+                        <label for="detailPengaduan" class="col-sm-2 col-form-label">Detail Pengaduan</label>
+                        <div class="col-sm-10">
+                            <textarea maxlength="250" placeholder="Berikan detail pengaduan..." oninput='this.style.height = ""; this.style.height = this.scrollHeight + "px"' style="background-color:#c8e5be;" class="form-control" type="String" name="detailPengaduan" id="detailPengaduan" th:field="*{detailPengaduan}" ></textarea>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="PageBottom pull-right" id="buttons">
+                        <button onclick="document.getElementById('popUp').style.display='block'" type="button" class="btn backgroundGreen float-right" th:attrappend="data-target=${pengaduan.id}">Submit</button>
+                        <a th:href="@{/pengaduan/viewall}" th type="button" class="btn backgroundOrange float-right ">Back</a>
+                    </div>
+                </div>
+                <!--Ini section yang bakal popup. Copy dari sini buat setiap halaman yang ada pop up-->
+                <div id="popUp" class="modal">
+                    <span onclick="document.getElementById('popup').style.display='none'"  title="Close Modal">×</span>
+                    <!--    Ini jangan lupa diisi actionnya-->
+                    <div class="modal-content">
+                        <div class="container">
+                            <img th:src="@{/images/warning.png}"/>
+                            <br><br>
+                            <!--            custom sendiri yaa-->
+                            <p>Apakah anda yakin ingin mengajukan pengaduan ini?</p>
+                            <div class="clearfix">
+                                <button type="button" onclick="document.getElementById('popUp').style.display='none'" class="btn backgroundOrange">Cancel</button>
+                                <!--                ini juga custom!-->
+                                <button type="submit" onclick="document.getElementById('popUP').style.display='none'" class="btn backgroundGreen">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
 </div>
 
-<!--    Container untuk bagian setelah abu abu-->
-<div class="container-fluid">
-    <div class="row">
-        <div class="card-body" id="pageBottom">
-            <div class="pull-right">
-                <button type="button" class="btn backgroundPurple ">Ungu</button>
-                <button type="button" class="btn backgroundOrange ">Oren</button>
-                <button type="button" class="btn backgroundGreen ">Hijau</button>
-            </div>
-        </div>
-    </div>
-</div>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
+
+<script src="js/select-script.js"></script>
+
 </body>
 </html>

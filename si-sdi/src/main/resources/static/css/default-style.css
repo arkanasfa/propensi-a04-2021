@@ -79,6 +79,11 @@ table.table-bordered > tbody > tr > th{
     color:white;
 }
 
+.backgroundGreentea{
+    background-color:#c8e5be;
+    color:black;
+}
+
 .btn{
     border-radius:10px;
 }
@@ -93,4 +98,19 @@ table.table-bordered > tbody > tr > th{
     margin-top: 20px;
     background-color: white; !important;
     text-align: right;
+}
+
+.search_select_box{
+    max-width: 400px;
+    margin: 80px auto;
+}
+
+.search_select_box select{
+    width: 100%;
+}
+
+.search_select_box button{
+    background-color: #83BA70 !important;
+    color: #fff !important;
+    font-size: 20px;
 }
