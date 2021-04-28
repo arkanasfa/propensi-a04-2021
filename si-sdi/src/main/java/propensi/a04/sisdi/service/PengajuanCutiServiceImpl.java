@@ -26,8 +26,8 @@ public class PengajuanCutiServiceImpl implements PengajuanCutiService{
     }
 
     @Override
-    public Optional<PengajuanCutiModel> getCutiById(Long id) {
-        return pengajuanCutiDb.findById(id);
+    public PengajuanCutiModel getCutiById(Long id) {
+        return pengajuanCutiDb.findById(id).get();
     }
 
     @Override
