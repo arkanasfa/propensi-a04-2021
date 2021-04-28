@@ -10,4 +10,6 @@ import java.util.Optional;
 public interface KaryawanDB extends JpaRepository<KaryawanModel, Integer> {
     KaryawanModel findByUser(UserModel user);
     Optional<KaryawanModel> findById(Long id_karyawan);
+    Optional<KaryawanModel> findByNoKaryawan(Long no_karyawan);
 }
+

@@ -34,45 +34,77 @@ public class SiswaModel implements Serializable{
     private String kelas;
 
     @OneToOne(mappedBy = "id_siswa")
-    private OrangTuaModel orangTuaModel;
+    private OrangTuaModel orangTuaModel;    
 
+    /**
+     * @return Long return the id
+     */
     public Long getId() {
         return id;
     }
 
+    /**
+     * @param id the id to set
+     */
     public void setId(Long id) {
         this.id = id;
     }
 
+    /**
+     * @return String return the namaSiswa
+     */
     public String getNamaSiswa() {
         return namaSiswa;
     }
 
+    /**
+     * @param namaSiswa the namaSiswa to set
+     */
     public void setNamaSiswa(String namaSiswa) {
         this.namaSiswa = namaSiswa;
     }
 
+    /**
+     * @return Integer return the jenisKelamin
+     */
     public Integer getJenisKelamin() {
         return jenisKelamin;
     }
 
+    /**
+     * @param jenisKelamin the jenisKelamin to set
+     */
     public void setJenisKelamin(Integer jenisKelamin) {
         this.jenisKelamin = jenisKelamin;
     }
 
+    /**
+     * @return String return the kelas
+     */
     public String getKelas() {
         return kelas;
     }
 
+    /**
+     * @param kelas the kelas to set
+     */
     public void setKelas(String kelas) {
         this.kelas = kelas;
     }
 
+    /**
+     * @return OrangTuaModel return the orangTuaModel
+     */
     public OrangTuaModel getOrangTuaModel() {
         return orangTuaModel;
     }
 
+    /**
+     * @param orangTuaModel the orangTuaModel to set
+     */
     public void setOrangTuaModel(OrangTuaModel orangTuaModel) {
         this.orangTuaModel = orangTuaModel;
     }
+
+
 }

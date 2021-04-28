@@ -9,3 +9,4 @@ import java.util.Optional;
 public interface StatusDB extends JpaRepository<StatusModel,Long>{
     Optional<StatusModel> findById(Long id_status);
 }
+

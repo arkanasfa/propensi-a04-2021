@@ -337,4 +337,5 @@ public class KaryawanModel implements Serializable{
     public void setInfal(LemburModel infal) {
         this.infal = infal;
     }
+
 }

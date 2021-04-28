@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <!--    Jangan Lupa diisi!-->
+    <title>Daftar Pengaduan Saya</title>
+    <object th:include="fragments/fragment :: cssjs" th:remove="tag"></object>
+    <!--    Default Style untuk semua page-->
+    <link rel="stylesheet" th:href="@{/css/default-style.css}" />
+
+
+</head>
+<body>
+<div class="container-fluid" >
+    <div class="col-auto" >
+        <!--    formatnya: sidebar([NamaHalaman] = 'highlight'). Buat nge highlight sidebar kalo lagi di halaman itu-->
+        <!--                Kecuali buat cuti izin dan lembur infal. gak pake garing karena jadi eror kalo pake garing-->
+        <object th:replace="fragments/fragment :: sidebar(Pengaduan = 'highlight')" th:remove="tag"></object>
+    </div>
+</div>
+
+
+<!--    Container untuk bagian sebelum abu abu-->
+<div class="container-fluid">
+    <div class="row">
+        <div class="card-body" id="pageTitle">
+            <h3 class="colorGreen">Daftar Pengaduan Saya</h3>
+            <a th:href="@{/pengaduan/add}" type="button" class="btn backgroundOrange float-right">+Ajukan Pengaduan</a>
+        </div>
+    </div>
+</div>
+
+
+<!--    Dalem abu-abu-->
+<div class="container-fluid">
+    <div class="row">
+        <div class="card-body">
+            <table class="rounded table table-bordered">
+                <thead >
+                <tr>
+                    <th scope="col" >No</th>
+                    <th scope="col">Tanggal Diajukan</th>
+                    <th scope="col">Id Pengaduan</th>
+                    <th scope="col">Karyawan</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Handle</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="pengaduan, iterationStatus : ${listPengaduan}">
+                        <td th:text="${iterationStatus.count}"></td>
+                        <td th:text="${pengaduan.tanggalPengaduan}"></td>
+                        <td th:text="${pengaduan.kode_pengaduan}"></td>
+                        <td th:text="${pengaduan.no_karyawan.getKaryawan()}"></td>
+                        <!-- <td th:text="${pengaduan.id_status.getStatus()}"></td> -->
+                        <td class="text-center">
+                            <div style="color:#b969ee;" th:if="${pengaduan.statusPengaduan == 0}">Menunggu Persetujuan</div>
+                            <div style="color:#D84242;" th:if="${pengaduan.statusPengaduan == 1}">Ditolak</div>
+                            <div style="color:#FAB14A;" th:if="${pengaduan.statusPengaduan == 2}">Diproses</div>
+                            <div style="color:#83BA70;" th:if="${pengaduan.statusPengaduan == 3}">Selesai</div>
+                        </td>
+                        <td><a class="btn backgroundGreen" type="button" role="button"  th:href="@{/pengaduan/view(id=${pengaduan.id})}">View</a></td>
+                        </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>

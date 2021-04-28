@@ -40,16 +40,27 @@ public class UserModel implements Serializable{
     @JsonIgnore
     private RoleModel id_role;
 
-    public KaryawanModel getKaryawan() {
-        return karyawan;
-    }
 
-    public void setKaryawan(KaryawanModel karyawan) {
-        this.karyawan = karyawan;
-    }
+//    public KaryawanModel getKaryawan() {
+//        return karyawan;
+//    }
+//
+//    public void setKaryawan(KaryawanModel karyawan) {
+//        this.karyawan = karyawan;
+//    }
+//
+//    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    private KaryawanModel karyawan;
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private KaryawanModel karyawan;
+    // @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    // @OnDelete(action = OnDeleteAction.CASCADE)
+    // @JsonIgnore
+    // private List<PengaduanModel> listPengaduan;
+
+   /*  @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore
+    private List<PengaduanModel> listPengaduan; */
 
     public String getId() {
         return id;
@@ -92,4 +103,15 @@ public class UserModel implements Serializable{
     }
 
 
+
+ /* 
+    public List<PengaduanModel> getListPengaduan() {
+        return listPengaduan;
+    }
+
+  
+    public void setListPengaduan(List<PengaduanModel> listPengaduan) {
+        this.listPengaduan = listPengaduan;
+    }
+ */
 }

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <!--    Jangan Lupa diisi!-->
-    <title>Form Pengajuan Cuti/Izin</title>
+    <title>Form Tambah Pengajuan Cuti/Izin</title>
     <object th:include="fragments/fragment :: cssjs" th:remove="tag"></object>
     <!--    Default Style untuk semua page-->
     <link rel="stylesheet" th:href="@{/css/default-style.css}" />
@@ -34,6 +34,7 @@
         text-align: left;
     }
 </style>
+
 <div class="container-fluid" >
     <div class="col-auto" >
         <!--    formatnya: sidebar([NamaHalaman] = 'highlight'). Buat nge highlight sidebar kalo lagi di halaman itu-->
@@ -58,14 +59,14 @@
             <form th:action="@{/cuti/add}" th:object="${cuti}" method="POST">
                 <input type="hidden" th:field="*{id}"/>
                 <br>
-                <div class="form row">
+                <div class="form-row">
                     <label class="col-4 col-form-label" style="text-align: right">Tanggal Mulai : </label>
                     <div class="col-4" style="align-content: baseline">
                         <input style="background-color:#c8e5be" class="form-control" type="date" th:field="*{tanggalMulai}" placeholder="yyyy/MM/dd">
                     </div>
                 </div>
                 <br>
-                <div class="form row">
+                <div class="form-row">
                     <label class="col-4 col-form-label" style="text-align: right">Tanggal Selesai : </label>
                     <div class="col-4">
                         <input style="background-color:#c8e5be" class="form-control" type="date" th:field="*{tanggalSelesai}" placeholder="yyyy/MM/dd">
@@ -88,35 +89,33 @@
                     <input style="background-color:#c8e5be" type="text" class="form-control col-4" id="formGroupExampleInput" th:field="*{keterangan}">
                 </div>
                 <br>
-                <a type="button" class="btn backgroundOrange " th:href="@{/cuti}">Back</a>
-                <button type="submit" class="btn backgroundGreen ">Submit</button>
-                </form>
-<!--            <div class="pull-right" id="buttons">-->
-<!--                <button onclick="document.getElementById('popUp').style.display='block'"  type="button" class="btn backgroundPurple" th:attrappend="data-target=${cuti.id}">Submit</button>-->
-<!--            </div>-->
+                <div class="PageBottom pull-right" id="buttons">
+                    <button onclick="document.getElementById('popUp').style.display='block'" type="button" class="btn backgroundGreen float-right" th:attrappend="data-target=${cuti.id}">Submit</button>
+                    <a th:href="@{/cuti}" th type="button" class="btn backgroundOrange float-right ">Back</a>
+                </div>
+
+                <!--Ini section yang bakal popup. Copy dari sini buat setiap halaman yang ada pop up-->
+                <div id="popUp" class="modal">
+                    <span onclick="document.getElementById('popup').style.display='none'"  title="Close Modal">×</span>
+                    <!--    Ini jangan lupa diisi actionnya-->
+                    <div class="modal-content">
+                        <div class="container">
+                            <img th:src="@{/images/warning.png}"/>
+                            <br><br>
+                            <!--            custom sendiri yaa-->
+                            <p>Apakah Anda yakin ingin membuat pengajuan cuti ini?</p>
+                            <div class="clearfix">
+                                <button type="button" onclick="document.getElementById('popUp').style.display='none'" class="btn backgroundOrange">Cancel</button>
+                                <!--                ini juga custom!-->
+                                <button type="submit" onclick="document.getElementById('popUP').style.display='none'" class="btn backgroundGreen">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
 </div>
-
-<!--    Container untuk bagian setelah abu abu-->
-<!--Ini section yang bakal popup. Copy dari sini buat setiap halaman yang ada pop up-->
-<!--<div id="popUp" class="modal">-->
-<!--    <span onclick="document.getElementById('popup').style.display='none'"  title="Close Modal">×</span>-->
-<!--    &lt;!&ndash;    Ini jangan lupa diisi actionnya&ndash;&gt;-->
-<!--    <div class="modal-content">-->
-<!--        <div class="container">-->
-<!--            <img th:src="@{/images/warning.png}"/>-->
-<!--            <br><br>-->
-<!--            &lt;!&ndash;            custom sendiri yaa&ndash;&gt;-->
-<!--            <p>Apakah anda yakin ingin menambahkan pengajuan cuti baru?</p>-->
-<!--            <div class="clearfix">-->
-<!--                <button type="button" onclick="document.getElementById('popUp').style.display='none'" class="btn backgroundOrange">Cancel</button>-->
-<!--                &lt;!&ndash;                ini juga custom!&ndash;&gt;-->
-<!--                <button type="submit" onclick="document.getElementById('popUP').style.display='none'" class="btn backgroundPurple">Ajukan</button>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</div>-->
 
 </body>
 </html>
