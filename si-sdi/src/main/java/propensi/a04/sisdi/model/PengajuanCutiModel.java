@@ -21,11 +21,11 @@ public class PengajuanCutiModel implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_karyawan", referencedColumnName = "id", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIgnore
-    private KaryawanModel id_karyawan;
+//    @ManyToOne(fetch = FetchType.EAGER)
+//    @JoinColumn(name = "id_karyawan", referencedColumnName = "id", nullable = false)
+//    @OnDelete(action = OnDeleteAction.CASCADE)
+//    @JsonIgnore
+//    private KaryawanModel id_karyawan;
 
 
     @NotNull
@@ -52,6 +52,14 @@ public class PengajuanCutiModel implements Serializable{
     @JsonIgnore
     private StatusModel id_status;
 
+    public String getKode_cuti() {
+        return kode_cuti;
+    }
+
+    public void setKode_cuti(String kode_cuti) {
+        this.kode_cuti = kode_cuti;
+    }
+
     @NotNull
     @Column(name="jenis",nullable = false)
     private Integer jenis;
@@ -61,6 +69,10 @@ public class PengajuanCutiModel implements Serializable{
     @Column(name="keterangan",nullable = false)
     private String keterangan;
 
+    @NotNull
+    @Column(name="kode_cuti",nullable = false)
+    private String kode_cuti;
+
     public Long getId() {
         return id;
     }
@@ -69,13 +81,13 @@ public class PengajuanCutiModel implements Serializable{
         this.id = id;
     }
 
-    public KaryawanModel getId_karyawan() {
-        return id_karyawan;
-    }
-
-    public void setId_karyawan(KaryawanModel id_karyawan) {
-        this.id_karyawan = id_karyawan;
-    }
+//    public KaryawanModel getId_karyawan() {
+//        return id_karyawan;
+//    }
+//
+//    public void setId_karyawan(KaryawanModel id_karyawan) {
+//        this.id_karyawan = id_karyawan;
+//    }
 
     public Date getTanggalRequest() {
         return tanggalRequest;
