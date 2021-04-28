@@ -71,7 +71,6 @@ public class PengajuanCutiServiceImpl implements PengajuanCutiService{
         LocalDate date1 = cuti.getTanggalMulai().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         LocalDate date2 = cuti.getTanggalSelesai().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         int durasi= (int)ChronoUnit.DAYS.between(date1, date2)+1;
-//        int durasi = (int)(Duration.between(date1, date2).toDays());
         return durasi;
     }
 }
