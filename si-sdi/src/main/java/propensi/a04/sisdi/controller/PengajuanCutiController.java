@@ -62,7 +62,6 @@ public class PengajuanCutiController {
                 cuti.setId_status(id_status);
                 Date date = new Date();
                 cuti.setTanggalRequest(date);
-                cuti.setJenis(cuti.getJenis());
                 int durasi = pengajuanCutiService.generateDurasi(cuti);
                 if(durasi>0 && durasi<13) {
                     cuti.setDurasi(durasi);
@@ -73,6 +72,7 @@ public class PengajuanCutiController {
                 else {
                     return "notifikasi-gagal-durasi-cuti";
                 }
+
             }
             catch (NullPointerException nullException){
                 return "notifikasi-gagal-add-cuti";
@@ -95,22 +95,27 @@ public class PengajuanCutiController {
 //        KaryawanModel karyawan = karyawanService.getByUser(user);
 //        if(karyawan.getJumlahCuti()+cuti.getDurasi()<=12) {
 //            cuti.setId_karyawan(karyawan);
+        try {
             String kodeCuti = pengajuanCutiService.generateKodeCuti(cuti);
             cuti.setKode_cuti(kodeCuti);
             int durasi = pengajuanCutiService.generateDurasi(cuti);
-            if(durasi>0 && durasi<13) {
+            if (durasi > 0 && durasi < 13) {
                 cuti.setDurasi(durasi);
                 pengajuanCutiService.changeCuti(cuti);
                 model.addAttribute("kode_cuti", cuti.getKode_cuti());
                 return "edit-cuti";
-            }
-            else{
+            } else {
                 return "notifikasi-gagal-durasi-cuti";
             }
+        }
+        catch (NullPointerException nullException){
+            return "notifikasi-gagal-ubah-cuti";
+        }
 //        }
 //        else {
 //            return "notifikasi-gagal-durasi-cuti";
 //        }
+
     }
 
     @RequestMapping(path = "/cuti/delete")
