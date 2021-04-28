@@ -1,19 +1,14 @@
 package propensi.a04.sisdi.service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.Random;
 
-import javax.persistence.Id;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import propensi.a04.sisdi.model.KaryawanModel;
 import propensi.a04.sisdi.model.PengaduanModel;
-import propensi.a04.sisdi.model.UserModel;
-import propensi.a04.sisdi.repository.KaryawanDb;
 import propensi.a04.sisdi.repository.PengaduanDb;
 
 @Service
@@ -22,7 +17,6 @@ public class PengaduanServiceImpl implements PengaduanService {
 
     @Autowired
     PengaduanDb pengaduanDb;
-    KaryawanDb karyawanDb;
 
     @Override
     public PengaduanModel addPengaduan(PengaduanModel pengaduan) {
@@ -34,24 +28,11 @@ public class PengaduanServiceImpl implements PengaduanService {
     public List<PengaduanModel> getPengaduanList() {
         return pengaduanDb.findAll();
     }
-/* 
-    @Override
-    public List<PengaduanModel> getPengaduanByUser(UserModel user) {
-        
-        return pengaduanDb.findByUser(user);
-    } */
 
     @Override
-    public PengaduanModel updatePengaduan(PengaduanModel pengaduan) {
+    public PengaduanModel getPengaduanById(Long id) {
        
-        pengaduanDb.save(pengaduan);
-        return pengaduan;
-    }
-
-    @Override
-    public Optional<PengaduanModel> getPengaduanById(Long id) {
-       
-        return pengaduanDb.findById(id);
+        return pengaduanDb.findById(id).get();
     }
 
     @Override
