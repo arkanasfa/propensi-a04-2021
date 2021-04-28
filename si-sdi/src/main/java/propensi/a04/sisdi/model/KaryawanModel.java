@@ -75,6 +75,15 @@ public class KaryawanModel implements Serializable{
     @Column(name="email",nullable = false)
     private String email;
 
+    @NotNull
+    @Size(max=15)
+    @Column(name="unit",nullable=false)
+    private String unit;
+
+    @NotNull
+    @Column(name="golongan",nullable=false)
+    private Long golongan;
+
     @OneToOne(mappedBy = "id_karyawan")
     private WakilPengurusHarianModel wakilpengurusHarianModel;
 
@@ -324,4 +333,21 @@ public class KaryawanModel implements Serializable{
     public void setInfal(LemburModel infal) {
         this.infal = infal;
     }
+
+    public String getUnit() {
+        return unit;
+    }
+
+    public void setUnit(String unit) {
+        this.unit = unit;
+    }
+
+    public Long getGolongan() {
+        return golongan;
+    }
+
+    public void setGolongan(Long golongan) {
+        this.golongan = golongan;
+    }
+
 }
