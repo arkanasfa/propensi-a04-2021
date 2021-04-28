@@ -3,19 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <!--    Jangan Lupa diisi!-->
-    <title>[Nama Halaman]</title>
+    <title>Home</title>
     <object th:include="fragments/fragment :: cssjs" th:remove="tag"></object>
     <!--    Default Style untuk semua page-->
     <link rel="stylesheet" th:href="@{/css/default-style.css}" />
+    <style>
+        #pageTitle{
+            text-align: left;
+        }
 
+        .card-body{
+            background-color:white;
+        }
 
+        a{
+            margin-bottom: 20px;!important;
+        }
+
+        img{
+            max-width:60%; !important;
+            height:auto;
+        }
+
+        #left{
+            margin-left:20%;
+        }
+
+        .downMargin{
+            margin-bottom: 5%;
+        }
+
+        .column{
+            margin-left:0;
+            margin-right:0;
+            padding:0;
+        }
+    </style>
 </head>
+
 <body>
     <div class="container-fluid" >
         <div class="col-auto" >
-        <!--    formatnya: sidebar([NamaHalaman] = 'highlight'). Buat nge highlight sidebar kalo lagi di halaman itu-->
-        <!--                Kecuali buat cuti izin dan lembur infal. gak pake garing karena jadi eror kalo pake garing-->
-                <object th:replace="fragments/fragment :: sidebar(Home = 'highlight')" th:remove="tag"></object>
+            <!--    formatnya: sidebar([NamaHalaman] = 'highlight'). Buat nge highlight sidebar kalo lagi di halaman itu-->
+            <!--                Kecuali buat cuti izin dan lembur infal. gak pake garing karena jadi eror kalo pake garing-->
+            <object th:replace="fragments/fragment :: sidebar(Home = 'highlight')" th:remove="tag"></object>
         </div>
     </div>
 
@@ -23,7 +54,8 @@
     <div class="container-fluid">
         <div class="row">
             <div class="card-body" id="pageTitle">
-                <h3 class="colorGreen">[Judul Halaman]</h3>
+                <h2 class="colorGreen">Halo, [Nama]!</h2>
+                <h4 class="colorGreen">Sistem Informasi SDI SIT Ummu'l Quro Depok</h4>
             </div>
         </div>
     </div>
@@ -31,51 +63,30 @@
     <!--    Dalem abu-abu-->
     <div class="container-fluid">
         <div class="row">
-            <div class="card-body">
-                    <table class="rounded table table-bordered">
-                        <thead >
-                        <tr>
-                            <th scope="col" >#</th>
-                            <th scope="col">First</th>
-                            <th scope="col">Last</th>
-                            <th scope="col">Handle</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>Mark</td>
-                            <td>Otto</td>
-                            <td>@mdo</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">2</th>
-                            <td>Jacob</td>
-                            <td>Thornton</td>
-                            <td>@fat</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td colspan="2">Larry the Bird</td>
-                            <td>@twitter</td>
-                        </tr>
-                        </tbody>
-                    </table>
+            <div class="column" id="left">
+                <a th:href="@{/cuti/add}">
+                    <img style="display:block" class="downMargin" th:src="@{/images/ajukan-cutiIzin.png}"/>
+                </a>
+                <a th:href="@{/lembur/add}">
+                    <img style="display:block" th:src="@{/images/ajukan-lemburInfal.png}"/>
+                </a>
             </div>
+            <div class="column">
+                <a th:href="@{/pengaduan/add}">
+                    <img style="display:block" class="downMargin" th:src="@{/images/ajukan-pengaduan.png}"/>
+                </a>
+                <a th:href="@{/}">
+                    <img style="display:block" th:src="@{/images/lihat-slipGaji.png}"/>
+                </a>
+            </div>
+            <div class="column">
+                <a th:href="@{/}">
+                    <img style="display:block" th:src="@{/images/ajukan-dist.png}"/>
+                </a>
+            </div>
+
         </div>
     </div>
 
-    <!--    Container untuk bagian setelah abu abu-->
-    <div class="container-fluid">
-        <div class="row">
-            <div class="card-body" id="pageBottom">
-                <div class="pull-right">
-                    <button type="button" class="btn backgroundPurple ">Ungu</button>
-                    <button type="button" class="btn backgroundOrange ">Oren</button>
-                    <button type="button" class="btn backgroundGreen ">Hijau</button>
-                </div>
-            </div>
-        </div>
-    </div>
 </body>
 </html>

@@ -75,6 +75,15 @@ public class KaryawanModel implements Serializable{
     @Column(name="email",nullable = false)
     private String email;
 
+    @NotNull
+    @Size(max=15)
+    @Column(name="unit",nullable=false)
+    private String unit;
+
+    @NotNull
+    @Column(name="golongan",nullable=false)
+    private Long golongan;
+
     @OneToOne(mappedBy = "id_karyawan")
     private WakilPengurusHarianModel wakilpengurusHarianModel;
 
@@ -104,10 +113,10 @@ public class KaryawanModel implements Serializable{
     @OneToOne(mappedBy = "id_karyawan")
     private GajiModel gajiModel;
 
-    @OneToMany(mappedBy = "id_karyawan", fetch = FetchType.LAZY)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIgnore
-    private List<PengajuanCutiModel> listPengajuanCuti;
+//    @OneToMany(mappedBy = "id_karyawan", fetch = FetchType.LAZY)
+//    @OnDelete(action = OnDeleteAction.CASCADE)
+//    @JsonIgnore
+//    private List<PengajuanCutiModel> listPengajuanCuti;
 
     @OneToMany(mappedBy = "id_karyawan", fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
@@ -116,6 +125,19 @@ public class KaryawanModel implements Serializable{
 
     @OneToOne(mappedBy = "id_infal")
     private LemburModel infal;
+
+    //@OneToOne()
+    //@JoinColumn(name = "uuidUser", referencedColumnName = "id")
+    //@OnDelete(action = OnDeleteAction.CASCADE)
+    //private UserModel user;
+
+    //public UserModel getUser() {
+    //    return user;
+    //}
+
+    //public void setUser(UserModel user) {
+    //    this.user = user;
+    //}
 
     public Long getId() {
         return id;
@@ -301,13 +323,13 @@ public class KaryawanModel implements Serializable{
         this.gajiModel = gajiModel;
     }
 
-    public List<PengajuanCutiModel> getListPengajuanCuti() {
-        return listPengajuanCuti;
-    }
-
-    public void setListPengajuanCuti(List<PengajuanCutiModel> listPengajuanCuti) {
-        this.listPengajuanCuti = listPengajuanCuti;
-    }
+//    public List<PengajuanCutiModel> getListPengajuanCuti() {
+//        return listPengajuanCuti;
+//    }
+//
+//    public void setListPengajuanCuti(List<PengajuanCutiModel> listPengajuanCuti) {
+//        this.listPengajuanCuti = listPengajuanCuti;
+//    }
 
     public List<LemburModel> getListLembur() {
         return listLembur;
@@ -324,4 +346,21 @@ public class KaryawanModel implements Serializable{
     public void setInfal(LemburModel infal) {
         this.infal = infal;
     }
+
+    public String getUnit() {
+        return unit;
+    }
+
+    public void setUnit(String unit) {
+        this.unit = unit;
+    }
+
+    public Long getGolongan() {
+        return golongan;
+    }
+
+    public void setGolongan(Long golongan) {
+        this.golongan = golongan;
+    }
+
 }

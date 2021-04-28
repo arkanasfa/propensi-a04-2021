@@ -16,10 +16,6 @@
         background-color:#F6F6F6;
     }
 
-    .colorWhite{
-        color:white;
-    }
-
     .card-group .card-body{
         border-radius:0px;
         margin-left:0px;
@@ -29,20 +25,24 @@
 
     .card-group .card-body p{
         text-align: left; !important;
-        font-size:10px;
+        font-size:13px;
         line-height:80%;
     }
 
     .container-fluid{
-        font-size:10px;
+        font-size:13px;
     }
 
     .btn{
-        font-size:10px;
+        font-size:13px;
     }
 
     tbody td{
         text-align: left;
+    }
+
+    tbody th{
+        font-weight: normal; !important;
     }
 </style>
 
@@ -66,20 +66,20 @@
     <div class="card-body backgroundGreen">
         <div class="card-group text-left">
             <div class="card-body text-left backgroundGreen" id="leftCard">
-                <p class="card-text">Periode: [Periode]</p>
-                <p class="card-text">Nama: [Nama]</p>
-                <p class="card-text">Unit Kerja: [Unit Kerja]</p>
+                <p class="card-text" th:text="'Periode: ' + ${yearMonth}"></p>
+                <p class="card-text" th:text="'Nama: ' + ${karyawan.getKaryawan()}"></p>
+                <p class="card-text" th:text="'Unit Kerja: ' + ${karyawan.getUnit()}"></p>
                 <p class="card-text">Jabatan/Fungsi: [Jabatan/Fungsi]</p>
-                <p class="card-text">Status: [status kepegawaian]</p>
-                <p class="card-text">Tahun Pengangkatan: [tahun]</p>
+                <p class="card-text" th:text="'Status: ' + ${status}">Status: [status kepegawaian]</p>
+                <p class="card-text" th:text="'Tahun Pengangkatan: ' + ${karyawan.getTanggalMasuk()}"></p>
                 <p class="card-text">Masa Keja Pegawai Tetap: [tahun] Tahun</p>
-                <p class="card-text">Golognan: [Golongan]</p>
+                <p class="card-text" th:text="'Golongan: ' + ${karyawan.getGolongan()}">Golognan: [Golongan]</p>
             </div>
             <div class="card-body text-left backgroundGreen" id="rightCard">
                 <p class="card-text">Sakit: [xx] Hari</p>
                 <p class="card-text">Ijin: [xx] Hari</p>
                 <p class="card-text">Alpa: [xx] Hari</p>
-                <p class="card-text">Cuti: [xx] Hari</p>
+                <p class="card-text" th:text="'Cuti: ' + ${karyawan.getJumlahCuti()} + ' Hari'"></p>
                 <p class="card-text"></p>
                 <p class="card-text">Jumlah Hari Efektif: [xx] Hari</p>
                 <p class="card-text">Jumlah Hari Kehadiran: [xx] Hari</p>
@@ -109,41 +109,42 @@
                     <tr>
                         <th>1</th>
                         <td colspan="2">Gaji Pokok</td>
-                        <th>Rp. [xx]</th>
+                        <th th:text="'Rp. ' + ${#numbers.formatDecimal(gaji.getGajiPokok(), 0, 'POINT', 2, 'COMMA')}"></th>
                     </tr>
                     <tr>
                         <th>2</th>
                         <td colspan="2">Tunjangan Jabatan</td>
-                        <th>Rp. [xx]</th>
+                        <th th:text="'Rp. ' + ${#numbers.formatDecimal(gaji.getTunjanganJabatan(), 0, 'POINT', 2, 'COMMA')}"></th>
                     </tr>
                     <tr>
                         <th>3</th>
                         <td colspan="2">Tunjangan Fungsional</td>
-                        <th>Rp. [xx]</th>
+                        <th th:text="'Rp. ' + ${#numbers.formatDecimal(gaji.getTunjanganFungsional(), 0, 'POINT', 2, 'COMMA')}"></th>
                     </tr>
                     <tr>
                         <th>4</th>
                         <td colspan="2">Tunjangan Transport</td>
-                        <th>Rp. [xx]</th>
+                        <th th:text="'Rp. ' + ${#numbers.formatDecimal(gaji.getTunjanganTransport(), 0, 'POINT', 2, 'COMMA')}"></th>
                     </tr>
                     <tr>
                         <th>5</th>
                         <td colspan="2">Tunjangan Keluarga</td>
-                        <th>Rp. [xx]</th>
+                        <th th:text="'Rp. ' + ${#numbers.formatDecimal(gaji.getTunjanganKeluarga(), 0, 'POINT', 2, 'COMMA')}"></th>
                     </tr>
                     <tr>
                         <th>6</th>
                         <td colspan="2">Tunjangan Kesehatan</td>
-                        <th>Rp. [xx]</th>
+                        <th th:text="'Rp. ' + ${#numbers.formatDecimal(gaji.getTunjanganKesehatan(), 0, 'POINT', 2, 'COMMA')}"></th>
                     </tr>
                     <tr>
                         <th>7</th>
                         <td colspan="2">Tunjangan Perintis</td>
-                        <th>Rp. [xx]</th>
+                        <th th:text="'Rp. ' + ${#numbers.formatDecimal(gaji.getTunjanganPerintis(), 0, 'POINT', 2, 'COMMA')}"></th>
                     </tr>
                     <tr>
                         <th colspan="3" class="backgroundGreen">Total Fix Cost</th>
-                        <th class="backgroundGreen">Rp. [xx]</th>
+                        <th class="backgroundGreen"
+                            th:text="'Rp. ' + ${#numbers.formatDecimal(gaji.getTotalFixCost(), 0, 'POINT', 2, 'COMMA')}"></th>
                     </tr>
                 </tbody>
                 <thead >
@@ -160,35 +161,32 @@
                     <tr>
                         <th>1</th>
                         <td colspan="2">T.pph (50%)</td>
-                        <th>Rp. [xx]</th>
+                        <th th:text="'Rp. ' + ${#numbers.formatDecimal(gaji.gettPPH(), 0, 'POINT', 2, 'COMMA')}"></th>
                     </tr>
                     <tr>
                         <th>2</th>
                         <td colspan="2">Uang Snack</td>
-                        <th>Rp. [xx]</th>
+                        <th th:text="'Rp. ' + ${#numbers.formatDecimal(gaji.getUangSnack(), 0, 'POINT', 2, 'COMMA')}"></th>
                     </tr>
                     <tr>
                         <th>3</th>
                         <td colspan="2">Tunjangan Prestasi</td>
-                        <th>Rp. [xx]</th>
+                        <th th:text="'Rp. ' + ${#numbers.formatDecimal(gaji.getTunjanganPrestasi(), 0, 'POINT', 2, 'COMMA')}"></th>
                     </tr>
                     <tr>
                         <th>4</th>
                         <td colspan="2">Lembur</td>
-                        <th>Rp. [xx]</th>
+                        <th th:text="'Rp. ' + ${#numbers.formatDecimal(gaji.getTotalLembur(), 0, 'POINT', 2, 'COMMA')}"></th>
                     </tr>
                     <tr>
                         <th>5</th>
                         <td colspan="2">Infal</td>
-                        <th>Rp. [xx]</th>
+                        <th th:text="'Rp. ' + ${#numbers.formatDecimal(gaji.getTotalInfal(), 0, 'POINT', 2, 'COMMA')}"></th>
                     </tr>
                     <tr>
                         <th colspan="3" class="backgroundGreen">Total Variable Cost</th>
-                        <th class="backgroundGreen">Rp. [xx]</th>
-                    </tr>
-                    <tr>
-                        <th colspan="3" class="backgroundGreen">Total Gaji</th>
-                        <th class="backgroundGreen">Rp. [xx]</th>
+                        <th class="backgroundGreen"
+                            th:text="'Rp. ' + ${#numbers.formatDecimal(gaji.getTotalVarCost(), 0, 'POINT', 2, 'COMMA')}"></th>
                     </tr>
                 </tbody>
                 <thead >
@@ -204,35 +202,45 @@
                     <tbody>
                     <tr>
                         <th>1</th>
-                        <td colspan="2">Simpanan wajib koperasi pegawai</td>
-                        <th>Rp. [xx]</th>
+                        <td>Angsuran koperasi pegawai</td>
+                        <td>Ke [ ]</td>
+                        <th th:text="'Rp. ' + ${#numbers.formatDecimal(gaji.getAngsuranKopeg(), 0, 'POINT', 2, 'COMMA')}"></th>
                     </tr>
                     <tr>
                         <th>2</th>
-                        <td>Angsuran koperasi pegawai</td>
-                        <td>Ke [x]</td>
-                        <th>Rp. [xx]</th>
+                        <td colspan="2">Angsuran Bank</td>
+                        <th th:text="'Rp. ' + ${#numbers.formatDecimal(gaji.getAngsuranBank(), 0, 'POINT', 2, 'COMMA')}"></th>
                     </tr>
                     <tr>
                         <th>3</th>
-                        <td colspan="2">Angsuran Bank</td>
-                        <th>Rp. [xx]</th>
+                        <td colspan="2">Potongan Absensi</td>
+                        <th th:text="'Rp. ' + ${#numbers.formatDecimal(gaji.getPotonganAbsensi(), 0, 'POINT', 2, 'COMMA')}"></th>
                     </tr>
                     <tr>
                         <th>4</th>
-                        <td colspan="2">Potongan Absensi</td>
-                        <th>Rp. [xx]</th>
+                        <td colspan="2">PPH (100%)</td>
+                        <th th:text="'Rp. ' + ${#numbers.formatDecimal(gaji.getPotonganPPH(), 0, 'POINT', 2, 'COMMA')}"></th>
                     </tr>
                     <tr>
                         <th>5</th>
-                        <td colspan="2">PPH (100%)</td>
-                        <th>Rp. [xx]</th>
+                        <td>Angsuran Yayasan</td>
+                        <td>Ke [ ]</td>
+                        <th th:text="'Rp. ' + ${#numbers.formatDecimal(gaji.getAngsuranYayasan(), 0, 'POINT', 2, 'COMMA')}"></th>
                     </tr>
                     <tr>
-                        <th>6</th>
-                        <td>Angsuran Yayasan</td>
-                        <td>Ke [x]</td>
-                        <th>Rp. [xx]</th>
+                        <th colspan="3" class="backgroundGreen">Total Potongan</th>
+                        <th class="backgroundGreen"
+                            th:text="'Rp. ' + ${#numbers.formatDecimal(gaji.getTotalPotongan(), 0, 'POINT', 2, 'COMMA')}"></th>
+                    </tr>
+                    <tr>
+                        <th colspan="3" class="backgroundGreen">Take Home Pay (THP) Sebelum Pajak</th>
+                        <th class="backgroundGreen"
+                            th:text="'Rp. ' + ${#numbers.formatDecimal(gaji.getTHPB(), 0, 'POINT', 2, 'COMMA')}"></th>
+                    </tr>
+                    <tr>
+                        <th colspan="3" class="backgroundGreen">Take Home Pay (THP) Setelah Pajak</th>
+                        <th class="backgroundGreen"
+                            th:text="'Rp. ' + ${#numbers.formatDecimal(gaji.getTHPA(), 0, 'POINT', 2, 'COMMA')}"></th>
                     </tr>
                 </tbody>
             </table>
@@ -240,8 +248,9 @@
             <br><br>
             <!--            Buttons-->
             <div class="pull-right" id="buttons">
-                <button type="button" class="btn backgroundPurple ">Edit</button>
-                <button type="button" class="btn backgroundPurple ">Download PDF</button>
+                <a type="button" class="btn backgroundPurple"
+                   th:href="@{/payroll/detailGaji/ubah(idGaji=${gaji.id})}">Edit</a>
+                <button type="button" class="btn backgroundPurple" style="display: none;">Download PDF</button>
             </div>
         </div>
     </div>
@@ -252,7 +261,7 @@
     <div class="row">
         <div class="card-body" id="pageBottom">
             <div class="pull-right">
-                <button type="button" class="btn backgroundOrange ">Back</button>
+                <a type="button" class="btn backgroundOrange" th:href="@{/payroll/}">Back</a>
             </div>
         </div>
     </div>

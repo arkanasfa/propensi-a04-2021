@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <!--    Jangan Lupa diisi!-->
+    <title>Detail Cuti</title>
+    <object th:include="fragments/fragment :: cssjs" th:remove="tag"></object>
+    <!--    Default Style untuk semua page-->
+    <link rel="stylesheet" th:href="@{/css/default-style.css}" />
+</head>
+<style>
+    th, td {
+        border-radius: 3em;
+        color:#000000;
+        text-align: start;
+        background-color: #F6F6F6; !important;
+        font-size: 1.15em;
+    }
+</style>
+
+<body>
+<div class="container-fluid" >
+    <div class="col-auto" >
+        <!--    formatnya: sidebar([NamaHalaman] = 'highlight'). Buat nge highlight sidebar kalo lagi di halaman itu-->
+        <!--                Kecuali buat cuti izin dan lembur infal. gak pake garing karena jadi eror kalo pake garing-->
+        <object th:replace="fragments/fragment :: sidebar(CutiIzin = 'highlight')" th:remove="tag"></object>
+    </div>
+</div>
+
+<!--    Container untuk bagian sebelum abu abu-->
+<div class="container-fluid">
+    <div class="row">
+        <div class="card-body" id="pageTitle">
+            <h3 class="colorGreen">Detail Cuti</h3>
+        </div>
+    </div>
+</div>
+
+<!--    Dalem abu-abu-->
+<div class="container-fluid">
+    <div class="row">
+        <div class="card-body">
+            <div  class="container d-flex justify-content-center align-middle">
+                <div class="row">
+                    <div class="w-100"></div>
+                    <a th:href="@{/cuti/edit(id=${cuti.id})}" class="btn backgroundGreen">Edit</a>
+                    <a th:href="@{/cuti/delete(id=${cuti.id})}" class="btn backgroundPurple">Delete</a>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <table width="100%" border="0">
+                        <td>
+                            <table border="0" width="100%" style="padding-left:2px;">
+                                <tbody>
+                                <tr>
+                                    <td width="35%"align="top">Kode cuti</td>
+                                    <td width="2%">:</td>
+                                    <td style="font-weight: bold" th:text="${cuti.kode_cuti}"></td>
+                                </tr>
+                                <tr>
+                                    <td>Tanggal Pengajuan</td>
+                                    <td>:</td>
+                                    <td th:text="${cuti.tanggalRequest}"></td>
+                                </tr>
+                                <tr>
+                                    <td>Tanggal Mulai</td>
+                                    <td>:</td>
+                                    <td th:text="${cuti.tanggalMulai}"></td>
+                                </tr>
+                                <tr>
+                                    <td>Tanggal Selesai</td>
+                                    <td>:</td>
+                                    <td th:text="${cuti.tanggalSelesai}"></td>
+                                </tr>
+                                <tr>
+                                    <td>Durasi</td>
+                                    <td>:</td>
+                                    <td th:text="${cuti.durasi}"></td>
+                                </tr>
+                                <tr>
+                                    <td>Jenis</td>
+                                    <td>:</td>
+                                    <td th:if="${cuti.jenis == 0}">Cuti tahunan</td>
+                                    <td th:if="${cuti.jenis == 1}">Cuti sakit</td>
+                                    <td th:if="${cuti.jenis == 2}">Cuti ibadah haji</td>
+                                    <td th:if="${cuti.jenis == 3}">Cuti ibadah umrah</td>
+                                    <td th:if="${cuti.jenis == 4}">Cuti bersalin</td>
+                                </tr>
+                                <tr>
+                                    <td>Keterangan</td>
+                                    <td>:</td>
+                                    <td th:text="${cuti.keterangan}"></td>
+                                </tr>
+                                <tr>
+                                    <td>Status</td>
+                                    <td>:</td>
+                                    <td th:text="${cuti.id_status.status}"></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--    Container untuk bagian setelah abu abu-->
+<div class="container-fluid">
+    <div class="row">
+        <div class="card-body" id="pageBottom">
+            <div class="pull-right">
+                <a type="button" class="btn backgroundOrange " th:href="@{/cuti}">Back</a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
