@@ -1,7 +1,7 @@
 package propensi.a04.sisdi.controller;
 
 import propensi.a04.sisdi.model.*;
-import propensi.a04.sisdi.repository.KaryawanDB;
+import propensi.a04.sisdi.repository.KaryawanDb;
 import propensi.a04.sisdi.repository.StatusDB;
 import propensi.a04.sisdi.service.*;
 import propensi.a04.sisdi.repository.LemburDB;
@@ -23,7 +23,7 @@ public class LemburController {
     LemburService lemburService;
 
     @Autowired
-    KaryawanDB karyawanDB;
+    KaryawanDb karyawanDB;
 
     @Autowired
     StatusDB statusDB;
@@ -43,7 +43,7 @@ public class LemburController {
             @RequestParam("infalID") String infalID,
             HttpServletRequest request,
             Model model) {
-        KaryawanModel id_karyawan = karyawanDB.findById(Long.valueOf(2)).get();
+        KaryawanModel id_karyawan = karyawanDB.findById(Long.valueOf(3)).get();
         lembur.setId_karyawan(id_karyawan);
         if (infalID.equals("NULL")==false) {
             Long idInfal = Long.valueOf(request.getParameter("infalID"));
@@ -78,13 +78,15 @@ public class LemburController {
             @RequestParam("infalID") String infalID,
             HttpServletRequest request,
             Model model) {
-        KaryawanModel id_karyawan = karyawanDB.findById(Long.valueOf(2)).get();
+        KaryawanModel id_karyawan = karyawanDB.findById(Long.valueOf(3)).get();
         lembur.setId_karyawan(id_karyawan);
         if (infalID.equals("NULL")==false) {
             Long idInfal = Long.valueOf(request.getParameter("infalID"));
             KaryawanModel id_karyawanInfal = karyawanDB.findById(idInfal).get();
             lembur.setId_infal(id_karyawanInfal);
-            System.out.println(lembur.getId_infal().getKaryawan());
+        }
+        if (infalID.equals("NULL")==true) {
+            lembur.setId_infal(null);
         }
         String kode_lembur = lemburService.generateKodeLembur(lembur);
         lembur.setKode_lembur(kode_lembur);

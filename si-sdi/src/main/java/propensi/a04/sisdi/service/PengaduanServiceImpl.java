@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import propensi.a04.sisdi.model.KaryawanModel;
 import propensi.a04.sisdi.model.PengaduanModel;
 import propensi.a04.sisdi.model.UserModel;
-import propensi.a04.sisdi.repository.KaryawanDB;
+import propensi.a04.sisdi.repository.KaryawanDb;
 import propensi.a04.sisdi.repository.PengaduanDb;
 
 @Service
@@ -22,7 +22,7 @@ public class PengaduanServiceImpl implements PengaduanService {
 
     @Autowired
     PengaduanDb pengaduanDb;
-    KaryawanDB karyawanDb;
+    KaryawanDb karyawanDb;
 
     @Override
     public PengaduanModel addPengaduan(PengaduanModel pengaduan) {
