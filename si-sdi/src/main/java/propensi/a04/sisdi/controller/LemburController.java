@@ -43,7 +43,7 @@ public class LemburController {
             @RequestParam("infalID") String infalID,
             HttpServletRequest request,
             Model model) {
-        KaryawanModel id_karyawan = karyawanDB.findById(Long.valueOf(2)).get();
+        KaryawanModel id_karyawan = karyawanDB.findById(Long.valueOf(3)).get();
         lembur.setId_karyawan(id_karyawan);
         if (infalID.equals("NULL")==false) {
             Long idInfal = Long.valueOf(request.getParameter("infalID"));
@@ -78,7 +78,7 @@ public class LemburController {
             @RequestParam("infalID") String infalID,
             HttpServletRequest request,
             Model model) {
-        KaryawanModel id_karyawan = karyawanDB.findById(Long.valueOf(2)).get();
+        KaryawanModel id_karyawan = karyawanDB.findById(Long.valueOf(3)).get();
         lembur.setId_karyawan(id_karyawan);
         if (infalID.equals("NULL")==false) {
             Long idInfal = Long.valueOf(request.getParameter("infalID"));
