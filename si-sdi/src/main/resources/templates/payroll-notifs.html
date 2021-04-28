@@ -37,7 +37,7 @@
         <div class="card-body">
             <img id="successLogo" th:src="@{/images/success.png}"/>
             <br> <br>
-            <h2 class="col d-flex justify-content-center mb-3" th:text="'Komponen Pengali Gaji ' + ${kode} + ' berhasil diubah.'"></h2>
+            <h2 class="col d-flex justify-content-center mb-3" th:text="${message}"></h2>
         </div>
     </div>
 </div>
@@ -47,7 +47,7 @@
     <div class="row">
         <div class="card-body" id="pageBottom">
             <div class="pull-right">
-                <a type="button" class="btn backgroundOrange" th:href="@{/payroll/komponenGaji}">Back</a>
+                <a type="button" class="btn backgroundOrange" th:href="@{/payroll}">Back</a>
             </div>
         </div>
     </div>

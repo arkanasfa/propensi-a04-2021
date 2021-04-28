@@ -9,6 +9,7 @@ import javax.persistence.*;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.time.YearMonth;
 import java.util.Date;
 import java.util.List;
 
@@ -19,9 +20,11 @@ public class DokumenTotalModel implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
-    @Column(name="tanggalIsu",nullable = false)
+    @Column(name="tanggalIsu")
     private Date tanggalIsu;
+
+    @Column(name="totalAnggaran")
+    private Integer totalAnggaran;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_status", referencedColumnName = "id", nullable = false)
@@ -29,7 +32,7 @@ public class DokumenTotalModel implements Serializable{
     @JsonIgnore
     private StatusModel id_status;
 
-    @OneToMany(mappedBy = "id_dokumen", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "dokumen", fetch = FetchType.EAGER, cascade=CascadeType.ALL)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     private List<GajiModel> listGaji;
@@ -65,4 +68,13 @@ public class DokumenTotalModel implements Serializable{
     public void setListGaji(List<GajiModel> listGaji) {
         this.listGaji = listGaji;
     }
+
+    public Integer getTotalAnggaran() {
+        return totalAnggaran;
+    }
+
+    public void setTotalAnggaran(Integer totalAnggaran) {
+        this.totalAnggaran = totalAnggaran;
+    }
+
 }

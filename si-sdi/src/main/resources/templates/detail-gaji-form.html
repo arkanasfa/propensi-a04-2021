@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Detail Gaji</title>
+    <object th:include="fragments/fragment :: cssjs" th:remove="tag"></object>
+    <link rel="stylesheet" th:href="@{/css/default-style.css}" />
+</head>
+
+<body>
+
+<style>
+    #buttons{
+        margin-top: 20px;
+        text-align: right; !important;
+        background-color:#F6F6F6;
+    }
+
+    .card-group .card-body{
+        border-radius:0px;
+        margin-left:0px;
+        margin-right:0px;
+        text-align: left; !important;
+    }
+
+    .card-group .card-body p{
+        text-align: left; !important;
+        font-size:13px;
+        line-height:80%;
+    }
+
+    .container-fluid{
+        font-size:13px;
+    }
+
+    .btn{
+        font-size:13px;
+    }
+
+    tbody td{
+        text-align: left;
+    }
+
+    tbody th{
+        font-weight: normal; !important;
+    }
+</style>
+
+<div class="container-fluid" >
+    <div class="col-auto" >
+        <object th:replace="fragments/fragment :: sidebar(Payroll = 'highlight')" th:remove="tag"></object>
+    </div>
+</div>
+
+<!--    Container untuk bagian sebelum abu abu-->
+<div class="container-fluid">
+    <div class="row">
+        <div class="card-body" id="pageTitle">
+            <h3 class="colorGreen">Detail Gaji</h3>
+        </div>
+    </div>
+</div>
+
+<!--    Container untuk bagian sebelum abu abu-->
+<div class="container-fluid">
+    <div class="card-body backgroundGreen">
+        <div class="card-group text-left">
+            <div class="card-body text-left backgroundGreen" id="leftCard">
+                <p class="card-text" th:text="'Periode: ' + ${yearMonth}"></p>
+                <p class="card-text" th:text="'Nama: ' + ${karyawan.getKaryawan()}"></p>
+                <p class="card-text" th:text="'Unit Kerja: ' + ${karyawan.getUnit()}"></p>
+                <p class="card-text">Jabatan/Fungsi: [Jabatan/Fungsi]</p>
+                <p class="card-text" th:text="'Status: ' + ${karyawan.getStatusKaryawan()}">Status: [status kepegawaian]</p>
+                <p class="card-text" th:text="'Tahun Pengangkatan: ' + ${karyawan.getTanggalMasuk()}"></p>
+                <p class="card-text">Masa Keja Pegawai Tetap: [tahun] Tahun</p>
+                <p class="card-text" th:text="'Golongan: ' + ${karyawan.getGolongan()}">Golognan: [Golongan]</p>
+            </div>
+            <div class="card-body text-left backgroundGreen" id="rightCard">
+                <p class="card-text">Sakit: [xx] Hari</p>
+                <p class="card-text">Ijin: [xx] Hari</p>
+                <p class="card-text">Alpa: [xx] Hari</p>
+                <p class="card-text" th:text="'Cuti: ' + ${karyawan.getJumlahCuti()} + ' Hari'"></p>
+                <p class="card-text"></p>
+                <p class="card-text">Jumlah Hari Efektif: [xx] Hari</p>
+                <p class="card-text">Jumlah Hari Kehadiran: [xx] Hari</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<br>
+
+<!--    Dalem abu-abu-->
+<form th:action="@{/payroll/detailGaji/ubah}" th:object="${gaji}" method="POST">
+<div class="container-fluid">
+    <div class="row">
+        <div class="card-body">
+            <table class="rounded table table-bordered">
+                <input type="hidden" th:field="${gaji.id}"/>
+                <input type="hidden" th:field="${gaji.unit}"/>
+                <input type="hidden" th:field="${gaji.dokumen}"/>
+                <input type="hidden" th:field="${gaji.id_karyawan}"/>
+                <thead >
+                <tr>
+                    <th colspan="4" scope="col" >PERINCIAN GAJI</th>
+                </tr>
+                <tr>
+                    <th>No.</th>
+                    <th colspan="2">Uraian</th>
+                    <th>Jumlah</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <th>1</th>
+                    <td colspan="2">Gaji Pokok</td>
+                    <th><input class="form-control" type="number" th:field="*{gajiPokok}"></th>
+                </tr>
+                <tr>
+                    <th>2</th>
+                    <td colspan="2">Tunjangan Jabatan</td>
+                    <th><input class="form-control" type="number" th:field="*{tunjanganJabatan}"></th>
+                </tr>
+                <tr>
+                    <th>3</th>
+                    <td colspan="2">Tunjangan Fungsional</td>
+                    <th><input class="form-control" type="number" th:field="*{tunjanganFungsional}"></th>
+                </tr>
+                <tr>
+                    <th>4</th>
+                    <td colspan="2">Tunjangan Transport</td>
+                    <th><input class="form-control" type="number" th:field="*{tunjanganTransport}"></th>
+                </tr>
+                <tr>
+                    <th>5</th>
+                    <td colspan="2">Tunjangan Keluarga</td>
+                    <th><input class="form-control" type="number" th:field="*{tunjanganKeluarga}"></th>
+                </tr>
+                <tr>
+                    <th>6</th>
+                    <td colspan="2">Tunjangan Kesehatan</td>
+                    <th><input class="form-control" type="number" th:field="*{tunjanganKesehatan}"></th>
+                </tr>
+                <tr>
+                    <th>7</th>
+                    <td colspan="2">Tunjangan Perintis</td>
+                    <th><input class="form-control" type="number" th:field="*{tunjanganPerintis}"></th>
+                </tr>
+                <tr>
+                    <th colspan="3" class="backgroundGreen">Total Fix Cost</th>
+                    <th class="backgroundGreen">
+                        <input class="form-control" type="number" th:field="*{totalFixCost}" readonly>
+                    </th>
+                </tr>
+                </tbody>
+                <thead >
+                <tr>
+                    <th colspan="4" scope="col" >TLP, TP, dan INFAL</th>
+                </tr>
+                <tr>
+                    <th>No.</th>
+                    <th colspan="2">Uraian</th>
+                    <th>Jumlah</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <th>1</th>
+                    <td colspan="2">T.pph (50%)</td>
+                    <th><input class="form-control" type="number" th:field="*{tPPH}"></th>
+                </tr>
+                <tr>
+                    <th>2</th>
+                    <td colspan="2">Uang Snack</td>
+                    <th><input class="form-control" type="number" th:field="*{uangSnack}"></th>
+                </tr>
+                <tr>
+                    <th>3</th>
+                    <td colspan="2">Tunjangan Prestasi</td>
+                    <th><input class="form-control" type="number" th:field="*{tunjanganPrestasi}"></th>
+                </tr>
+                <tr>
+                    <th>4</th>
+                    <td colspan="2">Lembur</td>
+                    <th><input class="form-control" type="number" th:field="*{totalLembur}"></th>
+                </tr>
+                <tr>
+                    <th>5</th>
+                    <td colspan="2">Infal</td>
+                    <th><input class="form-control" type="number" th:field="*{totalInfal}"></th>
+                </tr>
+                <tr>
+                    <th colspan="3" class="backgroundGreen">Total Variable Cost</th>
+                    <th class="backgroundGreen form-control">
+                        <input class="form-control" type="number" th:field="*{totalVarCost}" readonly>
+                    </th>
+                </tr>
+                </tbody>
+                <thead >
+                <tr>
+                    <th colspan="4" scope="col" >POTONGAN</th>
+                </tr>
+                <tr>
+                    <th>No.</th>
+                    <th colspan="2">Uraian</th>
+                    <th>Jumlah</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <th>1</th>
+                    <td>Angsuran koperasi pegawai</td>
+                    <td>Ke [ ]</td>
+                    <th><input class="form-control" type="number" th:field="*{angsuranKopeg}"></th>
+                </tr>
+                <tr>
+                    <th>2</th>
+                    <td colspan="2">Angsuran Bank</td>
+                    <th><input class="form-control" type="number" th:field="*{angsuranBank}"></th>
+                </tr>
+                <tr>
+                    <th>3</th>
+                    <td colspan="2">Potongan Absensi</td>
+                    <th><input class="form-control" type="number" th:field="*{potonganAbsensi}"></th>
+                </tr>
+                <tr>
+                    <th>4</th>
+                    <td colspan="2">PPH (100%)</td>
+                    <th><input class="form-control" type="number" th:field="*{potonganPPH}"></th>
+                </tr>
+                <tr>
+                    <th>5</th>
+                    <td>Angsuran Yayasan</td>
+                    <td>Ke [ ]</td>
+                    <th><input class="form-control" type="number" th:field="*{angsuranYayasan}"></th>
+                </tr>
+                <tr>
+                    <th colspan="3" class="backgroundGreen">Total Potongan</th>
+                    <th class="backgroundGreen">
+                        <input class="form-control" type="number" th:field="*{totalPotongan}" readonly>
+                    </th>
+                </tr>
+                <tr>
+                    <th colspan="3" class="backgroundGreen">Take Home Pay (THP) Sebelum Pajak</th>
+                    <th class="backgroundGreen">
+                        <input class="form-control" type="number" th:field="*{THPB}" readonly>
+                    </th>
+                </tr>
+                <tr>
+                    <th colspan="3" class="backgroundGreen">Take Home Pay (THP) Setelah Pajak</th>
+                    <th class="backgroundGreen">
+                        <input class="form-control" type="number" th:field="*{THPA}" readonly>
+                    </th>
+                </tr>
+                </tbody>
+            </table>
+
+            <br><br>
+            <!--            Buttons-->
+            <div class="pull-right" id="buttons">
+                <button type="button" class="btn backgroundPurple"
+                        onclick="document.getElementById('popUp').style.display='block'"
+                        th:attrappend="data-target=${gaji.id}">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--    Container untuk bagian setelah abu abu-->
+<div class="container-fluid">
+    <div class="row">
+        <div class="card-body" id="pageBottom">
+            <div class="pull-right">
+                <a type="button" class="btn backgroundOrange" th:href="@{/payroll/}">Back</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="popUp" class="modal">
+    <span onclick="document.getElementById('popup').style.display='none'"  title="Close Modal">×</span>
+    <!--    Ini jangan lupa diisi actionnya-->
+    <div class="modal-content">
+        <div class="container">
+            <img th:src="@{/images/warning.png}"/>
+            <br><br>
+            <!--            custom sendiri yaa-->
+            <p th:text="'Apakah anda yakin ingin mengubah gaji ?'"></p>
+            <div class="clearfix">
+                <button type="button" onclick="document.getElementById('popUp').style.display='none'" class="btn backgroundOrange">Cancel</button>
+                <!--                ini juga custom!-->
+                <button type="submit" onclick="document.getElementById('popUP').style.display='none'" class="btn backgroundPurple">Ubah</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+</form>
+</body>
+</html>

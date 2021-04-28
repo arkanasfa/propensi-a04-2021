@@ -20,11 +20,6 @@ public class GajiModel implements Serializable{
     private Long id;
 
     @NotNull
-    @Size(max=5)
-    @Column(name="idGolongan",nullable = false)
-    private String idGolongan;
-
-    @NotNull
     @Column(name="gajiPokok",nullable = false)
     private Integer gajiPokok;
 
@@ -73,10 +68,6 @@ public class GajiModel implements Serializable{
     private Integer totalInfal;
 
     @NotNull
-    @Column(name="kopeg",nullable = false)
-    private Integer kopeg;
-
-    @NotNull
     @Column(name="angsuranKopeg",nullable = false)
     private Integer angsuranKopeg;
 
@@ -97,12 +88,28 @@ public class GajiModel implements Serializable{
     private Integer potonganPPH;
 
     @NotNull
-    @Column(name="statusPersetujuan",nullable = false)
-    private Integer statusPersetujuan;
+    @Column(name="THPB",nullable = false)
+    private Integer THPB;
 
     @NotNull
-    @Column(name="THP",nullable = false)
-    private Integer THP;
+    @Column(name="THPA",nullable = false)
+    private Integer THPA;
+
+    @NotNull
+    @Column(name="totalFixCost",nullable = false)
+    private Integer totalFixCost;
+
+    @NotNull
+    @Column(name="totalVarCost",nullable = false)
+    private Integer totalVarCost;
+
+    @NotNull
+    @Column(name="totalPotongan",nullable = false)
+    private Integer totalPotongan;
+
+    @NotNull
+    @Column(name="unit",nullable = false)
+    private String unit;
 
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_karyawan", referencedColumnName = "id", nullable = false)
@@ -110,11 +117,11 @@ public class GajiModel implements Serializable{
     @JsonIgnore
     private KaryawanModel id_karyawan;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_dokumen", referencedColumnName = "id", nullable = false)
+    @ManyToOne(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
+    @JoinColumn(name = "dokumen", referencedColumnName = "id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
-    private DokumenTotalModel id_dokumen;
+    private DokumenTotalModel dokumen;
 
     public Long getId() {
         return id;
@@ -122,14 +129,6 @@ public class GajiModel implements Serializable{
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getIdGolongan() {
-        return idGolongan;
-    }
-
-    public void setIdGolongan(String idGolongan) {
-        this.idGolongan = idGolongan;
     }
 
     public Integer getGajiPokok() {
@@ -228,14 +227,6 @@ public class GajiModel implements Serializable{
         this.totalInfal = totalInfal;
     }
 
-    public Integer getKopeg() {
-        return kopeg;
-    }
-
-    public void setKopeg(Integer kopeg) {
-        this.kopeg = kopeg;
-    }
-
     public Integer getAngsuranKopeg() {
         return angsuranKopeg;
     }
@@ -276,22 +267,6 @@ public class GajiModel implements Serializable{
         this.potonganPPH = potonganPPH;
     }
 
-    public Integer getStatusPersetujuan() {
-        return statusPersetujuan;
-    }
-
-    public void setStatusPersetujuan(Integer statusPersetujuan) {
-        this.statusPersetujuan = statusPersetujuan;
-    }
-
-    public Integer getTHP() {
-        return THP;
-    }
-
-    public void setTHP(Integer THP) {
-        this.THP = THP;
-    }
-
     public KaryawanModel getId_karyawan() {
         return id_karyawan;
     }
@@ -300,11 +275,59 @@ public class GajiModel implements Serializable{
         this.id_karyawan = id_karyawan;
     }
 
-    public DokumenTotalModel getId_dokumen() {
-        return id_dokumen;
+    public DokumenTotalModel getDokumen() {
+        return dokumen;
     }
 
-    public void setId_dokumen(DokumenTotalModel id_dokumen) {
-        this.id_dokumen = id_dokumen;
+    public void setDokumen(DokumenTotalModel dokumen) {
+        this.dokumen = dokumen;
+    }
+
+    public Integer getTHPB() {
+        return THPB;
+    }
+
+    public void setTHPB(Integer THPB) {
+        this.THPB = THPB;
+    }
+
+    public Integer getTHPA() {
+        return THPA;
+    }
+
+    public void setTHPA(Integer THPA) {
+        this.THPA = THPA;
+    }
+
+    public Integer getTotalFixCost() {
+        return totalFixCost;
+    }
+
+    public void setTotalFixCost(Integer totalFixCost) {
+        this.totalFixCost = totalFixCost;
+    }
+
+    public Integer getTotalVarCost() {
+        return totalVarCost;
+    }
+
+    public void setTotalVarCost(Integer totalVarCost) {
+        this.totalVarCost = totalVarCost;
+    }
+
+    public Integer getTotalPotongan() {
+        return totalPotongan;
+    }
+
+    public void setTotalPotongan(Integer totalPotongan) {
+        this.totalPotongan = totalPotongan;
+    }
+
+    public String getUnit() {
+        return unit;
+    }
+
+    public void setUnit(String unit) {
+        this.unit = unit;
     }
 }
