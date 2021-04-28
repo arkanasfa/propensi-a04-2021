@@ -3,14 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <!--    Jangan Lupa diisi!-->
-    <title>Form Pengajuan Cuti/Izin</title>
+    <title>Cuti/Izin Notification</title>
     <object th:include="fragments/fragment :: cssjs" th:remove="tag"></object>
     <!--    Default Style untuk semua page-->
     <link rel="stylesheet" th:href="@{/css/default-style.css}" />
-
-
 </head>
 <body>
+<style>
+    #statusLogo {
+        max-width: 10%; !important;
+        height: auto;
+        text-align: center;
+    }
+</style>
 <div class="container-fluid" >
     <div class="col-auto" >
         <!--    formatnya: sidebar([NamaHalaman] = 'highlight'). Buat nge highlight sidebar kalo lagi di halaman itu-->
@@ -23,21 +28,30 @@
 <div class="container-fluid">
     <div class="row">
         <div class="card-body" id="pageTitle">
-            <h3 class="colorGreen">Buat Pengajuan Cuti/Izin Baru</h3>
+            <h3 class="colorGreen">Cuti/Izin Notification</h3>
+        </div>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="card-body">
+            <img id="statusLogo" th:src="@{/images/success.png}"/>
+            <br> <br>
+            <h2 class="col d-flex justify-content-center mb-3" th:text="'Pengajuan cuti/izin dengan kode ' + ${kode_cuti} + ' berhasil diubah.'"></h2>
         </div>
     </div>
 </div>
 
-<!--    Dalem abu-abu-->
-<div  class="container d-flex justify-content-center align-middle">
+<!--    Container untuk bagian setelah abu abu-->
+<div class="container-fluid">
     <div class="row">
-        <div class="w-100"></div>
-        <h2 class="col d-flex justify-content-center mb-3"
-            th:text="'Cuti dengan kode ' + ${kode_cuti} + ' berhasil diubah.'"></h2>
-        <div class="w-100"></div>
-        <br><br><br>
-        <a th:href="@{/}" class="btn btn-light col d-flex justify-content-center ml-1 mr-1">Back</a>
+        <div class="card-body" id="pageBottom">
+            <div class="pull-right">
+                <a type="button" class="btn backgroundOrange" th:href="@{/cuti}">Continue</a>
+            </div>
+        </div>
     </div>
 </div>
+
 </body>
 </html>

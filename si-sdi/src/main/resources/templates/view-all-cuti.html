@@ -38,7 +38,7 @@
     <div class="row">
         <div class="card-body">
             <table class="rounded table table-bordered">
-                <thead >
+                <thead style="color: #7BB662">
                 <tr>
                     <th scope="col">No.</th>
                     <th scope="col">Tanggal Pengajuan</th>
@@ -48,7 +48,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="cuti, iterationStatus : ${listCuti}">
+                <tr th:each="cuti, iterationStatus : ${cutiList}">
                     <td th:text="${iterationStatus.count}"></td>
                     <td th:text="${cuti.tanggalRequest}"></td>
                     <td th:text="${cuti.kode_cuti}"></td>

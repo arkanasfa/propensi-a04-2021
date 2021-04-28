@@ -9,8 +9,8 @@ public interface PengajuanCutiService {
     List<PengajuanCutiModel> getCutiList();
     Optional<PengajuanCutiModel> getCutiById(Long id);
     void addCuti(PengajuanCutiModel cuti);
-    PengajuanCutiModel editCuti(PengajuanCutiModel cuti);
     void deleteCuti(PengajuanCutiModel cuti);
     String generateKodeCuti(PengajuanCutiModel cuti);
     Integer generateDurasi(PengajuanCutiModel cuti);
+    PengajuanCutiModel changeCuti(PengajuanCutiModel cuti);
 }

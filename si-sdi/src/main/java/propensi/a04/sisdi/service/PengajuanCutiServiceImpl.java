@@ -9,6 +9,7 @@ import javax.transaction.Transactional;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
@@ -34,9 +35,10 @@ public class PengajuanCutiServiceImpl implements PengajuanCutiService{
         pengajuanCutiDb.save(cuti);
     }
 
+
     @Override
-    public PengajuanCutiModel editCuti(PengajuanCutiModel cuti) {
-        PengajuanCutiModel targetCuti = pengajuanCutiDb.findById(cuti.getId()).orElse(null);
+    public PengajuanCutiModel changeCuti(PengajuanCutiModel cuti) {
+        PengajuanCutiModel targetCuti = pengajuanCutiDb.findById(cuti.getId()).get();
         try {
             targetCuti.setDurasi(cuti.getDurasi());
             targetCuti.setJenis(cuti.getJenis());
@@ -68,7 +70,8 @@ public class PengajuanCutiServiceImpl implements PengajuanCutiService{
     public Integer generateDurasi(PengajuanCutiModel cuti) {
         LocalDate date1 = cuti.getTanggalMulai().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         LocalDate date2 = cuti.getTanggalSelesai().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        int durasi = (int)(Duration.between(date1, date2).toDays());
+        int durasi= (int)ChronoUnit.DAYS.between(date1, date2)+1;
+//        int durasi = (int)(Duration.between(date1, date2).toDays());
         return durasi;
     }
 }

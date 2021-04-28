@@ -11,6 +11,29 @@
 
 </head>
 <body>
+<style>
+    #buttons{
+        margin-top: 20px;
+        text-align: right; !important;
+        /*background-color:#F6F6F6;*/
+    }
+
+    .card-group .card-body{
+        border-radius:0px;
+        margin-left:0px;
+        margin-right:0px;
+        text-align: left; !important;
+    }
+
+    .card-group .card-body p{
+        text-align: left; !important;
+        line-height:80%;
+    }
+
+    tbody td{
+        text-align: left;
+    }
+</style>
 <div class="container-fluid" >
     <div class="col-auto" >
         <!--    formatnya: sidebar([NamaHalaman] = 'highlight'). Buat nge highlight sidebar kalo lagi di halaman itu-->
@@ -36,33 +59,41 @@
                 <input type="hidden" th:field="${cuti.id}"/>
                 <br>
                 <div class="form-row">
-                    <div class="form-group row">
-                        <label class="col-2 col-form-label">Tanggal Mulai: </label>
-                        <div class="col-10">
-                            <input class="form-control" type="date" th:field="*{tanggalMulai}" placeholder="yyyy/MM/dd">
-                        </div>
+                        <label class="col-4 col-form-label" >Tanggal Mulai: </label>
+                        <div class="col-4">
+                            <input style="background-color:#c8e5be" class="form-control" type="date" th:field="*{tanggalMulai}" placeholder="yyyy/MM/dd">
                     </div>
                 </div>
+                <br>
                 <div class="form-row">
-                    <div class="form-group row">
-                        <label class="col-2 col-form-label">Tanggal Selesai: </label>
-                        <div class="col-10">
-                            <input class="form-control" type="date" th:field="*{tanggalSelesai}" placeholder="yyyy/MM/dd">
-                        </div>
+                        <label class="col-4 col-form-label">Tanggal Selesai: </label>
+                        <div class="col-4">
+                            <input style="background-color:#c8e5be" class="form-control" type="date" th:field="*{tanggalSelesai}" placeholder="yyyy/MM/dd">
                     </div>
                 </div>
+                <br>
                 <div class="form-row">
-                    //jenis
+                    <label for="jenis" class="col-4 col-form-label">Jenis Cuti:</label>
+                    <select style="background-color:#c8e5be" id="jenis" th:field="*{jenis}" class="form-control col-4" required>
+                        <option value="0">Cuti Tahunan</option>
+                        <option value="1">Cuti Sakit</option>
+                        <option value="2">Cuti Ibadah Haji</option>
+                        <option value="3">Cuti Ibadah Umrah</option>
+                        <option value="4">Cuti Bersalin</option>
+                    </select>
                 </div>
+                <br>
                 <div class="form-row">
-                    <div class="form-group row">
-                        <label for="formGroupExampleInput">Keterangan</label>
-                        <input type="text" class="form-control" id="formGroupExampleInput" th:field="*{keterangan}">
-                    </div>
+                        <label for="formGroupExampleInput" class="col-4 col-form-label">Keterangan: </label>
+                        <input style="background-color:#c8e5be" type="text" class="form-control col-4" id="formGroupExampleInput" th:field="*{keterangan}">
                 </div>
-                <a type="button" class="btn backgroundOrange " th:href="@{/keterangan}">Back</a>
-                <button type="submit" class="btn backgroundGreen ">Submit</button>
+                <br>
+                <a type="button" class="btn backgroundOrange " th:href="@{/cuti}">Back</a>
+                <button type="submit" class="btn backgroundGreen ">Save</button>
             </form>
+            <!--            <div class="pull-right" id="buttons">-->
+            <!--                <button onclick="document.getElementById('popUp').style.display='block'"  type="button" class="btn backgroundPurple" th:attrappend="data-target=${cuti.id}">Save</button>-->
+            <!--            </div>-->
         </div>
     </div>
 </div>

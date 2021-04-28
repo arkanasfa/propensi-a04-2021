@@ -7,9 +7,17 @@
     <object th:include="fragments/fragment :: cssjs" th:remove="tag"></object>
     <!--    Default Style untuk semua page-->
     <link rel="stylesheet" th:href="@{/css/default-style.css}" />
-
-
 </head>
+<style>
+    th, td {
+        border-radius: 3em;
+        color:#000000;
+        text-align: start;
+        background-color: #F6F6F6; !important;
+        font-size: 1.15em;
+    }
+</style>
+
 <body>
 <div class="container-fluid" >
     <div class="col-auto" >
@@ -40,36 +48,61 @@
                 </div>
             </div>
             <br>
-            <h2  class="col d-flex justify-content-center mb-3"> Detail Cuti: </h2>
-            <br>
-            <div class="col d-flex justify-content-center">
-                <h5 class="col d-flex justify-content-center" th:text="'Kode Cuti: ' + ${cuti.kode_cuti}"></h5>
+            <h2  class="col d-flex justify-content-center mb-3"> Detail Cuti </h2>
+            <div class="col-md-8">
+                <table width="100%" border="0">
+                        <td>
+                            <table border="0" width="100%" style="padding-left:2px;">
+                                <tbody>
+                                <tr>
+                                    <td width="35%"align="top">Kode cuti</td>
+                                    <td width="2%">:</td>
+                                    <td style="font-weight: bold" th:text="${cuti.kode_cuti}"></td>
+                                </tr>
+                                <tr>
+                                    <td>Tanggal Pengajuan</td>
+                                    <td>:</td>
+                                    <td th:text="${cuti.tanggalRequest}"></td>
+                                </tr>
+                                <tr>
+                                    <td>Tanggal Mulai</td>
+                                    <td>:</td>
+                                    <td th:text="${cuti.tanggalMulai}"></td>
+                                </tr>
+                                <tr>
+                                    <td>Tanggal Selesai</td>
+                                    <td>:</td>
+                                    <td th:text="${cuti.tanggalSelesai}"></td>
+                                </tr>
+                                <tr>
+                                    <td>Durasi</td>
+                                    <td>:</td>
+                                    <td th:text="${cuti.durasi}"></td>
+                                </tr>
+                                <tr>
+                                    <td>Jenis</td>
+                                    <td>:</td>
+                                    <td th:if="${cuti.jenis == 0}">Cuti tahunan</td>
+                                    <td th:if="${cuti.jenis == 1}">Cuti sakit</td>
+                                    <td th:if="${cuti.jenis == 2}">Cuti ibadah haji</td>
+                                    <td th:if="${cuti.jenis == 3}">Cuti ibadah umrah</td>
+                                    <td th:if="${cuti.jenis == 4}">Cuti bersalin</td>
+                                </tr>
+                                <tr>
+                                    <td>Keterangan</td>
+                                    <td>:</td>
+                                    <td th:text="${cuti.keterangan}"></td>
+                                </tr>
+                                <tr>
+                                    <td>Status</td>
+                                    <td>:</td>
+                                    <td th:text="${cuti.id_status.status}"></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                </table>
             </div>
-            <br>
-            <div class="col d-flex justify-content-center">
-                <h5 class="col d-flex justify-content-center" th:text="'Tanggal Pengajuan: ' + ${cuti.tanggalRequest}"></h5>
-            </div>
-            <br>
-            <div class="col d-flex justify-content-center">
-                <h5 class="col d-flex justify-content-center" th:text="'Tanggal Mulai: ' + ${cuti.tanggalMulai}"></h5>
-            </div>
-            <br>
-            <div class="col d-flex justify-content-center">
-                <h5 class="col d-flex justify-content-center" th:text="'Tanggal Selesai: ' + ${cuti.tanggalSelesai}"></h5>
-            </div>
-            <br>
-            <div class="col d-flex justify-content-center">
-                <h5 class="col d-flex justify-content-center" th:text="'Jenis: ' + ${cuti.jenis}"></h5>
-            </div>
-            <br>
-            <div class="col d-flex justify-content-center">
-                <h5  class="col d-flex justify-content-center" th:text="'Keterangan: ' + ${cuti.keterangan}"></h5>
-            </div>
-            <br>
-            <div class="col d-flex justify-content-center">
-                <h5  class="col d-flex justify-content-center" th:text="'Status: ' + ${cuti.id_status.status}"></h5>
-            </div>
-            <br>
         </div>
     </div>
 </div>
