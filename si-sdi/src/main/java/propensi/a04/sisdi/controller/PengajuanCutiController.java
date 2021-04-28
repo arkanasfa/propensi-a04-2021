@@ -12,6 +12,7 @@ import propensi.a04.sisdi.repository.PengajuanCutiDb;
 import propensi.a04.sisdi.repository.StatusDB;
 import propensi.a04.sisdi.service.PengajuanCutiService;
 import propensi.a04.sisdi.service.KaryawanService;
+import propensi.a04.sisdi.service.StatusService;
 
 import java.util.Date;
 import java.util.List;
@@ -25,6 +26,9 @@ public class PengajuanCutiController {
     KaryawanService karyawanService;
 
     @Autowired
+    StatusService statusService;
+
+    @Autowired
     PengajuanCutiDb pengajuanCutiDb;
 
     @Autowired
@@ -34,7 +38,7 @@ public class PengajuanCutiController {
     public String viewAllCuti(Model model, UserModel user){
 //        KaryawanModel karyawan = karyawanService.getByUser(user);
 //        int sisaCuti = 12-karyawan.getJumlahCuti();
-        List<PengajuanCutiModel> cutiList = pengajuanCutiDb.findAll();
+        List<PengajuanCutiModel> cutiList = pengajuanCutiService.getCutiList();
 //        model.addAttribute("sisaCuti", sisaCuti);
         model.addAttribute("cutiList", cutiList);
         return "view-all-cuti";
@@ -43,7 +47,7 @@ public class PengajuanCutiController {
     @RequestMapping(path = "/cuti/detail")
     public String detailCuti(
         @RequestParam(value="id") Long id, Model model){
-        PengajuanCutiModel cuti = pengajuanCutiDb.findById(id).get();
+        PengajuanCutiModel cuti = pengajuanCutiService.getCutiById(id);
         model.addAttribute("cuti", cuti);
         return "detail-cuti";
     }
@@ -63,7 +67,7 @@ public class PengajuanCutiController {
             try {
                 String kodeCuti = pengajuanCutiService.generateKodeCuti(cuti);
                 cuti.setKode_cuti(kodeCuti);
-                StatusModel id_status = statusDb.findById(Long.valueOf(1)).get();
+                StatusModel id_status = statusService.getStatusById(Long.valueOf(1));
                 cuti.setId_status(id_status);
                 Date date = new Date();
                 cuti.setTanggalRequest(date);
@@ -77,7 +81,6 @@ public class PengajuanCutiController {
                 else {
                     return "notifikasi-gagal-durasi-cuti";
                 }
-
             }
             catch (NullPointerException nullException){
                 return "notifikasi-gagal-add-cuti";
@@ -90,7 +93,7 @@ public class PengajuanCutiController {
 
     @RequestMapping(path = "/cuti/edit")
     public String editCutiForm(@RequestParam(value="id") Long id, Model model){
-        PengajuanCutiModel existingCuti = pengajuanCutiDb.findById(id).get();
+        PengajuanCutiModel existingCuti = pengajuanCutiService.getCutiById(id);
         model.addAttribute("cuti", existingCuti);
         return "form-change-cuti";
     }
@@ -114,8 +117,7 @@ public class PengajuanCutiController {
             }
         }
         catch (NullPointerException nullException){
-            return "notifikasi-gagal-ubah" +
-                    "-cuti";
+            return "notifikasi-gagal-ubah-cuti";
         }
 //        }
 //        else {
@@ -125,8 +127,8 @@ public class PengajuanCutiController {
     }
 
     @RequestMapping(path = "/cuti/delete")
-    public String editCuti(@RequestParam(value="id") Long idCuti, Model model){
-        PengajuanCutiModel existingCuti = pengajuanCutiDb.findById(idCuti).get();
+    public String deleteCuti(@RequestParam(value="id") Long idCuti, Model model){
+        PengajuanCutiModel existingCuti = pengajuanCutiService.getCutiById(idCuti);
         String kodeCuti = existingCuti.getKode_cuti();
 //        KaryawanModel karyawan = existingCuti.getId_karyawan();
 //        karyawan.setJumlahCuti(karyawan.getJumlahCuti()- existingCuti.getDurasi());
