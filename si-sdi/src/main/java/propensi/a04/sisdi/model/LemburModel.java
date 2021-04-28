@@ -22,14 +22,14 @@ public class LemburModel implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_karyawan", referencedColumnName = "id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     private KaryawanModel id_karyawan;
     
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_infal", referencedColumnName = "id", nullable = false)
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_infal", referencedColumnName = "id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     private KaryawanModel id_infal;
@@ -54,7 +54,7 @@ public class LemburModel implements Serializable{
     @Column(name="jamSelesai",nullable = false)
     private Date jamSelesai;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_status", referencedColumnName = "id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
@@ -63,6 +63,14 @@ public class LemburModel implements Serializable{
     @NotNull
     @Column(name="alasan",nullable = false)
     private String alasan;
+
+    @NotNull
+    @Column(name="kode_lembur",nullable = false)
+    private String kode_lembur;
+
+    @NotNull
+    @Column(name="jenis",nullable = false)
+    private Integer jenis;
 
     public Long getId() {
         return id;
@@ -134,5 +142,21 @@ public class LemburModel implements Serializable{
 
     public void setAlasan(String alasan) {
         this.alasan = alasan;
+    }
+
+    public String getKode_lembur() {
+        return kode_lembur;
+    }
+
+    public void setKode_lembur(String kode_lembur) {
+        this.kode_lembur = kode_lembur;
+    }
+
+    public Integer getJenis() {
+        return jenis;
+    }
+
+    public void setJenis(Integer jenis) {
+        this.jenis = jenis;
     }
 }
