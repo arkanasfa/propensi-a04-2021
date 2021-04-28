@@ -6,11 +6,8 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
-import javax.persistence.criteria.CriteriaBuilder;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.util.Date;
-import java.util.List;
 
 
 @Entity
@@ -35,35 +32,61 @@ public class OrangTuaModel implements Serializable{
         @JsonIgnore
         private SiswaModel id_siswa;
 
-        public Long getId() {
-                return id;
-        }
+        
 
-        public void setId(Long id) {
-                this.id = id;
-        }
+    /**
+     * @return Long return the id
+     */
+    public Long getId() {
+        return id;
+    }
 
-        public String getNamaOrangTua() {
-                return namaOrangTua;
-        }
+    /**
+     * @param id the id to set
+     */
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-        public void setNamaOrangTua(String namaOrangTua) {
-                this.namaOrangTua = namaOrangTua;
-        }
+    /**
+     * @return String return the namaOrangTua
+     */
+    public String getNamaOrangTua() {
+        return namaOrangTua;
+    }
 
-        public Integer getJenisKelamin() {
-                return jenisKelamin;
-        }
+    /**
+     * @param namaOrangTua the namaOrangTua to set
+     */
+    public void setNamaOrangTua(String namaOrangTua) {
+        this.namaOrangTua = namaOrangTua;
+    }
 
-        public void setJenisKelamin(Integer jenisKelamin) {
-                this.jenisKelamin = jenisKelamin;
-        }
+    /**
+     * @return Integer return the jenisKelamin
+     */
+    public Integer getJenisKelamin() {
+        return jenisKelamin;
+    }
 
-        public SiswaModel getId_siswa() {
-                return id_siswa;
-        }
+    /**
+     * @param jenisKelamin the jenisKelamin to set
+     */
+    public void setJenisKelamin(Integer jenisKelamin) {
+        this.jenisKelamin = jenisKelamin;
+    }
 
-        public void setId_siswa(SiswaModel id_siswa) {
-                this.id_siswa = id_siswa;
-        }
+    /**
+     * @return SiswaModel return the id_siswa
+     */
+    public SiswaModel getId_siswa() {
+        return id_siswa;
+    }
+
+    /**
+     * @param id_siswa the id_siswa to set
+     */
+    public void setId_siswa(SiswaModel id_siswa) {
+        this.id_siswa = id_siswa;
+    }
 }
