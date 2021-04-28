@@ -73,7 +73,6 @@ public class PengajuanCutiController {
                 else {
                     return "notifikasi-gagal-durasi-cuti";
                 }
-
             }
             catch (NullPointerException nullException){
                 return "notifikasi-gagal-add-cuti";
