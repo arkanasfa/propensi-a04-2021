@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.*;
 
 import propensi.a04.sisdi.model.*;
 
+import propensi.a04.sisdi.repository.KaryawanDb;
+import propensi.a04.sisdi.repository.PengajuanCutiDb;
 import propensi.a04.sisdi.repository.StatusDB;
 import propensi.a04.sisdi.service.PengajuanCutiService;
 import propensi.a04.sisdi.service.KaryawanService;
@@ -23,13 +25,16 @@ public class PengajuanCutiController {
     KaryawanService karyawanService;
 
     @Autowired
+    PengajuanCutiDb pengajuanCutiDb;
+
+    @Autowired
     StatusDB statusDb;
 
     @RequestMapping("/cuti")
     public String viewAllCuti(Model model, UserModel user){
 //        KaryawanModel karyawan = karyawanService.getByUser(user);
 //        int sisaCuti = 12-karyawan.getJumlahCuti();
-        List<PengajuanCutiModel> cutiList = pengajuanCutiService.getCutiList();
+        List<PengajuanCutiModel> cutiList = pengajuanCutiDb.findAll();
 //        model.addAttribute("sisaCuti", sisaCuti);
         model.addAttribute("cutiList", cutiList);
         return "view-all-cuti";
@@ -38,7 +43,7 @@ public class PengajuanCutiController {
     @RequestMapping(path = "/cuti/detail")
     public String detailCuti(
         @RequestParam(value="id") Long id, Model model){
-        PengajuanCutiModel cuti = pengajuanCutiService.getCutiById(id).get();
+        PengajuanCutiModel cuti = pengajuanCutiDb.findById(id).get();
         model.addAttribute("cuti", cuti);
         return "detail-cuti";
     }
@@ -85,7 +90,7 @@ public class PengajuanCutiController {
 
     @RequestMapping(path = "/cuti/edit")
     public String editCutiForm(@RequestParam(value="id") Long id, Model model){
-        PengajuanCutiModel existingCuti = pengajuanCutiService.getCutiById(id).get();
+        PengajuanCutiModel existingCuti = pengajuanCutiDb.findById(id).get();
         model.addAttribute("cuti", existingCuti);
         return "form-change-cuti";
     }
@@ -109,7 +114,8 @@ public class PengajuanCutiController {
             }
         }
         catch (NullPointerException nullException){
-            return "notifikasi-gagal-ubah-cuti";
+            return "notifikasi-gagal-ubah" +
+                    "-cuti";
         }
 //        }
 //        else {
@@ -120,7 +126,7 @@ public class PengajuanCutiController {
 
     @RequestMapping(path = "/cuti/delete")
     public String editCuti(@RequestParam(value="id") Long idCuti, Model model){
-        PengajuanCutiModel existingCuti = pengajuanCutiService.getCutiById(idCuti).get();
+        PengajuanCutiModel existingCuti = pengajuanCutiDb.findById(idCuti).get();
         String kodeCuti = existingCuti.getKode_cuti();
 //        KaryawanModel karyawan = existingCuti.getId_karyawan();
 //        karyawan.setJumlahCuti(karyawan.getJumlahCuti()- existingCuti.getDurasi());
