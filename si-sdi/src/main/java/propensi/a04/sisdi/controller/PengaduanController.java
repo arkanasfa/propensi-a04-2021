@@ -21,7 +21,7 @@ import propensi.a04.sisdi.model.KaryawanModel;
 import propensi.a04.sisdi.model.PengaduanModel;
 import propensi.a04.sisdi.model.StatusModel;
 import propensi.a04.sisdi.model.UserModel;
-import propensi.a04.sisdi.repository.KaryawanDB;
+import propensi.a04.sisdi.repository.KaryawanDb;
 import propensi.a04.sisdi.repository.StatusDB;
 import propensi.a04.sisdi.service.PengaduanService;
 import propensi.a04.sisdi.service.PengaduanServiceImpl;
@@ -37,7 +37,7 @@ public class PengaduanController {
     private PengaduanService pengaduanService;
 
     @Autowired
-    KaryawanDB karyawanDB;
+    KaryawanDb karyawanDB;
 
     @Autowired
     StatusDB statusDB;

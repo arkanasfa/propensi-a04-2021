@@ -7,6 +7,14 @@
     <object th:include="fragments/fragment :: cssjs" th:remove="tag"></object>
     <!--    Default Style untuk semua page-->
     <link rel="stylesheet" th:href="@{/css/default-style.css}" />
+    <script>
+        function radio(choice){
+            if(choice==0)
+                document.getElementById('infal').style.display='none';
+            else
+                document.getElementById('infal').style.display='block';
+        }
+    </script>
 
 
 </head>
@@ -35,52 +43,45 @@
             <form th:action="@{/lembur/ubah}" th:object="${lembur}" method="POST">
                 <input type="hidden" th:field="${lembur.id}"/>
                 <br>
-                <div class="form-row">
                     <div class="form-group row">
-                        <label class="col-2 col-form-label">Tanggal Lembur: </label>
-                        <div class="col-10">
+                        <label class="col-3 col-form-label">Tanggal Lembur: </label>
+                        <div class="col-3">
                             <input class="form-control" type="date" th:field="*{tanggalLembur}" placeholder="yyyy/MM/dd">
                         </div>
                     </div>
-                </div>
-                <div class="form-row">
                     <div class="form-group row">
-                        <label class="col-2 col-form-label">Jam Mulai: </label>
-                        <div class="col-10">
+                        <label class="col-3 col-form-label">Jam Mulai: </label>
+                        <div class="col-3">
                             <input class="form-control" type="time" th:field="*{jamMulai}">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-2 col-form-label">Jam Selesai: </label>
-                        <div class="col-10">
+                        <label class="col-3 col-form-label">Jam Selesai: </label>
+                        <div class="col-3">
                             <input class="form-control" type="time" th:field="*{jamSelesai}">
                         </div>
                     </div>
-                </div>
-                <div class="form-row">
                     <div class="form-group-row">
-                        <div class="custom-control custom-radio custom-control-inline">
-                            <input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input" value="1" th:field="*{jenis}">
+                        <div class="custom-control col-sm-1 custom-radio custom-control-inline">
+                            <input type="radio" id="customRadioInline1" name="customRadioInline1" onclick="radio(0)" class="custom-control-input" value="1" th:field="*{jenis}" checked>
                             <label class="custom-control-label" for="customRadioInline1">Lembur</label>
                         </div>
-                        <div class="custom-control custom-radio custom-control-inline">
-                            <input type="radio" id="customRadioInline2" name="customRadioInline1" class="custom-control-input" value="2" th:field="*{jenis}">
+                        <div class="custom-control col-sm-1 custom-radio custom-control-inline">
+                            <input type="radio" id="customRadioInline2" name="customRadioInline1" onclick="radio(1)" class="custom-control-input" value="2" th:field="*{jenis}">
                             <label class="custom-control-label" for="customRadioInline2">Infal</label>
                         </div>
                     </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group row">
-                        <label>Karyawan Yang Diinfalkan</label>
+                <div id="infal" class="form-group row" >
+                    <label class="col-sm-3 col-form-label">Karyawan Yang Diinfalkan</label>
+                    <div class="col-sm-3">
                         <select name="infalID" class="form-control">
-                            <option value=NULL>Kosongkan bila memilih lembur</option>
                             <option th:selected="${lembur.id_infal}" th:each="karyawan : ${karyawanList}" th:value="${karyawan.id}" th:text="${karyawan.karyawan}"></option>
                         </select>
                     </div>
                 </div>
-                <div class="form-row">
-                    <div class="form-group row">
-                        <label for="formGroupExampleInput">Alasan</label>
+                <div class="form-group row">
+                    <label class="col-sm-3" for="formGroupExampleInput">Alasan</label>
+                    <div class="col-sm-3">
                         <input type="text" class="form-control" id="formGroupExampleInput" th:field="*{alasan}">
                     </div>
                 </div>
