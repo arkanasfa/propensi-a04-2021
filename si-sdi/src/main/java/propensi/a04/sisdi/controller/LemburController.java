@@ -1,7 +1,7 @@
 package propensi.a04.sisdi.controller;
 
 import propensi.a04.sisdi.model.*;
-import propensi.a04.sisdi.repository.KaryawanDB;
+import propensi.a04.sisdi.repository.KaryawanDb;
 import propensi.a04.sisdi.repository.StatusDB;
 import propensi.a04.sisdi.service.*;
 import propensi.a04.sisdi.repository.LemburDB;
@@ -23,7 +23,7 @@ public class LemburController {
     LemburService lemburService;
 
     @Autowired
-    KaryawanDB karyawanDB;
+    KaryawanDb karyawanDB;
 
     @Autowired
     StatusDB statusDB;
