@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import propensi.a04.sisdi.DTO.PengaduanDTOModel;
 import propensi.a04.sisdi.model.KaryawanModel;
 import propensi.a04.sisdi.model.PengaduanModel;
+import propensi.a04.sisdi.model.StatusModel;
 import propensi.a04.sisdi.repository.KaryawanDb;
+import propensi.a04.sisdi.repository.StatusDB;
 import propensi.a04.sisdi.service.PengaduanService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -32,6 +34,9 @@ public class PengaduanController {
     @Autowired
     KaryawanDb karyawanDb;
 
+    @Autowired
+    StatusDB statusDB;
+
     @GetMapping("/add")
     public String addPengaduanFormPage(Model model){
         List<KaryawanModel> listKaryawan = karyawanDb.findAll();
@@ -46,6 +51,7 @@ public class PengaduanController {
         @ModelAttribute PengaduanDTOModel pengaduanDTO,
         Model model
     ){
+
         PengaduanModel pengaduan = new PengaduanModel();
         if (pengaduanDTO.getNo_karyawan()==null||pengaduanDTO.getDetailPengaduan()==""){
             return "add-pengaduan-gagal";
@@ -54,14 +60,15 @@ public class PengaduanController {
         }
         pengaduan.setDetailPengaduan(pengaduanDTO.getDetailPengaduan());
 
-        pengaduan.setId(pengaduanDTO.getId());
         KaryawanModel karyawanNo = karyawanDb.findByNoKaryawan(pengaduanDTO.getNo_karyawan()).get();
         pengaduan.setNo_karyawan(karyawanNo);
         
         String kode_pengaduan = pengaduanService.generateKodePengaduan(pengaduan);
         pengaduan.setKode_pengaduan(kode_pengaduan);
         pengaduan.setTanggalPengaduan(LocalDate.now(ZoneId.of("Asia/Jakarta")));
-        pengaduan.setStatusPengaduan(0);
+        
+        StatusModel id_status = statusDB.findById(Long.valueOf(1)).get();
+        pengaduan.setId_status(id_status);
         
 
         PengaduanModel tmpPengaduan = pengaduanService.addPengaduan(pengaduan); 
@@ -87,7 +94,7 @@ public class PengaduanController {
     public String listPengaduan(Model model) {
         List<PengaduanModel> listPengaduan = pengaduanService.getPengaduanList();
         model.addAttribute("listPengaduan",listPengaduan);
-        
+
         return "viewall-pengaduan";
     }
 
