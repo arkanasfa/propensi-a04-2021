@@ -68,8 +68,8 @@ public class PengajuanCutiController {
 //        if(karyawan.getJumlahCuti()+cuti.getDurasi()<=12){
 //            cuti.setId_karyawan(karyawan);
             try {
-//                KaryawanModel id_karyawan = karyawanDb.findById(Long.valueOf(3)).get();
-//                cuti.setId_karyawan(id_karyawan);
+                KaryawanModel id_karyawan = karyawanDb.findById(Long.valueOf(3)).get();
+                cuti.setId_karyawan(id_karyawan);
                 String kodeCuti = pengajuanCutiService.generateKodeCuti(cuti);
                 cuti.setKode_cuti(kodeCuti);
                 StatusModel id_status = statusService.getStatusById(Long.valueOf(1));
