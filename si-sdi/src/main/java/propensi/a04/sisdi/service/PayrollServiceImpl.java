@@ -202,6 +202,7 @@ public class PayrollServiceImpl implements PayrollService{
     @Override
     public void simpanGajiKaryawan(GajiModel gaji, KaryawanModel karyawan, DokumenTotalModel dokumen){
         GajiModel targetGaji= gajiDb.findById(gaji.getId()).get();
+        System.out.println(targetGaji.getId());
 //        targetGaji.setUnit(karyawan.getUnit());
         try{
             //Perincian Gaji
@@ -237,8 +238,8 @@ public class PayrollServiceImpl implements PayrollService{
                     +targetGaji.getPotonganPPH());
             targetGaji.setTHPA(targetGaji.getTotalFixCost()+targetGaji.getTotalVarCost()-targetGaji.getTotalPotongan());
             targetGaji.setTHPB(targetGaji.getTotalFixCost()+targetGaji.getTotalVarCost()-targetGaji.getTotalPotongan());
-            //        targetGaji.setDokumen(dokumen);
-//        targetGaji.setId_karyawan(karyawan);
+            targetGaji.setDokumen(dokumen);
+            targetGaji.setId_karyawan(karyawan);
             karyawan.setGaji((long)targetGaji.getTHPB());
             gajiDb.save(targetGaji);
         }catch(NullPointerException nullException){

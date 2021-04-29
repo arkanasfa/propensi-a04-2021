@@ -20,7 +20,7 @@ public class PengaduanServiceImpl implements PengaduanService {
 
     @Override
     public PengaduanModel addPengaduan(PengaduanModel pengaduan) {
-        
+
         return pengaduanDb.save(pengaduan);
     }
 
@@ -31,18 +31,18 @@ public class PengaduanServiceImpl implements PengaduanService {
 
     @Override
     public PengaduanModel getPengaduanById(Long id) {
-       
+
         return pengaduanDb.findById(id).get();
     }
 
     @Override
     public String generateKodePengaduan(PengaduanModel pengaduan){
         Random rand = new Random();
-        String generate = "PG" + pengaduan.getId() + "-" + Integer.toString(rand.nextInt(9)) 
-        + Integer.toString(rand.nextInt(9)) + Integer.toString(rand.nextInt(9)) + "-" 
-        + Integer.toString(rand.nextInt(9))  ;
+        String generate = "PG" + pengaduan.getId() + "-" + Integer.toString(rand.nextInt(9))
+                + Integer.toString(rand.nextInt(9)) + Integer.toString(rand.nextInt(9)) + "-"
+                + Integer.toString(rand.nextInt(9))  ;
         return generate;
     }
 
-    
+
 }
