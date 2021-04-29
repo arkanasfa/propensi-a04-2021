@@ -67,10 +67,7 @@
                 </div>
                 <div class="col-75">
                     <h5 class="col d-flex justify-content-center">
-                        <div  th:if="${pengaduan.statusPengaduan == 0}">Menunggu Persetujuan</div>
-                        <div  th:if="${pengaduan.statusPengaduan == 1}">Ditolak</div>
-                        <div  th:if="${pengaduan.statusPengaduan == 2}">Diproses</div>
-                        <div  th:if="${pengaduan.statusPengaduan == 3}">Selesai</div>
+                        <div th:text="${pengaduan.id_status.status}"></div>
                     </h5>
                 </div>
             </div>
