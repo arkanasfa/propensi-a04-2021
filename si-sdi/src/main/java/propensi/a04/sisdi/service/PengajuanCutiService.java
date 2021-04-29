@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface PengajuanCutiService {
     List<PengajuanCutiModel> getCutiList();
-    Optional<PengajuanCutiModel> getCutiById(Long id);
+    PengajuanCutiModel getCutiById(Long id);
     void addCuti(PengajuanCutiModel cuti);
     void deleteCuti(PengajuanCutiModel cuti);
     String generateKodeCuti(PengajuanCutiModel cuti);
