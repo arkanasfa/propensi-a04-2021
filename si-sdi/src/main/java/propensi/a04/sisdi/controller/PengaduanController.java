@@ -17,6 +17,7 @@ import propensi.a04.sisdi.DTO.PengaduanDTOModel;
 import propensi.a04.sisdi.model.KaryawanModel;
 import propensi.a04.sisdi.model.PengaduanModel;
 import propensi.a04.sisdi.repository.KaryawanDb;
+import propensi.a04.sisdi.repository.StatusDB;
 import propensi.a04.sisdi.service.PengaduanService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -31,6 +32,14 @@ public class PengaduanController {
 
     @Autowired
     KaryawanDb karyawanDb;
+
+    @Autowired
+    StatusDB statusDB;
+
+    // @GetMapping("/")
+    // private String home() {
+    //     return "home";
+    // }
 
     @GetMapping("/add")
     public String addPengaduanFormPage(Model model){
