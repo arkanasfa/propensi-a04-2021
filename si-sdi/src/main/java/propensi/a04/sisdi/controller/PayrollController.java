@@ -13,6 +13,7 @@ import propensi.a04.sisdi.repository.KaryawanDb;
 import propensi.a04.sisdi.repository.KomponenPengaliDb;
 import propensi.a04.sisdi.service.PayrollService;
 
+import javax.servlet.http.HttpServletRequest;
 import java.time.YearMonth;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -67,8 +68,10 @@ public class PayrollController {
     @GetMapping(value="/ajukan")
     private String ajukanDokumenGaji(
             @RequestParam(value="idDok") Long idDok,
+            HttpServletRequest request,
             Model model) {
-        DokumenTotalModel ajukan = dokumenTotalDb.findById(idDok).get();
+        Long dokId = Long.valueOf(request.getParameter("idDok"));
+        DokumenTotalModel ajukan = dokumenTotalDb.findById(dokId).get();
         payrollService.ajukanDokumenTotalGaji(ajukan);
         Date date = ajukan.getTanggalIsu();
         String message = "Dokumen Total Gaji untuk isu" + date + "berhasil diajukan";
@@ -79,14 +82,17 @@ public class PayrollController {
     @GetMapping("/detailPayroll")
     private String detailPayroll(@RequestParam(value="dokumenId") Long dokumenId,
                                  @RequestParam(value="unitName") String unitName,
+                                 HttpServletRequest request,
                                  Model model) {
-        DokumenTotalModel dokumen = dokumenTotalDb.findById(dokumenId).get();
-        List<GajiModel> gajiList = gajiDb.findByUnitAndDokumen(unitName, dokumen);
+        Long idDokumen = Long.valueOf(request.getParameter("dokumenId"));
+        DokumenTotalModel dokumen = dokumenTotalDb.findById(idDokumen).get();
+        String namaUnit = String.valueOf(request.getParameter("unitName"));
+        List<GajiModel> gajiList = gajiDb.findByUnitAndDokumen(namaUnit, dokumen);
         List<KaryawanModel> karyawanList = new ArrayList<>();
         for(GajiModel gaji:gajiList){
             karyawanList.add(gaji.getId_karyawan());
         }
-        Integer totalAnggaranUnit = payrollService.totalAnggaranUnit(unitName, dokumen);
+        Integer totalAnggaranUnit = payrollService.totalAnggaranUnit(namaUnit, dokumen);
         model.addAttribute("totalAnggaranUnit", totalAnggaranUnit);
         model.addAttribute("karyawanList", karyawanList);
         model.addAttribute("unitName", unitName);
@@ -98,8 +104,10 @@ public class PayrollController {
     @GetMapping("/detailGaji")
     private String detailGaji(
             @RequestParam(value="idGaji") Long idGaji,
+            HttpServletRequest request,
             Model model){
-       GajiModel gaji = gajiDb.findById(idGaji).get();
+        Long gajiId = Long.valueOf(request.getParameter("idGaji"));
+       GajiModel gaji = gajiDb.findById(gajiId).get();
        KaryawanModel karyawan = karyawanDb.findByGajiModel(gaji).get();
        Date date = gaji.getDokumen().getTanggalIsu();
         YearMonth yearMonth =
@@ -123,8 +131,10 @@ public class PayrollController {
     @GetMapping("/detailGaji/ubah")
     private String detailGajiForm(
             @RequestParam(value="idGaji") Long idGaji,
+            HttpServletRequest request,
             Model model){
-        GajiModel gaji = gajiDb.findById(idGaji).get();
+        Long gajiId = Long.valueOf(request.getParameter("idGaji"));
+        GajiModel gaji = gajiDb.findById(gajiId).get();
         KaryawanModel karyawan = karyawanDb.findByGajiModel(gaji).get();
         String status;
         status="Tetap";
