@@ -21,11 +21,11 @@ public class PengajuanCutiModel implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_karyawan", referencedColumnName = "id", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIgnore
-    private KaryawanModel id_karyawan;
+//    @ManyToOne(fetch = FetchType.EAGER)
+//    @JoinColumn(name = "id_karyawan", referencedColumnName = "id", nullable = false)
+//    @OnDelete(action = OnDeleteAction.CASCADE)
+//    @JsonIgnore
+//    private KaryawanModel id_karyawan;
 
 
     @NotNull
@@ -81,13 +81,13 @@ public class PengajuanCutiModel implements Serializable{
         this.id = id;
     }
 
-    public KaryawanModel getId_karyawan() {
-        return id_karyawan;
-    }
-
-    public void setId_karyawan(KaryawanModel id_karyawan) {
-        this.id_karyawan = id_karyawan;
-    }
+//    public KaryawanModel getId_karyawan() {
+//        return id_karyawan;
+//    }
+//
+//    public void setId_karyawan(KaryawanModel id_karyawan) {
+//        this.id_karyawan = id_karyawan;
+//    }
 
     public Date getTanggalRequest() {
         return tanggalRequest;
