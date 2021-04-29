@@ -126,19 +126,6 @@ public class KaryawanModel implements Serializable{
     @OneToOne(mappedBy = "id_infal")
     private LemburModel infal;
 
-    //@OneToOne()
-    //@JoinColumn(name = "uuidUser", referencedColumnName = "id")
-    //@OnDelete(action = OnDeleteAction.CASCADE)
-    //private UserModel user;
-
-    //public UserModel getUser() {
-    //    return user;
-    //}
-
-    //public void setUser(UserModel user) {
-    //    this.user = user;
-    //}
-
     public Long getId() {
         return id;
     }
