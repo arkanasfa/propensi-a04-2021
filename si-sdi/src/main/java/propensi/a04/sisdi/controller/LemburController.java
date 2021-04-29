@@ -42,7 +42,10 @@ public class LemburController {
             Model model) {
         KaryawanModel id_karyawan = karyawanDB.findById(Long.valueOf(3)).get();
         lembur.setId_karyawan(id_karyawan);
-        if (infalID.equals("NULL")==false) {
+        if(lembur.getJenis()==1){
+            lembur.setId_infal(null);
+        }
+        else if(lembur.getJenis()==2){
             Long idInfal = Long.valueOf(request.getParameter("infalID"));
             KaryawanModel id_karyawanInfal = karyawanDB.findById(idInfal).get();
             lembur.setId_infal(id_karyawanInfal);
@@ -77,13 +80,13 @@ public class LemburController {
             Model model) {
         KaryawanModel id_karyawan = karyawanDB.findById(Long.valueOf(3)).get();
         lembur.setId_karyawan(id_karyawan);
-        if (infalID.equals("NULL")==false) {
+        if(lembur.getJenis()==1){
+            lembur.setId_infal(null);
+        }
+        else if(lembur.getJenis()==2){
             Long idInfal = Long.valueOf(request.getParameter("infalID"));
             KaryawanModel id_karyawanInfal = karyawanDB.findById(idInfal).get();
             lembur.setId_infal(id_karyawanInfal);
-        }
-        if (infalID.equals("NULL")==true) {
-            lembur.setId_infal(null);
         }
         String kode_lembur = lemburService.generateKodeLembur(lembur);
         lembur.setKode_lembur(kode_lembur);
