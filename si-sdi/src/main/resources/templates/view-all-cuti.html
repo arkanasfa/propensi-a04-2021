@@ -53,7 +53,7 @@
                     <td th:text="${cuti.tanggalRequest.getDate()} + '-' + ${cuti.tanggalRequest.getMonth()} + '-' + ${cuti.tanggalRequest.getYear()+1900}"></td>
                     <td th:text="${cuti.kode_cuti}"></td>
 
-                    <td th:if="${cuti.id_status.getStatus()}=='diproses'" style="color:#FAB14A;" th:text="${cuti.id_status.getStatus()}"></td>
+                    <td th:if="${cuti.id_status.getStatus()}=='Menunggu Persetujuan'" style="color:#FAB14A;" th:text="${cuti.id_status.getStatus()}"></td>
                     <td th:if="${cuti.id_status.getStatus()}=='Dibatalkan'" style="color:#000000;" th:text="${cuti.id_status.getStatus()}"></td>
                     <td th:if="${cuti.id_status.getStatus()}=='Diterima'" style="color:#83BA70;" th:text="${cuti.id_status.getStatus()}"></td>
                     <td th:if="${cuti.id_status.getStatus()}=='Ditolak'" style="color:#D84242;" th:text="${cuti.id_status.getStatus()}"></td>
