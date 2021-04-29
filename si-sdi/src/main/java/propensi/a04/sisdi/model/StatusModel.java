@@ -27,10 +27,10 @@ public class StatusModel implements Serializable{
     @JsonIgnore
     private List<GuruSertifikasiModel> statusSertifikasi;
 
-    @OneToMany(mappedBy = "id_status", fetch = FetchType.LAZY)
+/*     @OneToMany(mappedBy = "id_status", fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
-    private List<PengaduanModel> statusPengaduan;
+    private List<PengaduanModel> statusPengaduan; */
 
     @OneToMany(mappedBy = "id_status", fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
@@ -71,14 +71,14 @@ public class StatusModel implements Serializable{
         this.statusSertifikasi = statusSertifikasi;
     }
 
-    public List<PengaduanModel> getStatusPengaduan() {
+/*     public List<PengaduanModel> getStatusPengaduan() {
         return statusPengaduan;
     }
 
     public void setStatusPengaduan(List<PengaduanModel> statusPengaduan) {
         this.statusPengaduan = statusPengaduan;
     }
-
+ */
     public List<DokumenTotalModel> getStatusDokumen() {
         return statusDokumen;
     }
