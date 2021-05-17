@@ -4,15 +4,12 @@ import propensi.a04.sisdi.model.*;
 import propensi.a04.sisdi.repository.KaryawanDb;
 import propensi.a04.sisdi.repository.StatusDB;
 import propensi.a04.sisdi.service.*;
-import propensi.a04.sisdi.repository.LemburDB;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -45,7 +42,10 @@ public class LemburController {
             Model model) {
         KaryawanModel id_karyawan = karyawanDB.findById(Long.valueOf(3)).get();
         lembur.setId_karyawan(id_karyawan);
-        if (infalID.equals("NULL")==false) {
+        if(lembur.getJenis()==1){
+            lembur.setId_infal(null);
+        }
+        else if(lembur.getJenis()==2){
             Long idInfal = Long.valueOf(request.getParameter("infalID"));
             KaryawanModel id_karyawanInfal = karyawanDB.findById(idInfal).get();
             lembur.setId_infal(id_karyawanInfal);
@@ -80,13 +80,13 @@ public class LemburController {
             Model model) {
         KaryawanModel id_karyawan = karyawanDB.findById(Long.valueOf(3)).get();
         lembur.setId_karyawan(id_karyawan);
-        if (infalID.equals("NULL")==false) {
+        if(lembur.getJenis()==1){
+            lembur.setId_infal(null);
+        }
+        else if(lembur.getJenis()==2){
             Long idInfal = Long.valueOf(request.getParameter("infalID"));
             KaryawanModel id_karyawanInfal = karyawanDB.findById(idInfal).get();
             lembur.setId_infal(id_karyawanInfal);
-        }
-        if (infalID.equals("NULL")==true) {
-            lembur.setId_infal(null);
         }
         String kode_lembur = lemburService.generateKodeLembur(lembur);
         lembur.setKode_lembur(kode_lembur);

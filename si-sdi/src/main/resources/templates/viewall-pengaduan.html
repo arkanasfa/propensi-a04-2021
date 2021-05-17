@@ -54,15 +54,26 @@
                         <td th:text="${pengaduan.no_karyawan.getKaryawan()}"></td>
                         <!-- <td th:text="${pengaduan.id_status.getStatus()}"></td> -->
                         <td class="text-center">
-                            <div style="color:#b969ee;" th:if="${pengaduan.statusPengaduan == 0}">Menunggu Persetujuan</div>
-                            <div style="color:#D84242;" th:if="${pengaduan.statusPengaduan == 1}">Ditolak</div>
-                            <div style="color:#FAB14A;" th:if="${pengaduan.statusPengaduan == 2}">Diproses</div>
-                            <div style="color:#83BA70;" th:if="${pengaduan.statusPengaduan == 3}">Selesai</div>
+                            <div th:if="${pengaduan.id_status.getStatus()}=='Ditolak'" style="color:#D84242;" th:text="${pengaduan.id_status.getStatus()}"></div>
+                            <div th:if="${pengaduan.id_status.getStatus()}=='Diproses'" style="color:#FAB14A;" th:text="${pengaduan.id_status.getStatus()}"></div>
+                            <div th:if="${pengaduan.id_status.getStatus()}=='Diterima'" style="color:#83BA70;" th:text="${pengaduan.id_status.getStatus()}"></div>
+                            <div th:if="${pengaduan.id_status.getStatus()}=='Menunggu Persetujuan'" style="color:#b969ee;" th:text="${pengaduan.id_status.getStatus()}"></div>
                         </td>
                         <td><a class="btn backgroundGreen" type="button" role="button"  th:href="@{/pengaduan/view(id=${pengaduan.id})}">View</a></td>
                         </tr>
                 </tbody>
             </table>
+        </div>
+    </div>
+</div>
+
+<!--    Container untuk bagian setelah abu abu-->
+<div class="container-fluid">
+    <div class="row">
+        <div class="card-body" id="pageBottom">
+            <div class="pull-right">
+                <a type="button" class="btn backgroundOrange " th:href="@{/}">Back</a>
+            </div>
         </div>
     </div>
 </div>
