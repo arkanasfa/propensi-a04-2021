@@ -9,15 +9,13 @@
     <link rel="stylesheet" th:href="@{/css/default-style.css}" />
 </head>
 <body>
-
-<style>
+    <style>
     #statusLogo {
         max-width: 10%;
         height: auto;
         text-align: center;
     }
-</style>
-
+    </style>
 <div class="container-fluid" >
     <div class="col-auto" >
         <!--    formatnya: sidebar([NamaHalaman] = 'highlight'). Buat nge highlight sidebar kalo lagi di halaman itu-->
@@ -37,9 +35,9 @@
 <div class="container-fluid">
     <div class="row">
         <div class="card-body">
-            <img id="statusLogo" th:src="@{/images/failed.png}"/>
+            <img id="statusLogo" th:src="@{/images/Success.png}"/>
             <br> <br>
-            <h2 class="col d-flex justify-content-center mb-3" >Pengaduan gagal dibuat</h2>
+            <h2 class="col d-flex justify-content-center mb-3" th:text="'Pengaduan dengan kode ' + ${kode} + ' berhasil ditolak'"></h2>
         </div>
     </div>
 </div>
@@ -49,11 +47,10 @@
     <div class="row">
         <div class="card-body" id="pageBottom">
             <div class="pull-right">
-                <a type="button" class="btn backgroundOrange" th:href="@{/pengaduan/add}">Back</a>
+                <a type="button" class="btn backgroundOrange" th:href="@{/pengaduan/view-all}">Back</a>
             </div>
         </div>
     </div>
 </div>
-
 </body>
 </html>

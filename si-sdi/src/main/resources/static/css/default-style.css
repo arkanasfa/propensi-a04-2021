@@ -84,6 +84,11 @@ table.table-bordered > tbody > tr > th{
     color:black;
 }
 
+.backgroundMerah{
+    background-color:#F52323;
+    color:white;
+}
+
 .backgroundBtnViewAll {
     color: black;
 }
