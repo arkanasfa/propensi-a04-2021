@@ -4,6 +4,9 @@ public class PengaduanDTOModel {
     private Long no_karyawan;
     private String detailPengaduan;
     private Long id;
+    private int skor;
+
+    
 
     
 
@@ -50,6 +53,21 @@ public class PengaduanDTOModel {
      */
     public void setId(Long id) {
         this.id = id;
+    }
+
+
+    /**
+     * @return int return the skor
+     */
+    public int getSkor() {
+        return skor;
+    }
+
+    /**
+     * @param skor the skor to set
+     */
+    public void setSkor(int skor) {
+        this.skor = skor;
     }
 
 }
