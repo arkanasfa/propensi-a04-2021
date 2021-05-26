@@ -23,7 +23,17 @@
 <div class="container-fluid">
     <div class="row">
         <div class="card-body" id="pageTitle">
-            <h3 class="colorGreen">Detail Pengaduan Saya</h3>
+            <h3 class="colorGreen">Detail Pengaduan</h3>
+            <!-- <form class="float-right" id="FORMskor">
+                <a type="button" class="btn backgroundPurple " disabled>Skor</a>
+                <select name="skor" id="skor">
+                <option value="0" selected>0</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+                <option value="75">75</option>
+                <option value="100">100</option>
+                </select>
+            </form> -->
         </div>
     </div>
 </div>
@@ -88,8 +98,13 @@
 <div class="container-fluid">
     <div class="row">
         <div class="card-body" id="pageBottom">
+            <div class="pull-left">
+                <a type="button" class="btn backgroundOrange float-left" th:href="@{/pengaduan/view-all}">Back</a>
+            </div>
             <div class="pull-right">
-                <a type="button" class="btn backgroundOrange " th:href="@{/pengaduan/viewall}">Back</a>
+                <a type="button" class="btn backgroundMerah " th:href="@{/pengaduan/kelola/view/tolak(id=${pengaduan.id})}">Tolak</a>
+                <a type="button" class="btn backgroundPurple " th:href="@{/pengaduan/kelola/view/teruskan(id=${pengaduan.id})}">Teruskan</a>
+                <a type="submit" form="FORMskor" value="Submit" formmethod="post" class="btn backgroundGreen " th:href="@{/pengaduan/kelola/view/selesai(id=${pengaduan.id})}">Selesai</a>
             </div>
         </div>
     </div>

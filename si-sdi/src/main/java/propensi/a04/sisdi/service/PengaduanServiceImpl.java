@@ -44,5 +44,21 @@ public class PengaduanServiceImpl implements PengaduanService {
         return generate;
     }
 
+    @Override
+    public PengaduanModel updatePengaduan(PengaduanModel pengaduan) {
+        PengaduanModel pengaduanTarget = pengaduanDb.findById(pengaduan.getId()).get();
+        try {
+            pengaduanDb.save(pengaduanTarget);
+            return pengaduanTarget;
+        }
+        catch(NullPointerException nullException){
+            return null;
+        }
+    }
+    
+    @Override
+    public void deletePengaduan(PengaduanModel pengaduan) {
+        pengaduanDb.delete(pengaduan);
+    }
 
 }

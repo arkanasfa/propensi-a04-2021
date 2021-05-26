@@ -12,6 +12,10 @@ public interface PengaduanService {
     PengaduanModel getPengaduanById(Long id);
 
     String generateKodePengaduan(PengaduanModel pengaduan);
+
+    PengaduanModel updatePengaduan(PengaduanModel pengaduan);
+
+    void deletePengaduan(PengaduanModel pengaduan);
     
 
 

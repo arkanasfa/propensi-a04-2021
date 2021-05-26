@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import propensi.a04.sisdi.model.KaryawanModel;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 @Service
@@ -20,5 +22,22 @@ public class KaryawanServiceImpl implements KaryawanService{
     //    KaryawanModel targetKaryawan = karyawanDb.findByUser(user);
     //     return targetKaryawan;
     //}
+
+    @Override
+    public KaryawanModel updateSkorPengaduan(KaryawanModel karyawan) {
+        KaryawanModel karyawanTarget = karyawanDb.findById(karyawan.getId()).get();
+        try {
+            karyawanDb.save(karyawanTarget);
+            return karyawanTarget;
+        }
+        catch(NullPointerException nullException){
+            return null;
+        }
+    }
+
+    @Override
+    public List<KaryawanModel> getListKaryawan() {
+        return karyawanDb.findAll();
+    }
 }
 

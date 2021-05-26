@@ -24,8 +24,7 @@
 <div class="container-fluid">
     <div class="row">
         <div class="card-body" id="pageTitle">
-            <h3 class="colorGreen">Daftar Pengaduan Saya</h3>
-            <a th:href="@{/pengaduan/add}" type="button" class="btn backgroundOrange float-right">+Ajukan Pengaduan</a>
+            <h3 class="colorGreen">Daftar Pengaduan</h3>
         </div>
     </div>
 </div>
@@ -47,7 +46,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                    <tr th:each="pengaduan, iterationStatus : ${listPengaduan}">
+                    <tr th:each="pengaduan, iterationStatus : ${list}">
                         <td th:text="${iterationStatus.count}"></td>
                         <td th:text="${pengaduan.tanggalPengaduan}"></td>
                         <td th:text="${pengaduan.kode_pengaduan}"></td>
@@ -56,13 +55,11 @@
                         <td class="text-center">
                             <div th:if="${pengaduan.id_status.getStatus()}=='Ditolak'" style="color:#D84242;" th:text="${pengaduan.id_status.getStatus()}"></div>
                             <div th:if="${pengaduan.id_status.getStatus()}=='Diproses'" style="color:#FAB14A;" th:text="${pengaduan.id_status.getStatus()}"></div>
-                            <div th:if="${pengaduan.id_status.getStatus()}=='Diterima'" style="color:#83BA70;" th:text="${pengaduan.id_status.getStatus()}"></div>
                             <div th:if="${pengaduan.id_status.getStatus()}=='Selesai'" style="color:#83BA70;" th:text="${pengaduan.id_status.getStatus()}"></div>
                             <div th:if="${pengaduan.id_status.getStatus()}=='Menunggu Persetujuan'" style="color:#b969ee;" th:text="${pengaduan.id_status.getStatus()}"></div>
                             <div th:if="${pengaduan.id_status.getStatus()}=='Diteruskan'" style="color:#b969ee;" th:text="${pengaduan.id_status.getStatus()}"></div>
                         </td>
-                        <td><a class="btn backgroundGreen" type="button" role="button"  th:href="@{/pengaduan/view(id=${pengaduan.id})}">View</a></td>
-                        <!-- <td><a class="btn backgroundMerah" type="button" role="button"  th:href="@{/pengaduan/delete(id=${pengaduan.id})}">Delete</a></td> -->
+                        <td><a class="btn backgroundGreen" type="button" role="button"  th:href="@{/pengaduan/kelola/view(id=${pengaduan.id})}">View</a></td>
                         </tr>
                 </tbody>
             </table>
