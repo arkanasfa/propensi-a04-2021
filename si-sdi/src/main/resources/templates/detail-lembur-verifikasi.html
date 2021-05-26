@@ -32,13 +32,6 @@
 <div class="container-fluid">
     <div class="row">
         <div class="card-body">
-            <div  class="container d-flex justify-content-center align-middle">
-                <div class="row">
-                    <div class="w-100"></div>
-                    <a th:href="@{/lembur/ubah(id=${lembur.id})}" class="btn backgroundGreen">Edit</a>
-                    <a th:href="@{/lembur/delete(id=${lembur.id})}" class="btn backgroundPurple">Delete</a>
-                </div>
-            </div>
             <br>
             <h2  class="col d-flex justify-content-center mb-3"> Detail Lembur: </h2>
             <br>
@@ -85,9 +78,15 @@
 <!--    Container untuk bagian setelah abu abu-->
 <div class="container-fluid">
     <div class="row">
+        <div class="card-body" id="pageBottomLeft">
+            <div class="pull-left">
+                <a type="button" class="btn backgroundOrange " th:href="@{/lembur/list}">Back</a>
+            </div>
+        </div>
         <div class="card-body" id="pageBottom">
             <div class="pull-right">
-                <a type="button" class="btn backgroundOrange " th:href="@{/lembur/list}">Back</a>
+                <a type="button" class="btn btn-danger " th:href="@{/lembur/verifikasi(id=${lembur.id},status=${3})}">Tolak</a>
+                <a type="button" class="btn backgroundGreen " th:href="@{/lembur/verifikasi(id=${lembur.id},status=${4})}">Terima</a>
             </div>
         </div>
     </div>
