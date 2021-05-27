@@ -16,9 +16,8 @@ import java.util.List;
 public class UserModel implements Serializable{
 
     @Id
-    @GeneratedValue(generator = "system-uuid")
-    @GenericGenerator(name = "system-uuid", strategy = "uuid")
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @NotNull
     @Size(max=25)
@@ -39,6 +38,9 @@ public class UserModel implements Serializable{
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     private RoleModel id_role;
+
+    @OneToOne(mappedBy = "id_user")
+    private KaryawanModel karyawanModel;
 
 
 //    public KaryawanModel getKaryawan() {
@@ -62,11 +64,11 @@ public class UserModel implements Serializable{
     @JsonIgnore
     private List<PengaduanModel> listPengaduan; */
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -102,9 +104,15 @@ public class UserModel implements Serializable{
         this.id_role = id_role;
     }
 
+    public KaryawanModel getKaryawanModel() {
+        return karyawanModel;
+    }
 
+    public void setKaryawanModel(KaryawanModel karyawanModel) {
+        this.karyawanModel = karyawanModel;
+    }
 
- /* 
+    /*
     public List<PengaduanModel> getListPengaduan() {
         return listPengaduan;
     }

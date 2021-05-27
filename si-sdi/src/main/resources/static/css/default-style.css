@@ -109,6 +109,12 @@ table.table-bordered > tbody > tr > th{
     text-align: right;
 }
 
+#pageBottomLeft{
+    margin-top: 20px;
+    background-color: white; !important;
+    text-align: left;
+}
+
 .search_select_box{
     max-width: 400px;
     margin: 80px auto;

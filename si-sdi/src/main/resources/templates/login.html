@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Login | SI-SDI</title>
+    <object th:include="fragments/fragment :: cssjs" th:remove="tag"></object>
+</head>
+
+<div class="container-fluid" style="align-content: center">
+    <br><br><br>
+    <br><br>
+    <h1 class="colorGreen" align="center">SI-SDI</h1>
+    <br><br>
+    <div class="container-fluid" style="background-color: transparent">
+        <form th:action="@{/login}" method="POST">
+            <div class=" align-items-center bg-transparent" style="text-align: center; align-items: center;">
+                <!--Invalid Credentials-->
+                <div th:if="${param.error}">
+                    <span style="color: #ff0000; font-weight: 300;">Invalid username or password<br></span>
+                </div>
+                <br>
+                <!--Username-->
+                <div class="row container-fluid">
+                    <div class="col-sm-5"></div>
+                    <div class="col-sm-2 bg-transparent" style="background-color: transparent">
+                        <label class="sr-only" style="background-color: transparent">Username</label>
+                        <input name="username" type="text" class="form-control" placeholder="Username" style="background-color: transparent; height: 50px; border: white; border-width: thin; border-radius: 0;">
+                    </div>
+                    <div class="col-sm-5"></div>
+                </div>
+                <br>
+                <!--Password-->
+                <div class="row container-fluid">
+                    <div class="col-sm-5"></div>
+                    <div class="col-sm-2 bg-transparent" style="background-color: transparent">
+                        <label class="sr-only" style="background-color: transparent">Password</label>
+                        <input name="password" type="password" class="form-control" placeholder="Password" style="background-color: transparent; height: 50px; border: white; border-width: thin; border-radius: 0;">
+                    </div>
+                    <div class="col-sm-5"></div>
+                </div>
+                <br>
+                <!--Button-->
+                <div class="row container-fluid">
+                    <div class="col-sm-5"></div>
+                    <div class="col-sm-2">
+                        <button type="submit" class="btn btn-primary btn-block" style="height: 50px; background-color: white; color: #0B052D;">Log In</button>
+                    </div>
+                    <div class="col-sm-5"></div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>
