@@ -126,6 +126,12 @@ public class KaryawanModel implements Serializable{
     @OneToOne(mappedBy = "id_infal")
     private LemburModel infal;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_user", referencedColumnName = "id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore
+    private UserModel id_user;
+
     public Long getId() {
         return id;
     }
@@ -350,4 +356,11 @@ public class KaryawanModel implements Serializable{
         this.golongan = golongan;
     }
 
+    public UserModel getId_user() {
+        return id_user;
+    }
+
+    public void setId_user(UserModel id_user) {
+        this.id_user = id_user;
+    }
 }
