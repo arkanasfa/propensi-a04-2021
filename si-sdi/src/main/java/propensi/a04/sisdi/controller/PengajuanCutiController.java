@@ -16,6 +16,8 @@ import propensi.a04.sisdi.service.StatusService;
 
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Controller
 public class PengajuanCutiController {
@@ -39,12 +41,39 @@ public class PengajuanCutiController {
 
     @RequestMapping("/cuti")
     public String viewAllCuti(Model model, UserModel user){
-//        KaryawanModel karyawan = karyawanService.getByUser(user);
-//        int sisaCuti = 12-karyawan.getJumlahCuti();
-        List<PengajuanCutiModel> cutiList = pengajuanCutiService.getCutiList();
-//        model.addAttribute("sisaCuti", sisaCuti);
-        model.addAttribute("cutiList", cutiList);
-        return "view-all-cuti";
+//        String roleName = user.getId_role().getRole();
+//        if(roleName.equals("karyawan")){
+//            KaryawanModel karyawan = karyawanService.getKaryawanByUser(user);
+//            int sisaCuti = 12-karyawan.getJumlahCuti();
+            List<PengajuanCutiModel> cutiList = pengajuanCutiService.getCutiList();
+            model.addAttribute("cutiList", cutiList);
+//            model.addAttribute("sisaCuti", sisaCuti);
+            return "view-all-cuti";
+//        }
+//        else if (roleName.equals("pimpinanUnit")){
+//            List<PengajuanCutiModel> forPUA = pengajuanCutiService.getPengajuanCutiById_Status(Long.valueOf(1));
+//            List<PengajuanCutiModel> forPUB = pengajuanCutiService.getPengajuanCutiById_Status(Long.valueOf(7));
+//            List<PengajuanCutiModel> newList = Stream.concat(forPUA.stream(), forPUB.stream())
+//                    .collect(Collectors.toList());
+//            model.addAttribute("cutiList", newList);
+//            return "view-all-cuti";
+//        }
+//        else if (roleName.equals("kepalaBagian")){
+//            List<PengajuanCutiModel> forKBA = pengajuanCutiService.getPengajuanCutiById_Status(Long.valueOf(5));
+//            List<PengajuanCutiModel> forKBB = pengajuanCutiService.getPengajuanCutiById_Status(Long.valueOf(8));
+//            List<PengajuanCutiModel> newList = Stream.concat(forKBA.stream(), forKBB.stream())
+//                    .collect(Collectors.toList());
+//            model.addAttribute("cutiList", newList);
+//            return "view-all-cuti";
+//        }
+//        else {
+//            List<PengajuanCutiModel> forMSDIA = pengajuanCutiService.getPengajuanCutiById_Status(Long.valueOf(6));
+//            List<PengajuanCutiModel> forMSDIB = pengajuanCutiService.getPengajuanCutiById_Status(Long.valueOf(9));
+//            List<PengajuanCutiModel> newList = Stream.concat(forMSDIA.stream(), forMSDIB.stream())
+//                    .collect(Collectors.toList());
+//            model.addAttribute("cutiList", newList);
+//            return "view-all-cuti";
+//        }
     }
 
     @RequestMapping(path = "/cuti/detail")
@@ -77,6 +106,8 @@ public class PengajuanCutiController {
                 Date date = new Date();
                 cuti.setTanggalRequest(date);
                 int durasi = pengajuanCutiService.generateDurasi(cuti);
+//                int gap = pengajuanCutiService.generateStartValid(cuti);
+//                if(durasi>0 && durasi<13 && gap < 0) {
                 if(durasi>0 && durasi<13) {
                     cuti.setDurasi(durasi);
                     pengajuanCutiService.addCuti(cuti);
@@ -112,7 +143,8 @@ public class PengajuanCutiController {
             String kodeCuti = pengajuanCutiService.generateKodeCuti(cuti);
             cuti.setKode_cuti(kodeCuti);
             int durasi = pengajuanCutiService.generateDurasi(cuti);
-            if (durasi > 0 && durasi < 13) {
+            int gap = pengajuanCutiService.generateStartValid(cuti);
+            if (durasi > 0 && durasi < 13 && gap < 0) {
                 cuti.setDurasi(durasi);
                 pengajuanCutiService.changeCuti(cuti);
                 model.addAttribute("kode_cuti", cuti.getKode_cuti());
@@ -140,5 +172,23 @@ public class PengajuanCutiController {
         pengajuanCutiService.deleteCuti(existingCuti);
         model.addAttribute("kode_cuti", kodeCuti);
         return "delete-cuti";
+    }
+
+    @RequestMapping(path = "/cuti/setujui")
+    public String setujuiCuti(@RequestParam(value="id") Long idCuti, Model model){
+        PengajuanCutiModel cuti = pengajuanCutiService.getCutiById(idCuti);
+//        KaryawanModel karyawan = cuti.getId_karyawan();
+//        karyawan.setJumlahCuti(karyawan.getJumlahCuti()+ cuti.getDurasi());
+        pengajuanCutiService.setujuiCuti(cuti);
+        return "redirect:/cuti";
+    }
+
+    @RequestMapping(path = "/cuti/tolak")
+    public String tolakCuti(@RequestParam(value="id") Long idCuti, Model model){
+        PengajuanCutiModel cuti = pengajuanCutiService.getCutiById(idCuti);
+//        KaryawanModel karyawan = cuti.getId_karyawan();
+//        karyawan.setJumlahCuti(karyawan.getJumlahCuti()+ cuti.getDurasi());
+        pengajuanCutiService.tolakCuti(cuti);
+        return "redirect:/cuti";
     }
 }

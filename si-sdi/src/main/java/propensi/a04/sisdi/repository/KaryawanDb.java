@@ -11,8 +11,7 @@ import java.util.Optional;
 @Repository
 public interface KaryawanDb extends JpaRepository<KaryawanModel,Long> {
     List<KaryawanModel> findAll();
-    //KaryawanModel findByUser(UserModel user);
+//    KaryawanModel findByUser(UserModel user);
     Optional<KaryawanModel> findByGajiModel(GajiModel gaji);
     Optional<KaryawanModel> findByNoKaryawan(Long no_karyawan);
-
 }

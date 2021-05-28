@@ -33,7 +33,7 @@
     </div>
 </div>
 
-<!--    Dalem abu-abu-->
+<!--    Dalem abu-abu [Karyawan] -->
 <div class="container-fluid">
     <div class="row">
         <div class="card-body">
@@ -61,6 +61,43 @@
                     <td style="background-color: #83BA70"><a class="backgroundBtnViewAll" type="button" role="button"  th:href="@{/cuti/detail(id=${cuti.id})}">View</a></td>
                     <td style="background-color: #FAB14A"><a class="backgroundBtnViewAll" type="button" role="button"  th:href="@{/cuti/edit(id=${cuti.id})}">Edit</a></td>
                     <td style="background-color: #D84242"><a class="backgroundBtnViewAll" type="button" role="button"  th:href="@{/cuti/delete(id=${cuti.id})}">Delete</a></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!--    Dalem abu-abu [Approval]-->
+<div class="container-fluid">
+    <div class="row">
+        <div class="card-body">
+            <table class="rounded table table-bordered">
+                <thead style="color: #7BB662">
+                <tr>
+                    <th scope="col">No.</th>
+                    <th scope="col">Tanggal Pengajuan</th>
+                    <th scope="col">Kode Cuti/Izin</th>
+                    <th scope="col">Nama Pengaju</th>
+                    <th scope="col">Status</th>
+                    <th scope="col" colspan="3">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="cuti, iterationStatus : ${cutiList}">
+                    <td th:text="${iterationStatus.count}"></td>
+                    <td th:text="${cuti.tanggalRequest.getDate()} + '-' + ${cuti.tanggalRequest.getMonth()} + '-' + ${cuti.tanggalRequest.getYear()+1900}"></td>
+                    <td th:text="${cuti.kode_cuti}"></td>
+                    <td th:text="${cuti.getId_karyawan().getKaryawan()}"></td>
+
+                    <td th:if="${cuti.id_status.getStatus()}=='Menunggu Persetujuan'" style="color:#FAB14A;" th:text="${cuti.id_status.getStatus()}"></td>
+                    <td th:if="${cuti.id_status.getStatus()}=='Disetujui Pimpinan Unit'" style="color:#FAB14A;" th:text="${cuti.id_status.getStatus()}"></td>
+                    <td th:if="${cuti.id_status.getStatus()}=='Disetujui Kepala Bagian'" style="color:#FAB14A;" th:text="${cuti.id_status.getStatus()}"></td>
+                    <td th:if="${cuti.id_status.getStatus()}=='Pengajuan Pembatalan'" style="color:#000000;" th:text="${cuti.id_status.getStatus()}"></td>
+                    <td th:if="${cuti.id_status.getStatus()}=='Pembatalan | Pimpinan Unit'" style="color:#000000;" th:text="${cuti.id_status.getStatus()}"></td>
+                    <td th:if="${cuti.id_status.getStatus()}=='Pembatalan | Kepala Bagian'" style="color:#000000;" th:text="${cuti.id_status.getStatus()}"></td>
+
+                    <td style="background-color: #83BA70"><a class="backgroundBtnViewAll" type="button" role="button"  th:href="@{/cuti/detail(id=${cuti.id})}">View</a></td>
                 </tr>
                 </tbody>
             </table>

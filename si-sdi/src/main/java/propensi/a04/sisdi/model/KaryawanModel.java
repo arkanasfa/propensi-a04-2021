@@ -84,6 +84,20 @@ public class KaryawanModel implements Serializable{
     @Column(name="golongan",nullable=false)
     private Long golongan;
 
+//    @OneToOne(fetch = FetchType.EAGER)
+//    @JoinColumn(name = "uuidUser", referencedColumnName = "id", nullable = false)
+//    @OnDelete(action = OnDeleteAction.CASCADE)
+//    @JsonIgnore
+//    private UserModel user;
+//
+//    public UserModel getUser() {
+//        return user;
+//    }
+//
+//    public void setUser(UserModel user) {
+//        this.user = user;
+//    }
+
     @OneToOne(mappedBy = "id_karyawan")
     private WakilPengurusHarianModel wakilpengurusHarianModel;
 

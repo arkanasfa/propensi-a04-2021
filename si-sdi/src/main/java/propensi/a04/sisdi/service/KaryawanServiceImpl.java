@@ -15,10 +15,10 @@ public class KaryawanServiceImpl implements KaryawanService{
     @Autowired
     private KaryawanDb karyawanDb;
 
-    //@Override
-    //public KaryawanModel getByUser(UserModel user){
-    //    KaryawanModel targetKaryawan = karyawanDb.findByUser(user);
-    //     return targetKaryawan;
-    //}
+//    @Override
+//    public KaryawanModel getKaryawanByUser(UserModel user){
+//        KaryawanModel targetKaryawan = karyawanDb.findByUser(user);
+//         return targetKaryawan;
+//    }
 }
 

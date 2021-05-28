@@ -3,7 +3,9 @@ package propensi.a04.sisdi.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import propensi.a04.sisdi.model.PengajuanCutiModel;
+import propensi.a04.sisdi.model.StatusModel;
 import propensi.a04.sisdi.repository.PengajuanCutiDb;
+import propensi.a04.sisdi.repository.StatusDB;
 
 import javax.transaction.Transactional;
 import java.time.Duration;
@@ -19,6 +21,9 @@ import java.util.Random;
 public class PengajuanCutiServiceImpl implements PengajuanCutiService{
     @Autowired
     PengajuanCutiDb pengajuanCutiDb;
+
+    @Autowired
+    StatusDB statusDB;
 
     @Override
     public List<PengajuanCutiModel> getCutiList (){
@@ -73,4 +78,29 @@ public class PengajuanCutiServiceImpl implements PengajuanCutiService{
         int durasi= (int)ChronoUnit.DAYS.between(date1, date2)+1;
         return durasi;
     }
+
+    @Override
+    public Integer generateStartValid(PengajuanCutiModel cuti) {
+        LocalDate date1 = cuti.getTanggalMulai().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        LocalDate date2 = LocalDate.now();
+        int gap= (int)ChronoUnit.DAYS.between(date1, date2);
+        return gap;
+    }
+
+    @Override
+    public void setujuiCuti(PengajuanCutiModel cuti) {
+        StatusModel stat = statusDB.findById(Long.valueOf(4)).get();
+        cuti.setId_status(stat);
+    }
+
+    @Override
+    public void tolakCuti(PengajuanCutiModel cuti) {
+        StatusModel stat = statusDB.findById(Long.valueOf(5)).get();
+        cuti.setId_status(stat);
+    }
+
+//    @Override
+//    public List<PengajuanCutiModel> getPengajuanCutiById_Status(Long id) {
+//        return pengajuanCutiDb.findAllById_status(id);
+//    }
 }

@@ -36,7 +36,7 @@
     </div>
 </div>
 
-<!--    Dalem abu-abu-->
+<!--    Dalem abu-abu [Karyawan] -->
 <div class="container-fluid">
     <div class="row">
         <div class="card-body">
@@ -99,6 +99,80 @@
                                 </tbody>
                             </table>
                         </td>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--    Dalem abu-abu [Approval] -->
+<div class="container-fluid">
+    <div class="row">
+        <div class="card-body">
+            <div  class="container d-flex justify-content-center align-middle">
+                <div class="row">
+                    <div class="w-100"></div>
+                    <a th:href="@{/cuti/setujui(id=${cuti.id})}" class="btn backgroundGreen">Setujui</a>
+                    <a th:href="@{/cuti/tolak(id=${cuti.id})}" class="btn backgroundPurple">Tolak</a>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <table width="100%" border="0">
+                    <td>
+                        <table border="0" width="100%" style="padding-left:2px;">
+                            <tbody>
+                            <tr>
+                                <td width="35%"align="top">Kode cuti</td>
+                                <td width="2%">:</td>
+                                <td style="font-weight: bold" th:text="${cuti.kode_cuti}"></td>
+                            </tr>
+                            <tr>
+                                <td>Nama Karyawan</td>
+                                <td>:</td>
+                                <td th:text="${cuti.id_karyawan.getKaryawan()}"></td>
+                            </tr>
+                            <tr>
+                                <td>Tanggal Pengajuan</td>
+                                <td>:</td>
+                                <td th:text="${cuti.tanggalRequest}"></td>
+                            </tr>
+                            <tr>
+                                <td>Tanggal Mulai</td>
+                                <td>:</td>
+                                <td th:text="${cuti.tanggalMulai}"></td>
+                            </tr>
+                            <tr>
+                                <td>Tanggal Selesai</td>
+                                <td>:</td>
+                                <td th:text="${cuti.tanggalSelesai}"></td>
+                            </tr>
+                            <tr>
+                                <td>Durasi</td>
+                                <td>:</td>
+                                <td th:text="${cuti.durasi}"></td>
+                            </tr>
+                            <tr>
+                                <td>Jenis</td>
+                                <td>:</td>
+                                <td th:if="${cuti.jenis == 0}">Cuti tahunan</td>
+                                <td th:if="${cuti.jenis == 1}">Cuti sakit</td>
+                                <td th:if="${cuti.jenis == 2}">Cuti ibadah haji</td>
+                                <td th:if="${cuti.jenis == 3}">Cuti ibadah umrah</td>
+                                <td th:if="${cuti.jenis == 4}">Cuti bersalin</td>
+                            </tr>
+                            <tr>
+                                <td>Keterangan</td>
+                                <td>:</td>
+                                <td th:text="${cuti.keterangan}"></td>
+                            </tr>
+                            <tr>
+                                <td>Status</td>
+                                <td>:</td>
+                                <td th:text="${cuti.id_status.status}"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </td>
                 </table>
             </div>
         </div>
