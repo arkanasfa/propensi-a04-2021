@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import propensi.a04.sisdi.DTO.PengaduanDTOModel;
 import propensi.a04.sisdi.DTO.SkorDto;
 import propensi.a04.sisdi.model.KaryawanModel;
-import propensi.a04.sisdi.model.OrangTuaModel;
 import propensi.a04.sisdi.model.PengaduanModel;
 import propensi.a04.sisdi.model.StatusModel;
 import propensi.a04.sisdi.model.UserModel;

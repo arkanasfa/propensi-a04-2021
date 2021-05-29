@@ -2,6 +2,7 @@
 package propensi.a04.sisdi.service;
 
 import propensi.a04.sisdi.model.LemburModel;
+import propensi.a04.sisdi.model.UserModel;
 import propensi.a04.sisdi.repository.KaryawanDb;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,11 +19,11 @@ public class KaryawanServiceImpl implements KaryawanService{
     @Autowired
     private KaryawanDb karyawanDb;
 
-    //@Override
-    //public KaryawanModel getByUser(UserModel user){
-    //    KaryawanModel targetKaryawan = karyawanDb.findByUser(user);
-    //     return targetKaryawan;
-    //}
+//    @Override
+//    public KaryawanModel getById_user(UserModel user){
+//        KaryawanModel targetKaryawan = karyawanDb.findById_user(user);
+//         return targetKaryawan;
+//    }
 
     @Override
     public KaryawanModel updateSkorPengaduan(KaryawanModel karyawan) {

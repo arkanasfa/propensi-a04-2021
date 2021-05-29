@@ -47,10 +47,10 @@ public class PengajuanCutiModel implements Serializable{
     private Integer durasi;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_status", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "idstatus", referencedColumnName = "id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
-    private StatusModel id_status;
+    private StatusModel idstatus;
 
     public String getKode_cuti() {
         return kode_cuti;
@@ -121,12 +121,12 @@ public class PengajuanCutiModel implements Serializable{
         this.durasi = durasi;
     }
 
-    public StatusModel getId_status() {
-        return id_status;
+    public StatusModel getIdstatus() {
+        return idstatus;
     }
 
-    public void setId_status(StatusModel id_status) {
-        this.id_status = id_status;
+    public void setIdstatus(StatusModel id_status) {
+        this.idstatus = id_status;
     }
 
     public Integer getJenis() {

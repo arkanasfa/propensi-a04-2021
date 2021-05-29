@@ -26,10 +26,29 @@ public class UserController {
     private KaryawanService karyawanService;
 
     @Autowired
+
     private OrangTuaService orangTuaService;
 
     @Autowired
     private SiswaService siswaService;
+
+    private ManajerPendidikanService manajerPendidikanService;
+
+    @Autowired
+    private KepalaBagianService kepalaBagianService;
+
+    @Autowired
+    private PimpinanUnitService pimpinanUnitService;
+
+    @Autowired
+    private ManajerSDIService manajerSDIService;
+
+    @Autowired
+    private PengurusHarianService pengurusHarianService;
+
+    @Autowired
+    private WakilPengurusHarianService wakilPengurusHarianService;
+
 
     @Autowired
     private UserDb userDb;
@@ -94,6 +113,42 @@ public class UserController {
         }
         karyawan.setId_user(user);
         karyawanService.addKaryawan(karyawan);
+        if(user.getId_role().getId()==4){
+            ManajerPendidikanModel MP = new ManajerPendidikanModel();
+            MP.setId_karyawan(karyawan);
+            manajerPendidikanService.addManajerPendidikan(MP);
+            karyawan.setManajerPendidikanModel(MP);
+        }
+        else if(user.getId_role().getId()==5){
+            KepalaBagianModel KB = new KepalaBagianModel();
+            KB.setId_karyawan(karyawan);
+            kepalaBagianService.addKepalaBagian(KB);
+            karyawan.setKepalaBagianModel(KB);
+        }
+        if(user.getId_role().getId()==6){
+            PimpinanUnitModel PU = new PimpinanUnitModel();
+            PU.setId_karyawan(karyawan);
+            pimpinanUnitService.addPimpinanUnit(PU);
+            karyawan.setPimpinanUnitModel(PU);
+        }
+        else if(user.getId_role().getId()==7){
+            ManajerSDIModel MSDI = new ManajerSDIModel();
+            MSDI.setId_karyawan(karyawan);
+            manajerSDIService.addManajerSDI(MSDI);
+            karyawan.setManajerSDIModel(MSDI);
+        }
+        else if(user.getId_role().getId()==8){
+            PengurusHarianModel PH = new PengurusHarianModel();
+            PH.setId_karyawan(karyawan);
+            pengurusHarianService.addPengurusHarian(PH);
+            karyawan.setPengurusHarianModel(PH);
+        }
+        else if(user.getId_role().getId()==9){
+            WakilPengurusHarianModel WPH = new WakilPengurusHarianModel();
+            WPH.setId_karyawan(karyawan);
+            wakilPengurusHarianService.addWakilPengurusHarian(WPH);
+            karyawan.setWakilpengurusHarianModel(WPH);
+        }
         model.addAttribute("user", user);
         return "add-informasi-user";
     }

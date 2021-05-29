@@ -24,10 +24,10 @@ public class KepalaBagianModel implements Serializable{
     private Boolean identifikasiDivPendidikan;
 
     @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_karyawan", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "idkaryawan", referencedColumnName = "id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
-    private KaryawanModel id_karyawan;
+    private KaryawanModel idkaryawan;
 
     public Long getId() {
         return id;
@@ -46,11 +46,11 @@ public class KepalaBagianModel implements Serializable{
     }
 
     public KaryawanModel getId_karyawan() {
-        return id_karyawan;
+        return idkaryawan;
     }
 
     public void setId_karyawan(KaryawanModel id_karyawan) {
-        this.id_karyawan = id_karyawan;
+        this.idkaryawan = id_karyawan;
     }
 
 
