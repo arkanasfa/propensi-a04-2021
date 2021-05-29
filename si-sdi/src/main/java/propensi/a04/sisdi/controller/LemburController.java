@@ -42,7 +42,17 @@ public class LemburController {
             Model model) {
         KaryawanModel id_karyawan = karyawanDB.findById(Long.valueOf(3)).get();
         lembur.setId_karyawan(id_karyawan);
-        if (infalID.equals("NULL")==false) {
+        if(lemburService.generateDurasi(lembur)<=0){
+            String action = "dibuat";
+            String reason = "Jam selesai lebih dulu dari jam mulai";
+            model.addAttribute("action", action);
+            model.addAttribute("reason", reason);
+            return "notifikasi-gagal-lembur";
+        }
+        if(lembur.getJenis()==1){
+            lembur.setId_infal(null);
+        }
+        else if(lembur.getJenis()==2){
             Long idInfal = Long.valueOf(request.getParameter("infalID"));
             KaryawanModel id_karyawanInfal = karyawanDB.findById(idInfal).get();
             lembur.setId_infal(id_karyawanInfal);
@@ -77,13 +87,20 @@ public class LemburController {
             Model model) {
         KaryawanModel id_karyawan = karyawanDB.findById(Long.valueOf(3)).get();
         lembur.setId_karyawan(id_karyawan);
-        if (infalID.equals("NULL")==false) {
+        if(lemburService.generateDurasi(lembur)<=0){
+            String action = "diubah";
+            String reason = "Jam selesai lebih dulu dari jam mulai";
+            model.addAttribute("action", action);
+            model.addAttribute("reason", reason);
+            return "notifikasi-gagal-lembur";
+        }
+        if(lembur.getJenis()==1){
+            lembur.setId_infal(null);
+        }
+        else if(lembur.getJenis()==2){
             Long idInfal = Long.valueOf(request.getParameter("infalID"));
             KaryawanModel id_karyawanInfal = karyawanDB.findById(idInfal).get();
             lembur.setId_infal(id_karyawanInfal);
-        }
-        if (infalID.equals("NULL")==true) {
-            lembur.setId_infal(null);
         }
         String kode_lembur = lemburService.generateKodeLembur(lembur);
         lembur.setKode_lembur(kode_lembur);
@@ -93,14 +110,49 @@ public class LemburController {
     }
 
     @GetMapping("/detail")
-    private String detailLowongan(
+    private String detailLembur(
             @RequestParam(value="id") Long id,
             Model model){
         LemburModel lembur = lemburService.getLemburById(id);
         Integer durasi = lemburService.generateDurasi(lembur);
+        String menggantikan = "-";
+        if(lembur.getId_infal()!=null){
+            menggantikan = lembur.getId_infal().getKaryawan();
+        }
+        model.addAttribute("menggantikan",menggantikan);
         model.addAttribute("lembur",lembur);
         model.addAttribute("durasi",durasi);
         return "detail-lembur";
+    }
+
+    @GetMapping("/detail/verifikasi")
+    private String detailLemburVerifikasi(
+            @RequestParam(value="id") Long id,
+            Model model){
+        LemburModel lembur = lemburService.getLemburById(id);
+        Integer durasi = lemburService.generateDurasi(lembur);
+        String menggantikan = "-";
+        if(lembur.getId_infal()!=null){
+            menggantikan = lembur.getId_infal().getKaryawan();
+        }
+        model.addAttribute("menggantikan",menggantikan);
+        model.addAttribute("lembur",lembur);
+        model.addAttribute("durasi",durasi);
+        return "detail-lembur-verifikasi";
+    }
+
+    @GetMapping("/verifikasi")
+    private String verifikasiLembur(
+            @RequestParam(value="id") Long id,
+            @RequestParam(value="status") Long status,
+            Model model){
+        LemburModel lembur = lemburService.getLemburById(id);
+        String kode = lembur.getKode_lembur();
+        lembur.setId_status(statusDB.findById(status).get());
+        lemburService.changeLembur(lembur);
+        model.addAttribute("kode",kode);
+        model.addAttribute("status",statusDB.findById(status).get().getStatus());
+        return "verifikasi-lembur";
     }
 
     @GetMapping("/list")
@@ -109,6 +161,14 @@ public class LemburController {
         List<LemburModel> listLembur = lemburService.getLemburList();
         model.addAttribute("listLembur",listLembur);
         return "list-lembur";
+    }
+
+    @GetMapping("/list/verifikasi")
+    private String listVerifikasiLembur(
+            Model model){
+        List<LemburModel> listLembur = lemburService.getLemburList();
+        model.addAttribute("listLembur",listLembur);
+        return "list-lembur-verifikasi";
     }
 
     @GetMapping("/delete")

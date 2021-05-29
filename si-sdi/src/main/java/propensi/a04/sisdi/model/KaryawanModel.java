@@ -84,36 +84,22 @@ public class KaryawanModel implements Serializable{
     @Column(name="golongan",nullable=false)
     private Long golongan;
 
-//    @OneToOne(fetch = FetchType.EAGER)
-//    @JoinColumn(name = "uuidUser", referencedColumnName = "id", nullable = false)
-//    @OnDelete(action = OnDeleteAction.CASCADE)
-//    @JsonIgnore
-//    private UserModel user;
-//
-//    public UserModel getUser() {
-//        return user;
-//    }
-//
-//    public void setUser(UserModel user) {
-//        this.user = user;
-//    }
-
-    @OneToOne(mappedBy = "id_karyawan")
+    @OneToOne(mappedBy = "idkaryawan")
     private WakilPengurusHarianModel wakilpengurusHarianModel;
 
-    @OneToOne(mappedBy = "id_karyawan")
+    @OneToOne(mappedBy = "idkaryawan")
     private PengurusHarianModel pengurusHarianModel;
 
-    @OneToOne(mappedBy = "id_karyawan")
+    @OneToOne(mappedBy = "idkaryawan")
     private ManajerPendidikanModel manajerPendidikanModel;
 
-    @OneToOne(mappedBy = "id_karyawan")
+    @OneToOne(mappedBy = "idkaryawan")
     private PimpinanUnitModel pimpinanUnitModel;
 
-    @OneToOne(mappedBy = "id_karyawan")
+    @OneToOne(mappedBy = "idkaryawan")
     private ManajerSDIModel manajerSDIModel;
 
-    @OneToOne(mappedBy = "id_karyawan")
+    @OneToOne(mappedBy = "idkaryawan")
     private KepalaBagianModel kepalaBagianModel;
 
     @OneToOne(mappedBy = "id_karyawan")
@@ -139,6 +125,12 @@ public class KaryawanModel implements Serializable{
 
     @OneToOne(mappedBy = "id_infal")
     private LemburModel infal;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_user", referencedColumnName = "id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore
+    private UserModel id_user;
 
     public Long getId() {
         return id;
@@ -364,4 +356,11 @@ public class KaryawanModel implements Serializable{
         this.golongan = golongan;
     }
 
+    public UserModel getId_user() {
+        return id_user;
+    }
+
+    public void setId_user(UserModel id_user) {
+        this.id_user = id_user;
+    }
 }

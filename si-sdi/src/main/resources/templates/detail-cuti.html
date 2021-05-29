@@ -40,13 +40,6 @@
 <div class="container-fluid">
     <div class="row">
         <div class="card-body">
-            <div  class="container d-flex justify-content-center align-middle">
-                <div class="row">
-                    <div class="w-100"></div>
-                    <a th:href="@{/cuti/edit(id=${cuti.id})}" class="btn backgroundGreen">Edit</a>
-                    <a th:href="@{/cuti/delete(id=${cuti.id})}" class="btn backgroundPurple">Delete</a>
-                </div>
-            </div>
             <div class="col-md-8">
                 <table width="100%" border="0">
                         <td>
@@ -58,24 +51,27 @@
                                     <td style="font-weight: bold" th:text="${cuti.kode_cuti}"></td>
                                 </tr>
                                 <tr>
-                                    <td>Tanggal Pengajuan</td>
+                                    <td>Waktu Pengajuan</td>
                                     <td>:</td>
-                                    <td th:text="${cuti.tanggalRequest}"></td>
+                                    <td th:text="${cuti.tanggalRequest.getDate()} + '-' + ${cuti.tanggalRequest.getMonth()} + '-' + ${cuti.tanggalRequest.getYear()+1900} + ' ' + ${cuti.tanggalRequest.getHours()} + ':' + ${cuti.tanggalRequest.getMinutes()}"></td>
+
                                 </tr>
                                 <tr>
                                     <td>Tanggal Mulai</td>
                                     <td>:</td>
-                                    <td th:text="${cuti.tanggalMulai}"></td>
+                                    <td th:text="${cuti.tanggalMulai.getDate()} + '-' + ${cuti.tanggalMulai.getMonth()} + '-' + ${cuti.tanggalMulai.getYear()+1900}"></td>
+
                                 </tr>
                                 <tr>
                                     <td>Tanggal Selesai</td>
                                     <td>:</td>
-                                    <td th:text="${cuti.tanggalSelesai}"></td>
+                                    <td th:text="${cuti.tanggalSelesai.getDate()} + '-' + ${cuti.tanggalSelesai.getMonth()} + '-' + ${cuti.tanggalSelesai.getYear()+1900}"></td>
+
                                 </tr>
                                 <tr>
                                     <td>Durasi</td>
                                     <td>:</td>
-                                    <td th:text="${cuti.durasi}"></td>
+                                    <td th:text="${cuti.durasi} + ' hari'"></td>
                                 </tr>
                                 <tr>
                                     <td>Jenis</td>
@@ -94,7 +90,7 @@
                                 <tr>
                                     <td>Status</td>
                                     <td>:</td>
-                                    <td th:text="${cuti.id_status.status}"></td>
+                                    <td th:text="${cuti.idstatus.status}"></td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -109,13 +105,6 @@
 <div class="container-fluid">
     <div class="row">
         <div class="card-body">
-            <div  class="container d-flex justify-content-center align-middle">
-                <div class="row">
-                    <div class="w-100"></div>
-                    <a th:href="@{/cuti/setujui(id=${cuti.id})}" class="btn backgroundGreen">Setujui</a>
-                    <a th:href="@{/cuti/tolak(id=${cuti.id})}" class="btn backgroundPurple">Tolak</a>
-                </div>
-            </div>
             <div class="col-md-8">
                 <table width="100%" border="0">
                     <td>
@@ -132,24 +121,24 @@
                                 <td th:text="${cuti.id_karyawan.getKaryawan()}"></td>
                             </tr>
                             <tr>
-                                <td>Tanggal Pengajuan</td>
+                                <td>Waktu Pengajuan</td>
                                 <td>:</td>
-                                <td th:text="${cuti.tanggalRequest}"></td>
+                                <td th:text="${cuti.tanggalRequest.getDate()} + '-' + ${cuti.tanggalRequest.getMonth()} + '-' + ${cuti.tanggalRequest.getYear()+1900} + ' ' + ${cuti.tanggalRequest.getHours()} + ':' + ${cuti.tanggalRequest.getMinutes()}"></td>
                             </tr>
                             <tr>
                                 <td>Tanggal Mulai</td>
                                 <td>:</td>
-                                <td th:text="${cuti.tanggalMulai}"></td>
+                                <td th:text="${cuti.tanggalMulai.getDate()} + '-' + ${cuti.tanggalMulai.getMonth()} + '-' + ${cuti.tanggalMulai.getYear()+1900}"></td>
                             </tr>
                             <tr>
                                 <td>Tanggal Selesai</td>
                                 <td>:</td>
-                                <td th:text="${cuti.tanggalSelesai}"></td>
+                                <td th:text="${cuti.tanggalSelesai.getDate()} + '-' + ${cuti.tanggalSelesai.getMonth()} + '-' + ${cuti.tanggalSelesai.getYear()+1900}"></td>
                             </tr>
                             <tr>
                                 <td>Durasi</td>
                                 <td>:</td>
-                                <td th:text="${cuti.durasi}"></td>
+                                <td th:text="${cuti.durasi} + ' hari'"></td>
                             </tr>
                             <tr>
                                 <td>Jenis</td>
@@ -168,7 +157,7 @@
                             <tr>
                                 <td>Status</td>
                                 <td>:</td>
-                                <td th:text="${cuti.id_status.status}"></td>
+                                <td th:text="${cuti.idstatus.status}"></td>
                             </tr>
                             </tbody>
                         </table>
@@ -184,6 +173,10 @@
     <div class="row">
         <div class="card-body" id="pageBottom">
             <div class="pull-right">
+                <a th:href="@{/cuti/edit(id=${cuti.id})}" class="btn backgroundGreen">Edit</a>
+                <a th:href="@{/cuti/delete(id=${cuti.id})}" class="btn backgroundPurple">Cancel</a>
+                <a th:href="@{/cuti/setujui(id=${cuti.id})}" class="btn backgroundGreen">Approve</a>
+                <a th:href="@{/cuti/tolak(id=${cuti.id})}" class="btn backgroundPurple">Reject</a>
                 <a type="button" class="btn backgroundOrange " th:href="@{/cuti}">Back</a>
             </div>
         </div>

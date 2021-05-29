@@ -15,7 +15,7 @@ public interface PengajuanCutiService {
     Integer generateDurasi(PengajuanCutiModel cuti);
     PengajuanCutiModel changeCuti(PengajuanCutiModel cuti);
     Integer generateStartValid(PengajuanCutiModel cuti);
-//    List<PengajuanCutiModel> getPengajuanCutiById_Status(Long id);
+    List<PengajuanCutiModel> getPengajuanCutiById_Status(StatusModel stat);
     void setujuiCuti(PengajuanCutiModel cuti);
     void tolakCuti(PengajuanCutiModel cuti);
 }

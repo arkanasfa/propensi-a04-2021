@@ -90,17 +90,17 @@ public class PengajuanCutiServiceImpl implements PengajuanCutiService{
     @Override
     public void setujuiCuti(PengajuanCutiModel cuti) {
         StatusModel stat = statusDB.findById(Long.valueOf(4)).get();
-        cuti.setId_status(stat);
+        cuti.setIdstatus(stat);
     }
 
     @Override
     public void tolakCuti(PengajuanCutiModel cuti) {
         StatusModel stat = statusDB.findById(Long.valueOf(5)).get();
-        cuti.setId_status(stat);
+        cuti.setIdstatus(stat);
     }
 
-//    @Override
-//    public List<PengajuanCutiModel> getPengajuanCutiById_Status(Long id) {
-//        return pengajuanCutiDb.findAllById_status(id);
-//    }
+    @Override
+    public List<PengajuanCutiModel> getPengajuanCutiById_Status(StatusModel stat) {
+        return pengajuanCutiDb.findAllByIdstatus(stat);
+    }
 }

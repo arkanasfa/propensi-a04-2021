@@ -84,6 +84,11 @@ table.table-bordered > tbody > tr > th{
     color:black;
 }
 
+.backgroundMerah{
+    background-color:#F52323;
+    color:white;
+}
+
 .backgroundBtnViewAll {
     color: black;
 }
@@ -102,6 +107,12 @@ table.table-bordered > tbody > tr > th{
     margin-top: 20px;
     background-color: white; !important;
     text-align: right;
+}
+
+#pageBottomLeft{
+    margin-top: 20px;
+    background-color: white; !important;
+    text-align: left;
 }
 
 .search_select_box{
