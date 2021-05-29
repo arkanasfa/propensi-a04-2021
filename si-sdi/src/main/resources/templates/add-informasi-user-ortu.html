@@ -3,24 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <!--    Jangan Lupa diisi!-->
-    <title>Pengaduan Notification</title>
+    <title>Payroll Notification</title>
     <object th:include="fragments/fragment :: cssjs" th:remove="tag"></object>
     <!--    Default Style untuk semua page-->
     <link rel="stylesheet" th:href="@{/css/default-style.css}" />
 </head>
 <body>
-    <style>
+<style>
     #statusLogo {
-        max-width: 10%;
+        max-width: 10%; !important;
         height: auto;
         text-align: center;
     }
-    </style>
+</style>
 <div class="container-fluid" >
     <div class="col-auto" >
         <!--    formatnya: sidebar([NamaHalaman] = 'highlight'). Buat nge highlight sidebar kalo lagi di halaman itu-->
         <!--                Kecuali buat cuti izin dan lembur infal. gak pake garing karena jadi eror kalo pake garing-->
-        <object th:replace="fragments/fragment :: sidebar(Pengaduan= 'highlight')" th:remove="tag"></object>
+        <object th:replace="fragments/fragment :: sidebar(Payroll= 'highlight')" th:remove="tag"></object>
     </div>
 </div>
 
@@ -28,7 +28,7 @@
 <div class="container-fluid">
     <div class="row">
         <div class="card-body" id="pageTitle">
-            <h3 class="colorGreen">Pengaduan Notification</h3>
+            <h3 class="colorGreen">User Notification</h3>
         </div>
     </div>
 </div>
@@ -37,20 +37,14 @@
         <div class="card-body">
             <img id="statusLogo" th:src="@{/images/Success.png}"/>
             <br> <br>
-            <h2 class="col d-flex justify-content-center mb-3" th:text="'Pengaduan dengan kode ' + ${kode} + ' berhasil ditolak'"></h2>
+            <h2 class="col d-flex justify-content-center mb-3" th:text="'Informasi Orangtua dari Pengguna dengan username ' + ${user.username} + ' berhasil dibuat.'"></h2>
+            <br><br><br>
+            <a th:href="@{/}" class="btn btn-light col d-flex justify-content-center ml-1 mr-1">Kembali</a>
         </div>
     </div>
 </div>
 
 <!--    Container untuk bagian setelah abu abu-->
-<div class="container-fluid">
-    <div class="row">
-        <div class="card-body" id="pageBottom">
-            <div class="pull-right">
-                <a type="button" class="btn backgroundOrange" th:href="@{/pengaduan/viewall}">Back</a>
-            </div>
-        </div>
-    </div>
-</div>
+
 </body>
 </html>
