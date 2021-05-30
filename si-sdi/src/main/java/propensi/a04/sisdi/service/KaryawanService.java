@@ -8,7 +8,7 @@ import propensi.a04.sisdi.model.KaryawanModel;
 import propensi.a04.sisdi.model.UserModel;
 
 public interface KaryawanService {
-//    KaryawanModel getById_user(UserModel user);
+    KaryawanModel getByIduser(UserModel user);
     KaryawanModel updateSkorPengaduan(KaryawanModel karyawan);
     List<KaryawanModel> getListKaryawan();
     KaryawanModel getKaryawanbyId(Long id);

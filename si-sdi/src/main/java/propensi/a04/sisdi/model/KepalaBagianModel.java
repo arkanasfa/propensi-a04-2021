@@ -19,11 +19,7 @@ public class KepalaBagianModel implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
-    @Column(name="identifikasiDivPendidikan",nullable = false)
-    private Boolean identifikasiDivPendidikan;
-
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.EAGER,cascade=CascadeType.ALL)
     @JoinColumn(name = "idkaryawan", referencedColumnName = "id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
@@ -35,14 +31,6 @@ public class KepalaBagianModel implements Serializable{
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Boolean getIdentifikasiDivPendidikan() {
-        return identifikasiDivPendidikan;
-    }
-
-    public void setIdentifikasiDivPendidikan(Boolean identifikasiDivPendidikan) {
-        this.identifikasiDivPendidikan = identifikasiDivPendidikan;
     }
 
     public KaryawanModel getId_karyawan() {

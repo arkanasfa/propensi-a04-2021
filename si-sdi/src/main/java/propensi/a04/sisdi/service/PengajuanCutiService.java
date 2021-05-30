@@ -18,4 +18,6 @@ public interface PengajuanCutiService {
     List<PengajuanCutiModel> getPengajuanCutiById_Status(StatusModel stat);
     void setujuiCuti(PengajuanCutiModel cuti);
     void tolakCuti(PengajuanCutiModel cuti);
+    void batalkanCuti(PengajuanCutiModel cuti);
+    void tolakPembatalanCuti(PengajuanCutiModel cuti);
 }

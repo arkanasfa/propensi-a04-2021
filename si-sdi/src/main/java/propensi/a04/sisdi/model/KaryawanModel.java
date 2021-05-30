@@ -127,10 +127,10 @@ public class KaryawanModel implements Serializable{
     private LemburModel infal;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_user", referencedColumnName = "id")
+    @JoinColumn(name = "iduser", referencedColumnName = "id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
-    private UserModel id_user;
+    private UserModel iduser;
 
     public Long getId() {
         return id;
@@ -357,10 +357,10 @@ public class KaryawanModel implements Serializable{
     }
 
     public UserModel getId_user() {
-        return id_user;
+        return iduser;
     }
 
     public void setId_user(UserModel id_user) {
-        this.id_user = id_user;
+        this.iduser = id_user;
     }
 }
