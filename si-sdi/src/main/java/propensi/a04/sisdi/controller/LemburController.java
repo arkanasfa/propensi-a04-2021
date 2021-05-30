@@ -1,5 +1,6 @@
 package propensi.a04.sisdi.controller;
 
+import org.apache.tomcat.jni.User;
 import propensi.a04.sisdi.model.*;
 import propensi.a04.sisdi.repository.KaryawanDb;
 import propensi.a04.sisdi.repository.StatusDB;
@@ -20,6 +21,12 @@ public class LemburController {
     LemburService lemburService;
 
     @Autowired
+    UserService userService;
+
+    @Autowired
+    StatusService statusService;
+
+    @Autowired
     KaryawanDb karyawanDB;
 
     @Autowired
@@ -27,8 +34,15 @@ public class LemburController {
 
     @GetMapping("/tambah")
     private String addLemburForm(
+            @RequestParam(value="username") String username,
             Model model) {
         List<KaryawanModel> karyawanList = karyawanDB.findAll();
+        UserModel user = userService.findbyUsername(username);
+        for(int i=0;i<karyawanList.size();i++){
+            if(karyawanList.get(i).getId()==(user.getKaryawanModel().getId())){
+                karyawanList.remove(i);
+            }
+        }
         model.addAttribute("lembur", new LemburModel());
         model.addAttribute("karyawanList",karyawanList);
         return "form-add-lembur";
@@ -37,14 +51,25 @@ public class LemburController {
     @RequestMapping(value="/tambah", method = RequestMethod.POST)
     private String addLowonganSubmit(
             @ModelAttribute LemburModel lembur,
+            @RequestParam(value="username") String username,
             @RequestParam("infalID") String infalID,
             HttpServletRequest request,
             Model model) {
-        KaryawanModel id_karyawan = karyawanDB.findById(Long.valueOf(3)).get();
-        lembur.setId_karyawan(id_karyawan);
+        UserModel user = userService.findbyUsername(username);
+        lembur.setId_karyawan(user.getKaryawanModel());
+        Date date = new Date();
+        lembur.setTanggalRequest(date);
         if(lemburService.generateDurasi(lembur)<=0){
             String action = "dibuat";
             String reason = "Jam selesai lebih dulu dari jam mulai";
+            model.addAttribute("action", action);
+            model.addAttribute("reason", reason);
+            return "notifikasi-gagal-lembur";
+        }
+
+        if(lembur.getTanggalLembur().before(lembur.getTanggalRequest())){
+            String action = "dibuat";
+            String reason = "Tanggal lembur lebih dulu dari tanggal hari ini";
             model.addAttribute("action", action);
             model.addAttribute("reason", reason);
             return "notifikasi-gagal-lembur";
@@ -59,10 +84,8 @@ public class LemburController {
         }
         String kode_lembur = lemburService.generateKodeLembur(lembur);
         lembur.setKode_lembur(kode_lembur);
-        StatusModel id_status = statusDB.findById(Long.valueOf(1)).get();
+        StatusModel id_status = statusService.getStatusById(Long.valueOf(1));
         lembur.setId_status(id_status);
-        Date date = new Date();
-        lembur.setTanggalRequest(date);
         lemburService.addLembur(lembur);
         model.addAttribute("kode", lembur.getKode_lembur());
         return "add-lembur";
@@ -73,7 +96,13 @@ public class LemburController {
             @RequestParam(value="id") Long id,
             Model model) {
         LemburModel lembur = lemburService.getLemburById(id);
+        KaryawanModel karyawan = lembur.getId_karyawan();
         List<KaryawanModel> karyawanList = karyawanDB.findAll();
+        for(int i=0;i<karyawanList.size();i++){
+            if(karyawanList.get(i).getId()==(karyawan.getId())){
+                karyawanList.remove(i);
+            }
+        }
         model.addAttribute("lembur", lembur);
         model.addAttribute("karyawanList",karyawanList);
         return "form-change-lembur";
@@ -82,14 +111,24 @@ public class LemburController {
     @RequestMapping(value="/ubah", method = RequestMethod.POST)
     private String changeLowonganSubmit(
             @ModelAttribute LemburModel lembur,
+            @RequestParam(value="username") String username,
             @RequestParam("infalID") String infalID,
             HttpServletRequest request,
             Model model) {
-        KaryawanModel id_karyawan = karyawanDB.findById(Long.valueOf(3)).get();
-        lembur.setId_karyawan(id_karyawan);
+        UserModel user = userService.findbyUsername(username);
+        lembur.setId_karyawan(user.getKaryawanModel());
+        Date date = new Date();
+        lembur.setTanggalRequest(date);
         if(lemburService.generateDurasi(lembur)<=0){
             String action = "diubah";
             String reason = "Jam selesai lebih dulu dari jam mulai";
+            model.addAttribute("action", action);
+            model.addAttribute("reason", reason);
+            return "notifikasi-gagal-lembur";
+        }
+        if(lembur.getTanggalLembur().before(lembur.getTanggalRequest())){
+            String action = "diubah";
+            String reason = "Tanggal lembur lebih dulu dari tanggal hari ini";
             model.addAttribute("action", action);
             model.addAttribute("reason", reason);
             return "notifikasi-gagal-lembur";
