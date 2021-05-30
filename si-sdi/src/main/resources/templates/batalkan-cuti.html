@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <!--    Jangan Lupa diisi!-->
+    <title>Detail Pengajuan Cuti/Lembur</title>
+    <object th:include="fragments/fragment :: cssjs" th:remove="tag"></object>
+    <!--    Default Style untuk semua page-->
+    <link rel="stylesheet" th:href="@{/css/default-style.css}" />
+
+
+</head>
+<body>
+<div class="container-fluid" >
+    <div class="col-auto" >
+        <!--    formatnya: sidebar([NamaHalaman] = 'highlight'). Buat nge highlight sidebar kalo lagi di halaman itu-->
+        <!--                Kecuali buat cuti izin dan lembur infal. gak pake garing karena jadi eror kalo pake garing-->
+        <object th:replace="fragments/fragment :: sidebar(CutiIzin= 'highlight')" th:remove="tag"></object>
+    </div>
+</div>
+
+<!--    Container untuk bagian sebelum abu abu-->
+<div class="container-fluid">
+    <div class="row">
+        <div class="card-body" id="pageTitle">
+            <h3 class="colorGreen">Detail Pembatalan Cuti/Izin</h3>
+        </div>
+    </div>
+</div>
+
+<!--    Dalem abu-abu-->
+<div  class="container d-flex justify-content-center align-middle">
+    <div class="row">
+        <div class="w-100"></div>
+        <h2 class="col d-flex justify-content-center mb-3"
+            th:text="'Cuti dengan kode ' + ${kode_cuti} + ' akan dievaluasi untuk pembatalan. Pembatalan hanya dapat dilakukan jika Approval menyetujui. Mohon mengecek status pembatalan secara berkala.'"></h2>
+        <div class="w-100"></div>
+        <br><br><br>
+        <a th:href="@{/cuti}" class="btn btn-light col d-flex justify-content-center ml-1 mr-1">Back</a>
+    </div>
+</div>
+<!--Ini section yang bakal popup. Copy dari sini buat setiap halaman yang ada pop up-->
+<div id="popUp" class="modal">
+    <span onclick="document.getElementById('popup').style.display='none'"  title="Close Modal">×</span>
+    <!--    Ini jangan lupa diisi actionnya-->
+    <div class="modal-content">
+        <div class="container">
+            <img th:src="@{/images/warning.png}"/>
+            <br><br>
+            <!--            custom sendiri yaa-->
+            <p>Apakah anda yakin ingin menghapus pengajuan cuti?</p>
+            <div class="clearfix">
+                <button type="button" onclick="document.getElementById('popUp').style.display='none'" class="btn backgroundOrange">Cancel</button>
+                <!--                ini juga custom!-->
+                <button type="submit" onclick="document.getElementById('popUP').style.display='none'" class="btn backgroundPurple">Hapus</button>
+            </div>
+        </div>
+    </div>
+</div>
+</form>
+
+</body>
+</html>

@@ -22,6 +22,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/css/**").permitAll()
                 .antMatchers("/js/**").permitAll()
                 .antMatchers("/images/**").permitAll()
+                .antMatchers("/cuti/kelola").hasAnyAuthority("Pimpinan Unit", "Kepala Bagian", "Manajer SDI")
+                .antMatchers("/cuti/detail/kelola").hasAnyAuthority("Pimpinan Unit", "Kepala Bagian", "Manajer SDI")
+                .antMatchers("/cuti/tolak").hasAnyAuthority("Pimpinan Unit", "Kepala Bagian", "Manajer SDI")
+                .antMatchers("/cuti/setujui").hasAnyAuthority("Pimpinan Unit", "Kepala Bagian", "Manajer SDI")
+
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()

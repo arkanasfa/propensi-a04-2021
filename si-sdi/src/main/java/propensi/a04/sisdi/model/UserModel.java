@@ -39,7 +39,7 @@ public class UserModel implements Serializable{
     @JsonIgnore
     private RoleModel id_role;
 
-    @OneToOne(mappedBy = "id_user")
+    @OneToOne(mappedBy = "iduser")
     private KaryawanModel karyawanModel;
 
 

@@ -65,6 +65,12 @@ public class PengajuanCutiServiceImpl implements PengajuanCutiService{
     }
 
     @Override
+    public void batalkanCuti(PengajuanCutiModel cuti) {
+        StatusModel pembatalanPU = statusDB.findById(Long.valueOf(10)).get();
+        cuti.setIdstatus(pembatalanPU);
+    }
+
+    @Override
     public String generateKodeCuti(PengajuanCutiModel cuti) {
         Random rand = new Random();
         String generate = "CT" + "-" + Integer.toString(cuti.getJenis()) + "-" + Integer.toString(rand.nextInt(9)) + Integer.toString(rand.nextInt(9)) + Integer.toString(rand.nextInt(9)) + Integer.toString(rand.nextInt(9));
@@ -89,13 +95,41 @@ public class PengajuanCutiServiceImpl implements PengajuanCutiService{
 
     @Override
     public void setujuiCuti(PengajuanCutiModel cuti) {
-        StatusModel stat = statusDB.findById(Long.valueOf(4)).get();
-        cuti.setIdstatus(stat);
+        if(cuti.getIdstatus().getId()==1) {
+            StatusModel stat = statusDB.findById(Long.valueOf(2)).get();
+            cuti.setIdstatus(stat);
+        }
+        else if(cuti.getIdstatus().getId()==2){
+            StatusModel stat = statusDB.findById(Long.valueOf(3)).get();
+            cuti.setIdstatus(stat);
+        }
+        else if(cuti.getIdstatus().getId()==10){
+            StatusModel stat = statusDB.findById(Long.valueOf(11)).get();
+            cuti.setIdstatus(stat);
+        }
+        else if(cuti.getIdstatus().getId()==11){
+            StatusModel stat = statusDB.findById(Long.valueOf(16)).get();
+            cuti.setIdstatus(stat);
+        }
+        else if(cuti.getIdstatus().getId()==16){
+            StatusModel stat = statusDB.findById(Long.valueOf(4)).get();
+            cuti.setIdstatus(stat);
+        }
+        else {
+            StatusModel stat = statusDB.findById(Long.valueOf(7)).get();
+            cuti.setIdstatus(stat);
+        }
     }
 
     @Override
     public void tolakCuti(PengajuanCutiModel cuti) {
         StatusModel stat = statusDB.findById(Long.valueOf(5)).get();
+        cuti.setIdstatus(stat);
+    }
+
+    @Override
+    public void tolakPembatalanCuti(PengajuanCutiModel cuti) {
+        StatusModel stat = statusDB.findById(Long.valueOf(7)).get();
         cuti.setIdstatus(stat);
     }
 
