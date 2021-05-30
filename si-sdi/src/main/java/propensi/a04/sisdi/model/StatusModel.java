@@ -37,7 +37,7 @@ public class StatusModel implements Serializable{
     @JsonIgnore
     private List<DokumenTotalModel> statusDokumen;
 
-    @OneToMany(mappedBy = "id_status", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "idstatus", fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     private List<PengajuanCutiModel> statusCuti;

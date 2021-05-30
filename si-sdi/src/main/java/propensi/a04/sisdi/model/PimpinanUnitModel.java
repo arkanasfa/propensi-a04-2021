@@ -19,11 +19,11 @@ public class PimpinanUnitModel implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_karyawan", referencedColumnName = "id", nullable = false)
+    @OneToOne(fetch = FetchType.EAGER,cascade=CascadeType.ALL)
+    @JoinColumn(name = "idkaryawan", referencedColumnName = "id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
-    private KaryawanModel id_karyawan;
+    private KaryawanModel idkaryawan;
 
     public Long getId() {
         return id;
@@ -34,11 +34,11 @@ public class PimpinanUnitModel implements Serializable{
     }
 
     public KaryawanModel getId_karyawan() {
-        return id_karyawan;
+        return idkaryawan;
     }
 
     public void setId_karyawan(KaryawanModel id_karyawan) {
-        this.id_karyawan = id_karyawan;
+        this.idkaryawan = id_karyawan;
     }
 
 

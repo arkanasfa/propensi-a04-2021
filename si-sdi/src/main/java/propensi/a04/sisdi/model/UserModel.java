@@ -51,7 +51,7 @@ public class UserModel implements Serializable{
 //        this.karyawan = karyawan;
 //    }
 //
-//    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    @OneToOne(mappedBy = "user")
 //    private KaryawanModel karyawan;
 
     // @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)

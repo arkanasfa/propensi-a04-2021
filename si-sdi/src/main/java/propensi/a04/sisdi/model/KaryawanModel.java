@@ -84,22 +84,22 @@ public class KaryawanModel implements Serializable{
     @Column(name="golongan",nullable=false)
     private Long golongan;
 
-    @OneToOne(mappedBy = "id_karyawan")
+    @OneToOne(mappedBy = "idkaryawan")
     private WakilPengurusHarianModel wakilpengurusHarianModel;
 
-    @OneToOne(mappedBy = "id_karyawan")
+    @OneToOne(mappedBy = "idkaryawan")
     private PengurusHarianModel pengurusHarianModel;
 
-    @OneToOne(mappedBy = "id_karyawan")
+    @OneToOne(mappedBy = "idkaryawan")
     private ManajerPendidikanModel manajerPendidikanModel;
 
-    @OneToOne(mappedBy = "id_karyawan")
+    @OneToOne(mappedBy = "idkaryawan")
     private PimpinanUnitModel pimpinanUnitModel;
 
-    @OneToOne(mappedBy = "id_karyawan")
+    @OneToOne(mappedBy = "idkaryawan")
     private ManajerSDIModel manajerSDIModel;
 
-    @OneToOne(mappedBy = "id_karyawan")
+    @OneToOne(mappedBy = "idkaryawan")
     private KepalaBagianModel kepalaBagianModel;
 
     @OneToOne(mappedBy = "id_karyawan")

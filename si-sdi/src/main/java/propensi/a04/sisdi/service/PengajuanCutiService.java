@@ -1,6 +1,7 @@
 package propensi.a04.sisdi.service;
 
 import propensi.a04.sisdi.model.PengajuanCutiModel;
+import propensi.a04.sisdi.model.StatusModel;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,4 +14,8 @@ public interface PengajuanCutiService {
     String generateKodeCuti(PengajuanCutiModel cuti);
     Integer generateDurasi(PengajuanCutiModel cuti);
     PengajuanCutiModel changeCuti(PengajuanCutiModel cuti);
+    Integer generateStartValid(PengajuanCutiModel cuti);
+    List<PengajuanCutiModel> getPengajuanCutiById_Status(StatusModel stat);
+    void setujuiCuti(PengajuanCutiModel cuti);
+    void tolakCuti(PengajuanCutiModel cuti);
 }
