@@ -26,6 +26,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/cuti/detail/kelola").hasAnyAuthority("Pimpinan Unit", "Kepala Bagian", "Manajer SDI")
                 .antMatchers("/cuti/tolak").hasAnyAuthority("Pimpinan Unit", "Kepala Bagian", "Manajer SDI")
                 .antMatchers("/cuti/setujui").hasAnyAuthority("Pimpinan Unit", "Kepala Bagian", "Manajer SDI")
+                .antMatchers("/pengaduan/kelola/view/selesai").hasAnyAuthority("Pimpinan Unit", "Kepala Bagian", "Manajer SDI")
+                .antMatchers("/pengaduan/kelola/view/teruskan").hasAnyAuthority("Pimpinan Unit", "Kepala Bagian", "Manajer SDI")
+                .antMatchers("/pengaduan/kelola/view/tolak").hasAnyAuthority("Pimpinan Unit", "Kepala Bagian", "Manajer SDI")
+                .antMatchers("/pengaduan/kelola/view").hasAnyAuthority("Pimpinan Unit", "Kepala Bagian", "Manajer SDI")
+                .antMatchers("/pengaduan/view-all").hasAnyAuthority("Pimpinan Unit", "Kepala Bagian", "Manajer SDI")
 
                 .anyRequest().authenticated()
                 .and()

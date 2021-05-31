@@ -26,6 +26,12 @@ public class UserController {
     private KaryawanService karyawanService;
 
     @Autowired
+    private OrangTuaService orangTuaService;
+
+    @Autowired
+    private SiswaService siswaService;
+    
+    @Autowired
     private ManajerPendidikanService manajerPendidikanService;
 
     @Autowired
@@ -42,6 +48,7 @@ public class UserController {
 
     @Autowired
     private WakilPengurusHarianService wakilPengurusHarianService;
+
 
     @Autowired
     private UserDb userDb;
@@ -69,7 +76,9 @@ public class UserController {
             Model model) {
         UserModel user = userService.findbyUsername(username);
         if(user.getId_role().getId()==1){
+            List<SiswaModel> listSiswa = siswaService.getListSiswa();
             model.addAttribute("orangtua", new OrangTuaModel());
+            model.addAttribute("listsiswa", listSiswa);
             model.addAttribute("user", user);
             return "form-user-orangtua";
         }
@@ -85,9 +94,23 @@ public class UserController {
 
     @RequestMapping(value ="/addUser/InformasiKaryawan", method = RequestMethod.POST)
     public String addDetailUserSubmit(@ModelAttribute KaryawanModel karyawan,
+                                        @ModelAttribute OrangTuaModel orangtua,
+                                        @ModelAttribute SiswaModel siswa,
                                       @RequestParam(value="username") String username,
                                       Model model){
         UserModel user = userService.findbyUsername(username);
+        if(user.getId_role().getId()==1){
+            orangtua.setId_userOrtu(user);
+            orangTuaService.addOrangTua(orangtua);
+            model.addAttribute("user", user);
+            return "add-informasi-user-ortu";
+        }
+        else if(user.getId_role().getId()==2){
+            siswa.setId_userSiswa(user);
+            siswaService.addSiswa(siswa);
+            model.addAttribute("user", user);
+            return "add-informasi-user-siswa";
+        }
         karyawan.setId_user(user);
         karyawanService.addKaryawan(karyawan);
         if(user.getId_role().getId()==4){
