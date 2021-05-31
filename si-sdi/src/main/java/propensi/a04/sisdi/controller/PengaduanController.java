@@ -103,7 +103,6 @@ public class PengaduanController {
     ){  PengaduanModel pengaduan = pengaduanService.getPengaduanById(id);
 
         model.addAttribute("pengaduan", pengaduan);
-        
         return "view-pengaduan";
                
     }
