@@ -155,11 +155,8 @@ public class PengajuanCutiController {
                         durasi2 = durasi2 - listCutiKaryawan.get(i).getDurasi();
                     }
                 }
-                System.out.print(durasi);
-                System.out.print(durasi2);
-                System.out.print(karyawan.getJumlahCuti());
 
-                if (gap < 0 && (durasi+karyawan.getJumlahCuti()+durasi2<13)) {
+                if (durasi>0 && gap <= 0 && (durasi+karyawan.getJumlahCuti()+durasi2<13)) {
                     cuti.setDurasi(durasi);
                     pengajuanCutiService.addCuti(cuti);
                     model.addAttribute("kode_cuti", cuti.getKode_cuti());
@@ -211,7 +208,7 @@ public class PengajuanCutiController {
                 }
             }
 
-            if (gap < 0 && (durasi+karyawan.getJumlahCuti()+durasi2<13)) {
+            if (durasi>0 && gap <= 0 && (durasi+karyawan.getJumlahCuti()+durasi2<13)) {
                 cuti.setDurasi(durasi);
                 pengajuanCutiService.changeCuti(cuti);
                 model.addAttribute("kode_cuti", cuti.getKode_cuti());
