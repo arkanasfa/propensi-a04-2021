@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <!--    Jangan Lupa diisi!-->
+    <title>Detail Pengaduan Saya</title>
+    <object th:include="fragments/fragment :: cssjs" th:remove="tag"></object>
+    <!--    Default Style untuk semua page-->
+    <link rel="stylesheet" th:href="@{/css/default-style.css}" />
+
+
+</head>
+<body>
+<div class="container-fluid" >
+    <div class="col-auto" >
+        <!--    formatnya: sidebar([NamaHalaman] = 'highlight'). Buat nge highlight sidebar kalo lagi di halaman itu-->
+        <!--                Kecuali buat cuti izin dan lembur infal. gak pake garing karena jadi eror kalo pake garing-->
+        <object th:replace="fragments/fragment :: sidebar(Pengaduan = 'highlight')" th:remove="tag"></object>
+    </div>
+</div>
+
+<!--    Container untuk bagian sebelum abu abu-->
+<div class="container-fluid">
+    <div class="row">
+        <div class="card-body" id="pageTitle">
+            <h3 class="colorGreen">Detail Pengaduan</h3>
+            <!-- <form class="float-right" id="FORMskor">
+                <a type="button" class="btn backgroundPurple " disabled>Skor</a>
+                <select name="skor" id="skor">
+                <option value="0" selected>0</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+                <option value="75">75</option>
+                <option value="100">100</option>
+                </select>
+            </form> -->
+        </div>
+    </div>
+</div>
+
+<!--    Dalem abu-abu-->
+<div class="container-fluid">
+    <div class="row">
+        <div class="card-body">
+            <h2  class="col d-flex justify-content-center mb-3"> Detail Pengaduan: </h2>
+            <br>
+            <div class="row">
+                <div class="col-25">
+                  <h5>Kode Pengaduan&emsp;&ensp; : &emsp;</h5>
+                </div>
+                <div class="col-75">
+                    <h5 th:text="${pengaduan.kode_pengaduan}"></h5>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-25">
+                  <h5>Tanggal Diajukan&ensp;&emsp;: &emsp; </h5>
+                </div>
+                <div class="col-75">
+                    <h5 th:text="${pengaduan.tanggalPengaduan}"></h5>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-25">
+                  <h5 >Nama Karyawan &emsp; &ensp;: &emsp;</h5>
+                </div>
+                <div class="col-75">
+                    <h5 th:text="${pengaduan.no_karyawan.karyawan}"></h5>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-25">
+                  <h5>Status &emsp; &emsp; &emsp; &emsp; &ensp; : &ensp;</h5>
+                </div>
+                <div class="col-75">
+                    <h5 class="col d-flex justify-content-center">
+                        <div th:text="${pengaduan.id_status.status}"></div>
+                    </h5>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-25">
+                  <h5>Detail Pengaduan &emsp;: &emsp;</h5>
+                </div>
+                <div class="col-75">
+                    <h5 th:text="${pengaduan.detailPengaduan}"></h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--    Container untuk bagian setelah abu abu-->
+<div class="container-fluid">
+    <div class="row">
+        <div class="card-body" id="pageBottom">
+            <div class="pull-left">
+                <a type="button" class="btn backgroundOrange float-left" th:href="@{/pengaduan/view-all}">Back</a>
+            </div>
+            <div class="pull-right">
+                <a type="button" class="btn backgroundMerah " th:href="@{/pengaduan/kelola/view/tolak(id=${pengaduan.id})}">Tolak</a>
+                <a type="submit" form="FORMskor" value="Submit" formmethod="post" class="btn backgroundGreen " th:href="@{/pengaduan/kelola/view/selesai(id=${pengaduan.id})}">Selesai</a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

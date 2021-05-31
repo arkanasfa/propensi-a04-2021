@@ -47,4 +47,19 @@ public class UserServiceImpl implements UserService {
         return userDb.findByUsername(username);
     }
 
+    @Override
+    public UserModel getCurrentUser(){
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username = "";
+
+        if (principal instanceof UserDetails) {
+            username = ((UserDetails)principal).getUsername();
+        }
+        else {
+            username = principal.toString();
+        }
+
+        return userDb.findByUsername(username);
+    }
+
 }

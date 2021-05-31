@@ -19,10 +19,14 @@ import propensi.a04.sisdi.DTO.SkorDto;
 import propensi.a04.sisdi.model.KaryawanModel;
 import propensi.a04.sisdi.model.PengaduanModel;
 import propensi.a04.sisdi.model.StatusModel;
+import propensi.a04.sisdi.model.UserModel;
 import propensi.a04.sisdi.repository.KaryawanDb;
 import propensi.a04.sisdi.repository.StatusDB;
 import propensi.a04.sisdi.service.KaryawanService;
+import propensi.a04.sisdi.service.OrangTuaService;
 import propensi.a04.sisdi.service.PengaduanService;
+import propensi.a04.sisdi.service.UserService;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -43,6 +47,12 @@ public class PengaduanController {
     @Autowired
     StatusDB statusDB;
 
+    @Autowired
+    UserService userService;
+
+    @Autowired
+    OrangTuaService orangTuaService;
+
     @GetMapping("/add")
     public String addPengaduanFormPage(Model model){
         List<KaryawanModel> listKaryawan = karyawanService.getListKaryawan();
@@ -57,7 +67,7 @@ public class PengaduanController {
         @ModelAttribute PengaduanDTOModel pengaduanDTO,
         Model model
     ){
-
+        UserModel user = userService.getCurrentUser();
         PengaduanModel pengaduan = new PengaduanModel();
         if (pengaduanDTO.getNo_karyawan()==null||pengaduanDTO.getDetailPengaduan()==""){
             return "add-pengaduan-gagal";
@@ -73,13 +83,14 @@ public class PengaduanController {
         pengaduan.setKode_pengaduan(kode_pengaduan);
         pengaduan.setTanggalPengaduan(LocalDate.now(ZoneId.of("Asia/Jakarta")));
         
-        StatusModel id_status = statusDB.findById(Long.valueOf(2)).get();
-        pengaduan.setId_status(id_status);
-        
+        StatusModel diajukan = statusDB.findById(Long.valueOf(1)).get();
+        pengaduan.setId_status(diajukan);
+        pengaduan.setId_user(user);
 
         PengaduanModel tmpPengaduan = pengaduanService.addPengaduan(pengaduan); 
         tmpPengaduan.setKode_pengaduan(pengaduanService.generateKodePengaduan(tmpPengaduan));
         pengaduanService.addPengaduan(tmpPengaduan);
+
         model.addAttribute("kode", pengaduan.getKode_pengaduan());
 
         return "add-pengaduan";
@@ -89,45 +100,80 @@ public class PengaduanController {
     public String viewDetailPengaduan(
         @RequestParam(value = "id") Long id,
         Model model
-    ){  PengaduanModel pengaduan = pengaduanService.getPengaduanById(id);    
+    ){  PengaduanModel pengaduan = pengaduanService.getPengaduanById(id);
+
         model.addAttribute("pengaduan", pengaduan);
-        
         return "view-pengaduan";
                
     }
 
     @GetMapping("/viewall")
     public String listPengaduan(Model model) {
-        List<PengaduanModel> listPengaduan = pengaduanService.getPengaduanList();
+        UserModel user = userService.getCurrentUser();
+        List<PengaduanModel> listPengaduan = user.getListPengaduan();
         model.addAttribute("listPengaduan",listPengaduan);
-
         return "viewall-pengaduan";
+        
     }
 
     //mengelola
     @GetMapping("/view-all")
     public String listkasusPengaduan(Model model) {
-        List<PengaduanModel> listPengaduan = pengaduanService.getPengaduanList();
-        List<PengaduanModel> list = new ArrayList<PengaduanModel>();
+        UserModel user = userService.getCurrentUser();
+        if(user.getId_role().getId()==6){
+            List<PengaduanModel> listPengaduan = pengaduanService.getPengaduanList();
+            List<PengaduanModel> list = new ArrayList<PengaduanModel>();
         
 
-       for (int i=0; i<listPengaduan.size();i++){
-           if(listPengaduan.get(i).getId_status().getId().equals(Long.valueOf(2))
-                ||listPengaduan.get(i).getId_status().getId().equals(Long.valueOf(7))){
+            for (int i=0; i<listPengaduan.size();i++){
+                if(listPengaduan.get(i).getId_status().getId().equals(Long.valueOf(1))){
 
-               list.add(listPengaduan.get(i));
-           }
-       }
-        model.addAttribute("list",list);
+                    list.add(listPengaduan.get(i));
+                }
+            }
+            model.addAttribute("list",list);
+            return "view-all-pengaduan";
+        }
+        else if(user.getId_role().getId()==5){
+            List<PengaduanModel> listPengaduan = pengaduanService.getPengaduanList();
+            List<PengaduanModel> list = new ArrayList<PengaduanModel>();
+        
 
-        return "view-all-pengaduan";
+            for (int i=0; i<listPengaduan.size();i++){
+                if(listPengaduan.get(i).getId_status().getId().equals(Long.valueOf(8))){
+
+                    list.add(listPengaduan.get(i));
+                }
+            }
+            model.addAttribute("list",list);
+            return "view-all-pengaduan";
+        }
+            List<PengaduanModel> listPengaduan = pengaduanService.getPengaduanList();
+            List<PengaduanModel> list = new ArrayList<PengaduanModel>();
+        
+
+            for (int i=0; i<listPengaduan.size();i++){
+                if(listPengaduan.get(i).getId_status().getId().equals(Long.valueOf(9))){
+
+                    list.add(listPengaduan.get(i));
+                }
+            }
+            model.addAttribute("list",list);
+            return "view-all-pengaduan";
+        
     }
 
     @GetMapping("/kelola/view")
     public String viewPengaduan(
         @RequestParam(value = "id") Long id,
         Model model
-    ){  PengaduanModel pengaduan = pengaduanService.getPengaduanById(id);    
+    ){  PengaduanModel pengaduan = pengaduanService.getPengaduanById(id);
+        UserModel user = userService.getCurrentUser();
+        if(user.getId_role().getId()==7){
+            model.addAttribute("pengaduan", pengaduan);
+        
+            return "detail-pengaduan-sdi";
+        }
         model.addAttribute("pengaduan", pengaduan);
         
         return "detail-pengaduan";
@@ -138,9 +184,11 @@ public class PengaduanController {
     public String selesaikanPengaduan(
         @RequestParam(value = "id") Long id,
         Model model
-    ){  PengaduanModel pengaduan = pengaduanService.getPengaduanById(id);
-        StatusModel id_status = statusDB.findById(Long.valueOf(8)).get();
-        pengaduan.setId_status(id_status);
+    ){  
+        PengaduanModel pengaduan = pengaduanService.getPengaduanById(id);
+        
+        StatusModel selesai = statusDB.findById(Long.valueOf(6)).get();
+        pengaduan.setId_status(selesai);
         pengaduanService.updatePengaduan(pengaduan);
         String kode = pengaduan.getKode_pengaduan();
 
@@ -164,7 +212,6 @@ public class PengaduanController {
     ){
         
         PengaduanModel pengaduan = pengaduanService.getPengaduanById(skorDto.getId());
-        
         int skorPengaduan = pengaduan.getNo_karyawan().getSkorPengaduan() + skorDto.getSkor();
         pengaduan.getNo_karyawan().setSkorPengaduan(skorPengaduan);
         karyawanService.updateSkorPengaduan(pengaduan.getNo_karyawan());
@@ -179,8 +226,8 @@ public class PengaduanController {
         @RequestParam(value = "id") Long id,
         Model model
     ){  PengaduanModel pengaduan = pengaduanService.getPengaduanById(id);
-        StatusModel id_status = statusDB.findById(Long.valueOf(5)).get();
-        pengaduan.setId_status(id_status);
+        StatusModel ditolak = statusDB.findById(Long.valueOf(5)).get();
+        pengaduan.setId_status(ditolak);
         pengaduanService.updatePengaduan(pengaduan);
         String kode = pengaduan.getKode_pengaduan();
         model.addAttribute("kode", kode);
@@ -194,7 +241,26 @@ public class PengaduanController {
         @RequestParam(value = "id") Long id,
         Model model
     ){  PengaduanModel pengaduan = pengaduanService.getPengaduanById(id);
-        StatusModel id_status = statusDB.findById(Long.valueOf(7)).get();
+        UserModel user = userService.getCurrentUser();
+        if(user.getId_role().getId()==6){
+            StatusModel diteruskanOlehPU = statusDB.findById(Long.valueOf(8)).get();
+            pengaduan.setId_status(diteruskanOlehPU);
+            pengaduanService.updatePengaduan(pengaduan);
+            String kode = pengaduan.getKode_pengaduan();
+            model.addAttribute("kode", kode);
+            
+            return "teruskan-pengaduan";
+        }
+        else if(user.getId_role().getId()==5){
+            StatusModel diteruskanOlehKabag = statusDB.findById(Long.valueOf(9)).get();
+            pengaduan.setId_status(diteruskanOlehKabag);
+            pengaduanService.updatePengaduan(pengaduan);
+            String kode = pengaduan.getKode_pengaduan();
+            model.addAttribute("kode", kode);
+            
+            return "teruskan-pengaduan";
+        }
+        StatusModel id_status = statusDB.findById(Long.valueOf(6)).get();
         pengaduan.setId_status(id_status);
         pengaduanService.updatePengaduan(pengaduan);
         String kode = pengaduan.getKode_pengaduan();

@@ -45,7 +45,12 @@ public class PengaduanModel implements Serializable{
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     private StatusModel id_status;
-    
+
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "id_user", referencedColumnName = "id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore
+    private UserModel id_user;
 
     public Long getId() {
         return id;
@@ -98,6 +103,21 @@ public class PengaduanModel implements Serializable{
 
     public void setId_status(StatusModel id_status) {
         this.id_status = id_status;
+    }
+
+
+    /**
+     * @return UserModel return the id_user
+     */
+    public UserModel getId_user() {
+        return id_user;
+    }
+
+    /**
+     * @param id_user the id_user to set
+     */
+    public void setId_user(UserModel id_user) {
+        this.id_user = id_user;
     }
 
 }
