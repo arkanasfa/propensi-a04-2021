@@ -26,12 +26,12 @@ public class UserController {
     private KaryawanService karyawanService;
 
     @Autowired
-
     private OrangTuaService orangTuaService;
 
     @Autowired
     private SiswaService siswaService;
-
+    
+    @Autowired
     private ManajerPendidikanService manajerPendidikanService;
 
     @Autowired

@@ -83,8 +83,8 @@ public class PengaduanController {
         pengaduan.setKode_pengaduan(kode_pengaduan);
         pengaduan.setTanggalPengaduan(LocalDate.now(ZoneId.of("Asia/Jakarta")));
         
-        StatusModel id_status = statusDB.findById(Long.valueOf(1)).get();
-        pengaduan.setId_status(id_status);
+        StatusModel diajukan = statusDB.findById(Long.valueOf(1)).get();
+        pengaduan.setId_status(diajukan);
         pengaduan.setId_user(user);
 
         PengaduanModel tmpPengaduan = pengaduanService.addPengaduan(pengaduan); 
@@ -110,7 +110,16 @@ public class PengaduanController {
 
     @GetMapping("/viewall")
     public String listPengaduan(Model model) {
+        UserModel user = userService.getCurrentUser();
+        List<PengaduanModel> listPengaduan = user.getListPengaduan();
+        model.addAttribute("listPengaduan",listPengaduan);
+        return "viewall-pengaduan";
         
+    }
+
+    //mengelola
+    @GetMapping("/view-all")
+    public String listkasusPengaduan(Model model) {
         UserModel user = userService.getCurrentUser();
         if(user.getId_role().getId()==6){
             List<PengaduanModel> listPengaduan = pengaduanService.getPengaduanList();
@@ -140,7 +149,6 @@ public class PengaduanController {
             model.addAttribute("list",list);
             return "view-all-pengaduan";
         }
-        else if(user.getId_role().getId()==7){
             List<PengaduanModel> listPengaduan = pengaduanService.getPengaduanList();
             List<PengaduanModel> list = new ArrayList<PengaduanModel>();
         
@@ -153,30 +161,7 @@ public class PengaduanController {
             }
             model.addAttribute("list",list);
             return "view-all-pengaduan";
-        }
-        List<PengaduanModel> listPengaduan = user.getListPengaduan();
-        model.addAttribute("listPengaduan",listPengaduan);
-        return "viewall-pengaduan";
         
-    }
-
-    //mengelola
-    @GetMapping("/view-all")
-    public String listkasusPengaduan(Model model) {
-        List<PengaduanModel> listPengaduan = pengaduanService.getPengaduanList();
-        List<PengaduanModel> list = new ArrayList<PengaduanModel>();
-        
-
-       for (int i=0; i<listPengaduan.size();i++){
-           if(listPengaduan.get(i).getId_status().getId().equals(Long.valueOf(2))
-                ||listPengaduan.get(i).getId_status().getId().equals(Long.valueOf(7))){
-
-               list.add(listPengaduan.get(i));
-           }
-       }
-        model.addAttribute("list",list); 
-
-        return "view-all-pengaduan";
     }
 
     @GetMapping("/kelola/view")
@@ -203,8 +188,8 @@ public class PengaduanController {
     ){  
         PengaduanModel pengaduan = pengaduanService.getPengaduanById(id);
         
-        StatusModel id_status = statusDB.findById(Long.valueOf(6)).get();
-        pengaduan.setId_status(id_status);
+        StatusModel selesai = statusDB.findById(Long.valueOf(6)).get();
+        pengaduan.setId_status(selesai);
         pengaduanService.updatePengaduan(pengaduan);
         String kode = pengaduan.getKode_pengaduan();
 
@@ -242,8 +227,8 @@ public class PengaduanController {
         @RequestParam(value = "id") Long id,
         Model model
     ){  PengaduanModel pengaduan = pengaduanService.getPengaduanById(id);
-        StatusModel id_status = statusDB.findById(Long.valueOf(5)).get();
-        pengaduan.setId_status(id_status);
+        StatusModel ditolak = statusDB.findById(Long.valueOf(5)).get();
+        pengaduan.setId_status(ditolak);
         pengaduanService.updatePengaduan(pengaduan);
         String kode = pengaduan.getKode_pengaduan();
         model.addAttribute("kode", kode);
@@ -259,8 +244,8 @@ public class PengaduanController {
     ){  PengaduanModel pengaduan = pengaduanService.getPengaduanById(id);
         UserModel user = userService.getCurrentUser();
         if(user.getId_role().getId()==6){
-            StatusModel id_status = statusDB.findById(Long.valueOf(8)).get();
-            pengaduan.setId_status(id_status);
+            StatusModel diteruskanOlehPU = statusDB.findById(Long.valueOf(8)).get();
+            pengaduan.setId_status(diteruskanOlehPU);
             pengaduanService.updatePengaduan(pengaduan);
             String kode = pengaduan.getKode_pengaduan();
             model.addAttribute("kode", kode);
@@ -268,8 +253,8 @@ public class PengaduanController {
             return "teruskan-pengaduan";
         }
         else if(user.getId_role().getId()==5){
-            StatusModel id_status = statusDB.findById(Long.valueOf(9)).get();
-            pengaduan.setId_status(id_status);
+            StatusModel diteruskanOlehKabag = statusDB.findById(Long.valueOf(9)).get();
+            pengaduan.setId_status(diteruskanOlehKabag);
             pengaduanService.updatePengaduan(pengaduan);
             String kode = pengaduan.getKode_pengaduan();
             model.addAttribute("kode", kode);

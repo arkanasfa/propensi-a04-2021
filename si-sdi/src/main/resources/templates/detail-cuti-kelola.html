@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <!--    Jangan Lupa diisi!-->
+    <title>Detail Cuti</title>
+    <object th:include="fragments/fragment :: cssjs" th:remove="tag"></object>
+    <!--    Default Style untuk semua page-->
+    <link rel="stylesheet" th:href="@{/css/default-style.css}" />
+</head>
+<style>
+    th, td {
+        border-radius: 3em;
+        color:#000000;
+        text-align: start;
+        background-color: #F6F6F6; !important;
+        font-size: 1.15em;
+    }
+</style>
+
+<body>
+<div class="container-fluid" >
+    <div class="col-auto" >
+        <!--    formatnya: sidebar([NamaHalaman] = 'highlight'). Buat nge highlight sidebar kalo lagi di halaman itu-->
+        <!--                Kecuali buat cuti izin dan lembur infal. gak pake garing karena jadi eror kalo pake garing-->
+        <object th:replace="fragments/fragment :: sidebar(CutiIzin = 'highlight')" th:remove="tag"></object>
+    </div>
+</div>
+
+<!--    Container untuk bagian sebelum abu abu-->
+<div class="container-fluid">
+    <div class="row">
+        <div class="card-body" id="pageTitle">
+            <h3 th:if="${cuti.idstatus.id==1} OR ${cuti.idstatus.id==2} OR ${cuti.idstatus.id==3}" class="colorGreen">Detail Pengajuan Cuti</h3>
+            <h3 th:if="${cuti.idstatus.id==10} OR ${cuti.idstatus.id==11} OR ${cuti.idstatus.id==16}" class="colorGreen">Detail Pembatalan Cuti</h3>
+        </div>
+    </div>
+</div>
+
+<!--    Dalem abu-abu [Approval] -->
+<div class="container-fluid">
+    <div class="row">
+        <div class="card-body">
+            <div class="col-md-8">
+                <table width="100%" border="0">
+                    <td>
+                        <table border="0" width="100%" style="padding-left:2px;">
+                            <tbody>
+                            <tr>
+                                <td width="35%"align="top">Kode cuti</td>
+                                <td width="2%">:</td>
+                                <td style="font-weight: bold" th:text="${cuti.kode_cuti}"></td>
+                            </tr>
+                            <tr>
+                                <td>Nama Karyawan</td>
+                                <td>:</td>
+                                <td th:text="${cuti.id_karyawan.getKaryawan()}"></td>
+                            </tr>
+                            <tr>
+                                <td>Waktu Pengajuan</td>
+                                <td>:</td>
+                                <td th:text="${cuti.tanggalRequest.getDate()} + '-' + ${cuti.tanggalRequest.getMonth()} + '-' + ${cuti.tanggalRequest.getYear()+1900} + ' ' + ${cuti.tanggalRequest.getHours()} + ':' + ${cuti.tanggalRequest.getMinutes()}"></td>
+                            </tr>
+                            <tr>
+                                <td>Tanggal Mulai</td>
+                                <td>:</td>
+                                <td th:text="${cuti.tanggalMulai.getDate()} + '-' + ${cuti.tanggalMulai.getMonth()} + '-' + ${cuti.tanggalMulai.getYear()+1900}"></td>
+                            </tr>
+                            <tr>
+                                <td>Tanggal Selesai</td>
+                                <td>:</td>
+                                <td th:text="${cuti.tanggalSelesai.getDate()} + '-' + ${cuti.tanggalSelesai.getMonth()} + '-' + ${cuti.tanggalSelesai.getYear()+1900}"></td>
+                            </tr>
+                            <tr>
+                                <td>Durasi</td>
+                                <td>:</td>
+                                <td th:text="${cuti.durasi} + ' hari'"></td>
+                            </tr>
+                            <tr>
+                                <td>Jenis</td>
+                                <td>:</td>
+                                <td th:if="${cuti.jenis == 0}">Cuti tahunan</td>
+                                <td th:if="${cuti.jenis == 1}">Cuti sakit</td>
+                                <td th:if="${cuti.jenis == 2}">Cuti ibadah haji</td>
+                                <td th:if="${cuti.jenis == 3}">Cuti ibadah umrah</td>
+                                <td th:if="${cuti.jenis == 4}">Cuti bersalin</td>
+                            </tr>
+                            <tr>
+                                <td>Keterangan</td>
+                                <td>:</td>
+                                <td th:text="${cuti.keterangan}"></td>
+                            </tr>
+                            <tr>
+                                <td>Status</td>
+                                <td>:</td>
+                                <td th:text="${cuti.idstatus.status}"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--    Container untuk bagian setelah abu abu-->
+<div class="container-fluid">
+    <div class="row">
+        <div class="card-body" id="pageBottom">
+            <div class="pull-right">
+                <a th:href="@{/cuti/setujui(id=${cuti.id})}" class="btn backgroundGreen">Approve</a>
+                <a th:href="@{/cuti/tolak(id=${cuti.id})}" class="btn backgroundPurple">Reject</a>
+                <a type="button" class="btn backgroundOrange " th:href="@{/cuti/kelola}">Back</a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
