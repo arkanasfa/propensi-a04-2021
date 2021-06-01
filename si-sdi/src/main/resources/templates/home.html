@@ -54,7 +54,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="card-body" id="pageTitle">
-                <h2 class="colorGreen">Halo, [Nama]!</h2>
+                <h2 class="colorGreen" th:text="'Halo ' + ${uname}"></h2>
                 <h4 class="colorGreen">Sistem Informasi SDI SIT Ummu'l Quro Depok</h4>
             </div>
         </div>
@@ -75,7 +75,7 @@
                 <a th:href="@{/pengaduan/add}">
                     <img style="display:block" class="downMargin" th:src="@{/images/ajukan-pengaduan.png}"/>
                 </a>
-                <a th:href="@{/}">
+                <a th:href="@{/payroll/listGaji(idKaryawan=${idKaryawan})}">
                     <img style="display:block" th:src="@{/images/lihat-slipGaji.png}"/>
                 </a>
             </div>

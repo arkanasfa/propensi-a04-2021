@@ -111,7 +111,7 @@ public class GajiModel implements Serializable{
     @Column(name="unit",nullable = false)
     private String unit;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_karyawan", referencedColumnName = "id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
@@ -330,4 +330,5 @@ public class GajiModel implements Serializable{
     public void setUnit(String unit) {
         this.unit = unit;
     }
+
 }

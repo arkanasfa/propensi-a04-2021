@@ -1,17 +1,21 @@
 package propensi.a04.sisdi.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.templatemode.TemplateMode;
+import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 import propensi.a04.sisdi.model.*;
 import propensi.a04.sisdi.repository.*;
 
+import javax.naming.Context;
 import javax.transaction.Transactional;
+import java.time.LocalDate;
+import java.time.Month;
 import java.time.YearMonth;
 import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Service
 @Transactional
@@ -30,6 +34,9 @@ public class PayrollServiceImpl implements PayrollService{
 
     @Autowired
     GajiDb gajiDb;
+
+    @Autowired
+    UserDb userDb;
 
     //Find Id
     @Override
@@ -100,13 +107,10 @@ public class PayrollServiceImpl implements PayrollService{
     }
 
     @Override
-    public void makeDokumenTotal(DokumenTotalModel dokumenBaru){
+    public void makeDokumenTotal(DokumenTotalModel dokumenBaru, Date date){
         dokumenBaru.setTotalAnggaran(0);
         dokumenBaru.setId_status(statusDb.findByStatus("Menunggu Pengajuan"));
-        YearMonth now = YearMonth.now();
-        final Date convertedFromYearMonth =
-                Date.from(now.atDay(1).atStartOfDay(ZoneId.systemDefault()).toInstant());
-        dokumenBaru.setTanggalIsu(convertedFromYearMonth);
+        dokumenBaru.setTanggalIsu(date);
         dokumenTotalDb.save(dokumenBaru);
 
         List<KaryawanModel> karyawanList = karyawanDb.findAll();
@@ -157,17 +161,17 @@ public class PayrollServiceImpl implements PayrollService{
 
         gaji.setDokumen(dokumen);
         gaji.setId_karyawan(karyawan);
-        karyawan.setGaji((long)gaji.getTHPB());
+        karyawan.setGaji((long)gaji.getTHPA());
         gajiDb.save(gaji);
+        karyawan.getGajiModel().add(gaji);
     }
 
     @Override
     public void updateDokumenTotal(DokumenTotalModel dokumen){
-        List<KaryawanModel> karyawanList = karyawanDb.findAll();
+        List<GajiModel> gajiList= gajiDb.findByDokumen(dokumen);
         Integer anggaranTotal;
         anggaranTotal = 0;
-        for(KaryawanModel karyawan : karyawanList){
-            GajiModel gaji = karyawan.getGajiModel();
+        for(GajiModel gaji:gajiList){
             anggaranTotal += gaji.getTHPA();
         }
         dokumen.setTotalAnggaran(anggaranTotal);
@@ -175,9 +179,9 @@ public class PayrollServiceImpl implements PayrollService{
     }
 
     @Override
-    public void ajukanDokumenTotalGaji(DokumenTotalModel ajukan){
-        ajukan.setId_status(statusDb.findByStatus("Menunggu Persetujuan"));
-        dokumenTotalDb.save(ajukan);
+   public void statusToAjukan(DokumenTotalModel dokumenSubmit){
+        dokumenSubmit.setId_status(statusDb.findByStatus("Menunggu Persetujuan"));
+        dokumenTotalDb.save(dokumenSubmit);
     }
 
     @Override
@@ -302,6 +306,79 @@ public class PayrollServiceImpl implements PayrollService{
             finGol = komponenGaji.getGol5AD();
         }
         return finGol;
+    }
+
+    public Date YMtoDate(YearMonth now){
+        final Date date =
+                Date.from(now.atDay(1).atStartOfDay(ZoneId.systemDefault()).toInstant());
+        return date;
+    }
+
+    public YearMonth datetoYM(Date date){
+        YearMonth yearMonth =
+                YearMonth.from(date.toInstant()
+                        .atZone(ZoneId.systemDefault())
+                        .toLocalDate());
+        return yearMonth;
+    }
+
+    public DokumenTotalModel getDokumenByTanggal_Isu(Date tanggalIsu) throws NoSuchElementException{
+        return dokumenTotalDb.findDokumenTotalByTanggalIsu(tanggalIsu).get();
+    }
+
+    public List<String> displayYearMonth(){
+        List<DokumenTotalModel> dokumenList = dokumenTotalDb.findAll();
+        List<String> yearMonths = new ArrayList<>();
+        for(DokumenTotalModel dokumen : dokumenList){
+            Date date = dokumen.getTanggalIsu();
+            LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            String yearMonth = localDate.getMonth() + " - " + localDate.getYear();
+            yearMonths.add(yearMonth);
+        }
+        return yearMonths;
+    }
+
+    public String displayYearMonth(Date date){
+        LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        String yearMonth = localDate.getMonth() + " - " + localDate.getYear();
+        return yearMonth;
+    }
+
+    @Override
+    public UserModel findUser(){
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        return userDb.findByUsername(username);
+    }
+
+    @Override
+    public  void statusToMenungguAkses(DokumenTotalModel dokumenSubmit){
+        dokumenSubmit.setId_status(statusDb.findByStatus("Menunggu Akses"));
+        dokumenTotalDb.save(dokumenSubmit);
+    }
+
+    @Override
+    public void statusToAksesDiberikan(DokumenTotalModel dokumenSubmit){
+        dokumenSubmit.setId_status(statusDb.findByStatus("Akses Diberikan"));
+        dokumenTotalDb.save(dokumenSubmit);
+    }
+
+    @Override
+    public void statusToDisetujui(DokumenTotalModel dokumenSubmit){
+        dokumenSubmit.setId_status(statusDb.findByStatus("Disetujui"));
+        dokumenTotalDb.save(dokumenSubmit);
+    }
+
+    @Override
+    public String displayStatus(Integer status){
+        String ret;
+        if(status==1){
+            ret="Tetap";
+        }else if(status==2){
+            ret="Kontrak";
+        }else{
+            ret="Tenaga Ahli";
+        }
+        return ret;
     }
 
 

@@ -25,6 +25,7 @@
     <script th:href="@{https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js}"></script>
     <script th:href="@{https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js}"></script>
     <link rel="shortcut icon" type="image/x-icon" th:href="@{/images/favicon.ico}" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.debug.js"></script>
 </head>
 
 
@@ -37,50 +38,51 @@
             <div class="sidebar-header">
                 <img th:src="@{/images/sidebarHeader.png}"/>
                 <img th:src="@{/images/profpicTemporary.png}"/>
-                <p>Role</p> <!--                Nanti sesuain rolenya-->
+                <p><span  th:text="${#httpServletRequest.remoteUser}"></span></p> <!--                Nanti sesuain rolenya-->
                 <img th:src="@{/images/border.png}"/>
             </div>
 
             <!--Bagian menu sidebar-->
             <ul class="list-unstyled components">
                 <li th:id="${Profile}">
-                    <!--Nungguin penamaan yang sesuai-->
-                    <a th:href="@{/}">Profile</a>
+                    <a th:href="@{/}">Profile
+                        <span class="sr-only"></span></a>
                 </li>
                 <li th:id="${Home}">
                     <!--Nungguin penamaan yang sesuai-->
-                    <a th:href="@{/}">Home</a>
+                    <a th:href="@{/}">Home
+                        <span class="sr-only"></span></a>
                 </li>
-                <li th:id="${CutiIzin}">
+                <li sec:authorize access="hasAnyRole('Karyawan')" th:id="${LemburInfal}">
                     <!--Nungguin penamaan yang sesuai-->
                     <!--sec:authorize="hasAnyAuthority('Karyawan')"-->
-                    <a th:href="@{/cuti}">Cuti/Izin</a>
-                </li>
-                <li th:id="${LemburInfal}">
-                    <!--Nungguin penamaan yang sesuai-->
-                    <!--sec:authorize="hasAnyAuthority('Karyawan')"-->
-                    <a th:href="@{/lembur/list}">Lembur/Infal</a>
+                    <a sec:authorize="hasAnyAuthority('Karyawan')" th:href="@{/lembur/list}">Lembur/Infal
+                        <span class="sr-only"></span></a>
                 </li>
                 <li th:id="${Pengaduan}">
                     <!--Nungguin penamaan yang sesuai-->
                     <!--sec:authorize="hasAnyAuthority('Karyawan', 'Eksternal')"-->
-                    <a th:href="@{/pengaduan/viewall}">Pengaduan</a>
+                    <a th:href="@{/pengaduan/viewall}">Pengaduan
+                        <span class="sr-only"></span></a>
                 </li>
-                <li th:id="${FAQ}">
+                <li sec:authorize access="hasAnyRole('Karyawan', 'Orang Tua', 'Siswa')" th:id="${FAQ}">
                     <!--Nungguin penamaan yang sesuai-->
                     <!--sec:authorize="hasAnyAuthority('Karyawan', 'Eksternal')"-->
-                    <a th:href="@{/}">FAQ</a>
+                    <a sec:authorize="hasAnyAuthority('Karyawan', 'Orang Tua', 'Siswa')" th:href="@{/}">FAQ
+                        <span class="sr-only"></span></a>
                 </li>
-                <li th:id="${Penilaian}">
+                <li sec:authorize access="hasAnyRole('Orang Tua', 'Siswa')" th:id="${Penilaian}">
                     <!--Nungguin penamaan yang sesuai-->
                     <!--sec:authorize="hasAnyAuthority('Guru')"-->
                     <!--Ini penilaian dari sisi guru, jadi cuma ngeliat aja-->
-                    <a th:href="@{/}">Penilaian</a>
+                    <a sec:authorize="hasAnyAuthority('Orang Tua', 'Siswa')" th:href="@{/}">Penilaian
+                        <span class="sr-only"></span></a>
                 </li>
-                <li th:id="${Payroll}">
+                <li sec:authorize="hasAnyAuthority('Manajer SDI')" th:id="${Payroll}">
                     <!--Nungguin penamaan yang sesuai-->
                     <!--sec:authorize="hasAnyAuthority('Manajer SDI')"-->
-                    <a th:href="@{/payroll}">Payroll</a>
+                    <a th:href="@{/payroll(tanggalIsu=${#dates.format(#dates.createNow() , 'yyyy-MM-dd')})}">Payroll
+                        <span class="sr-only"></span></a>
                 </li>
                 <li>
                     <br>
