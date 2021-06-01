@@ -1,6 +1,10 @@
 package propensi.a04.sisdi.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import propensi.a04.sisdi.model.PengajuanCutiModel;
 import propensi.a04.sisdi.model.StatusModel;
@@ -12,6 +16,7 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
@@ -131,6 +136,27 @@ public class PengajuanCutiServiceImpl implements PengajuanCutiService{
     public void tolakPembatalanCuti(PengajuanCutiModel cuti) {
         StatusModel stat = statusDB.findById(Long.valueOf(7)).get();
         cuti.setIdstatus(stat);
+    }
+
+    @Override
+    public Page<PengajuanCutiModel> findPaginated(Pageable pageable, List<PengajuanCutiModel> cuti) {
+        int pageSize = pageable.getPageSize();
+        int currentPage = pageable.getPageNumber();
+        int startItem = currentPage * pageSize;
+
+//        List<PengajuanCutiModel> cuti = pengajuanCutiDb.findAll();
+        List<PengajuanCutiModel> list;
+
+        if(cuti.size() < startItem){
+            list = Collections.emptyList();
+        }else {
+            int toIndex = Math.min(startItem + pageSize, cuti.size());
+            list = cuti.subList(startItem, toIndex);
+        }
+        Page<PengajuanCutiModel> cutiPage
+        = new PageImpl<PengajuanCutiModel>(list,
+                PageRequest.of(currentPage,pageSize), cuti.size());
+        return cutiPage;
     }
 
     @Override
