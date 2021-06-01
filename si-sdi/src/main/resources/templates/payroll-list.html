@@ -31,11 +31,13 @@
 <div class="container-fluid">
     <div class="row">
         <div class="card-body" id="pageTitle">
-            <h3 class="colorGreen">Detail Payroll</h3>
-            <h4 class="colorGreen" style="text-align: left"
-                th:text="${periodeDokumen}"></h4>
-            <h4 class="colorGreen" style="text-align: left"
-                th:text="'Unit - ' + ${unitName}"></h4>
+            <h3 class="colorGreen">List Gaji</h3>
+            <h4 class="colorPurple" style="text-align: left"
+                th:text="${karyawan.getKaryawan()}"></h4>
+            <br>
+            <h5 class="colorOrange">Mohon tidak menggunakan slip gaji ini untuk keperluan formal.
+                Slip Gaji dengan stempel basah bisa didapatkan melalui bagian SDI.
+            </h5>
         </div>
     </div>
 </div>
@@ -48,32 +50,20 @@
                 <thead >
                 <tr>
                     <th scope="col" >No.</th>
-                    <th scope="col">Nama</th>
-<!--                    <th scope="col">Peran</th>-->
-                    <th scope="col">Gaji</th>
+                    <th scope="col">Isu</th>
+                    <th scope="col">Take Home Pay</th>
                     <th scope="col">Action</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="karyawan, iterationStatus : ${karyawanList}">
+                <tr th:each="gaji, iterationStatus : ${gajiList}">
                     <th scope="row" th:text="${iterationStatus.count}"></th>
-                    <td th:text="${karyawan.getKaryawan()}"></td>
-<!--                    <td th:text=""></td>-->
-                    <td th:text="'Rp. ' + ${#numbers.formatDecimal(karyawan.getGaji(), 0, 'POINT', 2, 'COMMA')}"></td>
-                    <td><a th:href="@{/payroll/detailGaji(idGaji=${karyawan.getGajibyDokumen(dokumen).getId()})}" > View </a></td>
-                </tr>
-                <tr>
-                    <td colspan="3" class="backgroundGreen colorWhite">Total Anggaran</td>
-                    <td th:text="'Rp. ' + ${#numbers.formatDecimal(totalAnggaranUnit, 0, 'POINT', 2, 'COMMA')}"></td>
+                    <td th:text="${dateList.get(iterationStatus.index)}"></td>
+                    <td th:text="'Rp. ' + ${#numbers.formatDecimal(gaji.getTHPA(), 0, 'POINT', 2, 'COMMA')}"></td>
+                    <td><a id="view" th:href="@{/payroll/detailGaji(idGaji=${gaji.getId()})}" > View </a></td>
                 </tr>
                 </tbody>
             </table>
-
-            <br><br>
-            <!--            Buttons-->
-            <div class="pull-right" id="buttons">
-                <button type="button" class="btn backgroundPurple" style=" display: none;">Download PDF</button>
-            </div>
         </div>
     </div>
 </div>
@@ -83,7 +73,7 @@
     <div class="row">
         <div class="card-body" id="pageBottom">
             <div class="pull-right">
-                <a type="button" class="btn backgroundOrange" th:href="@{/payroll(tanggalIsu=${#dates.format(#dates.createNow() , 'yyyy-MM-dd')})}">Back</a>
+                <a type="button" class="btn backgroundOrange" th:href="@{/}">Back</a>
             </div>
         </div>
     </div>

@@ -13,5 +13,5 @@ import java.util.Optional;
 public interface GajiDb extends JpaRepository<GajiModel,Long> {
     Optional<GajiModel> findById(Long id);
     List<GajiModel> findByUnitAndDokumen(String unit, DokumenTotalModel dokumen);
-
+    List<GajiModel> findByDokumen(DokumenTotalModel dokumen);
 }

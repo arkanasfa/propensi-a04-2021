@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -21,6 +22,7 @@ public class DokumenTotalModel implements Serializable{
     private Long id;
 
     @Column(name="tanggalIsu")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date tanggalIsu;
 
     @Column(name="totalAnggaran")
@@ -32,7 +34,7 @@ public class DokumenTotalModel implements Serializable{
     @JsonIgnore
     private StatusModel id_status;
 
-    @OneToMany(mappedBy = "dokumen", fetch = FetchType.EAGER, cascade=CascadeType.ALL)
+    @OneToMany(mappedBy = "dokumen", fetch = FetchType.EAGER)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     private List<GajiModel> listGaji;
