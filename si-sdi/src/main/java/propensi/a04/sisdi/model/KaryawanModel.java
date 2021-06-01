@@ -110,8 +110,10 @@ public class KaryawanModel implements Serializable{
     @JsonIgnore
     private List<PengaduanModel> listpengaduanKaryawan;
 
-    @OneToOne(mappedBy = "id_karyawan")
-    private GajiModel gajiModel;
+    @OneToMany(mappedBy = "id_karyawan")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore
+    private List<GajiModel> gajiModel;
 
     @OneToMany(mappedBy = "id_karyawan", fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
@@ -308,11 +310,11 @@ public class KaryawanModel implements Serializable{
         this.listpengaduanKaryawan = listpengaduanKaryawan;
     }
 
-    public GajiModel getGajiModel() {
+    public List<GajiModel> getGajiModel() {
         return gajiModel;
     }
 
-    public void setGajiModel(GajiModel gajiModel) {
+    public void setGajiModel(List<GajiModel> gajiModel) {
         this.gajiModel = gajiModel;
     }
 
@@ -362,5 +364,16 @@ public class KaryawanModel implements Serializable{
 
     public void setId_user(UserModel id_user) {
         this.iduser = id_user;
+    }
+
+    public GajiModel getGajibyDokumen(DokumenTotalModel dokumen){
+        List<GajiModel> gajiList = getGajiModel();
+        GajiModel ret = gajiList.get(0);
+        for(GajiModel gaji:gajiList){
+            if(gaji.getDokumen().getId()==dokumen.getId()){
+                ret = gaji;
+            }
+        }
+        return ret;
     }
 }
