@@ -20,7 +20,7 @@
     <div class="col-auto" >
         <!--    formatnya: sidebar([NamaHalaman] = 'highlight'). Buat nge highlight sidebar kalo lagi di halaman itu-->
         <!--                Kecuali buat cuti izin dan lembur infal. gak pake garing karena jadi eror kalo pake garing-->
-        <object th:replace="fragments/fragment :: sidebar(Pengaduan= 'highlight')" th:remove="tag"></object>
+        <object th:replace="fragments/fragment2 :: sidebar(Pengaduan= 'highlight')" th:remove="tag"></object>
     </div>
 </div>
 
@@ -47,11 +47,11 @@
     <div class="row">
         <div class="card-body" id="pageBottom">
             <div class="pull-right">
-                <h2>Silahkan Berikan Skor Pengaduan</h2>
+                <h4>Silahkan Berikan Skor Pengaduan</h4>
                 <form th:action="@{/pengaduan/selesai/}" th:object="${skorDto}" class="float-right" id="FORMskor" method="POST">
                     <input type="hidden" id="pengaduanId" name="pengaduanId" th:value="${skorDto.id}" th:field="*{id}">
                     
-                    <select th:field="*{skor}" name="skor" id="skor">
+                    <select th:field="*{skor}" name="skor" id="skor" data-style="btn backgroundGreentea" class="form-control">
                     <option value="0" selected>0</option>
                     <option value="25">25</option>
                     <option value="50">50</option>

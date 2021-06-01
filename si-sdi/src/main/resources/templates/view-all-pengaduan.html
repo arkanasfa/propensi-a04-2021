@@ -15,7 +15,7 @@
     <div class="col-auto" >
         <!--    formatnya: sidebar([NamaHalaman] = 'highlight'). Buat nge highlight sidebar kalo lagi di halaman itu-->
         <!--                Kecuali buat cuti izin dan lembur infal. gak pake garing karena jadi eror kalo pake garing-->
-        <object th:replace="fragments/fragment :: sidebar(Pengaduan = 'highlight')" th:remove="tag"></object>
+        <object th:replace="fragments/fragment2 :: sidebar(Pengaduan = 'highlight')" th:remove="tag"></object>
     </div>
 </div>
 
@@ -42,7 +42,7 @@
                     <th scope="col">Id Pengaduan</th>
                     <th scope="col">Karyawan</th>
                     <th scope="col">Status</th>
-                    <th scope="col">Handle</th>
+                    <th scope="col">Action</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -62,7 +62,7 @@
                             <div th:if="${pengaduan.id_status.getStatus()}=='Diteruskan oleh Pimpinan Unit'" style="color:#b969ee;" th:text="${pengaduan.id_status.getStatus()}"></div>
                             <div th:if="${pengaduan.id_status.getStatus()}=='Diteruskan oleh Kepala Bagian'" style="color:#b969ee;" th:text="${pengaduan.id_status.getStatus()}"></div>
                         </td>
-                        <td><a class="btn backgroundGreen" type="button" role="button"  th:href="@{/pengaduan/kelola/view(id=${pengaduan.id})}">View</a></td>
+                        <td style="background-color: #83BA70"><a class="backgroundBtnViewAll" type="button" role="button"  th:href="@{/pengaduan/kelola/view(id=${pengaduan.id})}">View</a></td>
                         </tr>
                 </tbody>
             </table>
