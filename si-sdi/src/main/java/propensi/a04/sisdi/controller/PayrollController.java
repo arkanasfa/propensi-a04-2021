@@ -274,6 +274,7 @@ public class PayrollController {
         model.addAttribute("gaji", gaji);
         String message = "Gaji berhasil diubah.";
         model.addAttribute("message", message);
+        model.addAttribute("flag", "0");
         return "payroll-notifs";
     }
 
