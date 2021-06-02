@@ -99,6 +99,7 @@
                 </a>
                 <a th:href="@{/payroll/listGaji(idKaryawan=${idKaryawan})}">
                     <img style="display:block" class="choice"
+                         id="slipGaji"
                          th:src="@{/images/lihat-slipGaji.png}"/>
                 </a>
                 <a th:href="@{/}">
@@ -133,6 +134,7 @@
         $('#ajukan-lemburinfal').hide();
         $('#ajukan-pengaduan').hide()
         $('#faq').hide();
+        $('#slipGaji').hide();
     } else{
         $('#ajukan-cutiizin').hide();
         $('#ajukan-lemburinfal').hide();
