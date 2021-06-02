@@ -42,12 +42,12 @@
                     <th scope="col">Id Pengaduan</th>
                     <th scope="col">Karyawan</th>
                     <th scope="col">Status</th>
-                    <th scope="col">Handle</th>
+                    <th scope="col">Action</th>
                 </tr>
                 </thead>
                 <tbody>
-                    <tr th:each="pengaduan, iterationStatus : ${list}">
-                        <td th:text="${iterationStatus.count}"></td>
+                    <tr th:each="pengaduan, iStat: ${pengaduanPage.content}">
+                        <td th:text="${iStat.count}"></td>
                         <td th:text="${pengaduan.tanggalPengaduan}"></td>
                         <td th:text="${pengaduan.kode_pengaduan}"></td>
                         <td th:text="${pengaduan.no_karyawan.getKaryawan()}"></td>
@@ -62,10 +62,16 @@
                             <div th:if="${pengaduan.id_status.getStatus()}=='Diteruskan oleh Pimpinan Unit'" style="color:#b969ee;" th:text="${pengaduan.id_status.getStatus()}"></div>
                             <div th:if="${pengaduan.id_status.getStatus()}=='Diteruskan oleh Kepala Bagian'" style="color:#b969ee;" th:text="${pengaduan.id_status.getStatus()}"></div>
                         </td>
-                        <td><a class="btn backgroundGreen" type="button" role="button"  th:href="@{/pengaduan/kelola/view(id=${pengaduan.id})}">View</a></td>
+                        <td style="background-color: #83BA70"><a class="backgroundBtnViewAll" type="button" role="button"  th:href="@{/pengaduan/kelola/view(id=${pengaduan.id})}">View</a></td>
                         </tr>
                 </tbody>
             </table>
+            <div th:if="${pengaduanPage.totalPages > 0}" class="pagination"
+                th:each="pageNumber : ${pageNumbers}" style="align-items: center">
+               <a th:href="@{/pengaduan/view-all(size=${pengaduanPage.size}, page=${pageNumber})}"
+                  th:text=${pageNumber}
+                  th:class="${pageNumber==pengaduanPage.number + 1} ? active" th:style="'color:#83BA70'" ></a>
+           </div>
         </div>
     </div>
 </div>

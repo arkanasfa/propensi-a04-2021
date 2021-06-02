@@ -27,7 +27,6 @@ public class PageController {
     @Autowired
     KaryawanService karyawanService;
 
-
     @RequestMapping("/")
     public String home(
             Model model) {

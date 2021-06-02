@@ -1,10 +1,15 @@
 package propensi.a04.sisdi.service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -59,6 +64,26 @@ public class PengaduanServiceImpl implements PengaduanService {
     @Override
     public void deletePengaduan(PengaduanModel pengaduan) {
         pengaduanDb.delete(pengaduan);
+    }
+
+    @Override
+    public Page<PengaduanModel> findPaginated(Pageable pageable, List<PengaduanModel> pengaduan) {
+        int pageSize = pageable.getPageSize();
+        int currentPage = pageable.getPageNumber();
+        int startItem = currentPage * pageSize;
+
+        List<PengaduanModel> list;
+
+        if(pengaduan.size() < startItem){
+            list = Collections.emptyList();
+        }else {
+            int toIndex = Math.min(startItem + pageSize, pengaduan.size());
+            list = pengaduan.subList(startItem, toIndex);
+        }
+        Page<PengaduanModel> pengaduanPage
+        = new PageImpl<PengaduanModel>(list,
+                PageRequest.of(currentPage,pageSize), pengaduan.size());
+        return pengaduanPage;
     }
 
 }

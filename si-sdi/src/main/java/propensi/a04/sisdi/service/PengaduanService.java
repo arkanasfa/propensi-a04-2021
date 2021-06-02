@@ -4,6 +4,9 @@ import propensi.a04.sisdi.model.PengaduanModel;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 public interface PengaduanService {
     PengaduanModel addPengaduan(PengaduanModel pengaduan);
 
@@ -17,6 +20,6 @@ public interface PengaduanService {
 
     void deletePengaduan(PengaduanModel pengaduan);
     
-
+    Page<PengaduanModel> findPaginated(Pageable pageable, List<PengaduanModel> pengaduan);
 
 }
