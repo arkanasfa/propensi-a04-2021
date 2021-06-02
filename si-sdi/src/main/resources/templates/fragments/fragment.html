@@ -55,10 +55,11 @@
                     <a th:href="@{/}">Home
                         <span class="sr-only"></span></a>
                 </li>
-                <li th:id="${LemburInfal}" id="LemburInfal">
+                <li th:id="${LemburInfal}">
                     <!--Nungguin penamaan yang sesuai-->
                     <!--sec:authorize="hasAnyAuthority('Karyawan')"-->
-                    <a th:href="@{/lembur/list}">Lembur/Infal
+                    <a  id="LemburInfal"
+                        th:href="@{/lembur/list}">Lembur/Infal
                         <span class="sr-only"></span></a>
                 </li>
                 <li  th:id="${CutiIzin}">
@@ -109,6 +110,7 @@
         } else if((role==='Orang Tua') || (role==='Siswa')) {
             $('#LemburInfal').hide();
             $('#CutiIzin').hide();
+            $('#Payroll').hide();
         } else{
             $('#Payroll').hide();
         }
