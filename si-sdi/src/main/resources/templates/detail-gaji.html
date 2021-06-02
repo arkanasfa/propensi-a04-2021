@@ -49,13 +49,13 @@
 </style>
 
 <div class="container-fluid" >
-    <div class="col-auto" >
-        <object th:replace="fragments/fragment :: sidebar(Payroll = 'highlight')" th:remove="tag"></object>
+    <div class="col-auto noPrint" >
+        <object th:replace="fragments/fragment :: sidebar" th:remove="tag"></object>
     </div>
 </div>
 
 <!--    Container untuk bagian sebelum abu abu-->
-<div class="container-fluid">
+<div class="container-fluid" id="top">
     <div class="row">
         <div class="card-body" id="pageTitle">
             <h3 class="colorGreen">Detail Gaji</h3>
@@ -249,17 +249,18 @@
 
             <br><br>
             <!--            Buttons-->
-            <div class="pull-right" id="buttons">
+            <div class="pull-right noPrint" id="buttons">
                 <a type="button" class="btn backgroundPurple" id="edit"
                    th:href="@{/payroll/detailGaji/ubah(idGaji=${gaji.id})}">Edit</a>
-                <button type="button" class="btn backgroundPurple" id="downloadPDF">Download PDF</button>
+                <button type="button" class="btn backgroundPurple" id="downloadPDF"
+                onclick="pleasePrint()">Download PDF</button>
             </div>
         </div>
     </div>
 </div>
 
 <!--    Container untuk bagian setelah abu abu-->
-<div class="container-fluid">
+<div class="container-fluid noPrint">
     <div class="row">
         <div class="card-body" id="pageBottom">
             <div class="pull-right">
@@ -272,6 +273,19 @@
 </div>
 
 <script th:inline="javascript">
+function pleasePrint() {
+    $('.noPrint').hide();
+    $('.card-body').css("margin-left", "50px");
+    $('.card-body').css("margin-right", "50px");
+    $('#top').css("margin-top", "50px");
+    window.print();
+    $('.noPrint').show();
+    $('.card-body').css("margin-left", "250px");
+    $('.card-body').css("margin-top", "0px");
+    $('#top').css("margin-top", "0px");
+    location.reload();
+
+}
 var role =  /*[[${role}]]*/ 'default';
 var statusDokumen =  /*[[${statusDokumen}]]*/ 'default';
 $(document).ready(function() {
@@ -290,8 +304,20 @@ $(document).ready(function() {
             $('#downloadPDF').show();
         }else{
             $('#edit').show();
+            $('#downloadPDF').hide();
         }
-    } else{
+    } else if((role==="Wakil Pengurus Harian") && (statusDokumen!=="Disetujui")){
+        $('#edit').hide();
+        $('#downloadPDF').hide();
+        $('#back').show();
+        $('#home').hide();
+    } else if((role==="Wakil Pengurus Harian") && (statusDokumen==="Disetujui")){
+        $('#edit').hide();
+        $('#downloadPDF').show();
+        $('#back').hide();
+        $('#home').show();
+    }
+    else{
         $('#edit').hide();
         $('#back').show();
         $('#home').hide();

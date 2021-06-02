@@ -30,7 +30,7 @@ public class PageController {
     @RequestMapping("/")
     public String home(
             Model model) {
-        String uname = payrollService.findUser().getUsername();
+        String nama = payrollService.findUser().getUsername();
         String role = payrollService.findUser().getId_role().getRole();
         Long idKaryawan;
         try{
@@ -40,7 +40,7 @@ public class PageController {
             idKaryawan=(long)0;
         }
         model.addAttribute("idKaryawan", idKaryawan);
-        model.addAttribute("uname", uname);
+        model.addAttribute("nama", nama);
         model.addAttribute("role", role);
         return "home";
     }
