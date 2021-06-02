@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"xmlns:b="http://www.w3.org/1999/XSL/Transform">
 <head>
     <meta charset="UTF-8">
     <!--    Jangan Lupa diisi!-->
@@ -47,8 +47,8 @@
                 </tr>
                 </thead>
                 <tbody>
-                    <tr th:each="pengaduan, iterationStatus : ${listPengaduan}">
-                        <td th:text="${iterationStatus.count}"></td>
+                    <tr th:each="pengaduan, iStat: ${pengaduanPage.content}">
+                        <td th:text="${iStat.count}"></td>
                         <td th:text="${pengaduan.tanggalPengaduan}"></td>
                         <td th:text="${pengaduan.kode_pengaduan}"></td>
                         <td th:text="${pengaduan.no_karyawan.getKaryawan()}"></td>
@@ -67,6 +67,12 @@
                         </tr>
                 </tbody>
             </table>
+            <div th:if="${pengaduanPage.totalPages > 0}" class="pagination text-center"
+                th:each="pageNumber : ${pageNumbers}" style="align-items: center">
+               <a th:href="@{/pengaduan/viewall(size=${pengaduanPage.size}, page=${pageNumber})}"
+                  th:text=${pageNumber}
+                  th:class="${pageNumber==pengaduanPage.number + 1} ? active" th:style="'color:#83BA70'" ></a>
+           </div>
         </div>
     </div>
 </div>

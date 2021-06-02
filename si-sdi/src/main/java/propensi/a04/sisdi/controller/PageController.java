@@ -27,9 +27,6 @@ public class PageController {
     @Autowired
     KaryawanService karyawanService;
 
-    @Autowired
-    UserService userService;
-
     @RequestMapping("/")
     public String home(
             Model model) {
@@ -45,11 +42,6 @@ public class PageController {
         model.addAttribute("idKaryawan", idKaryawan);
         model.addAttribute("uname", uname);
         model.addAttribute("role", role);
-
-        UserModel user = userService.getCurrentUser();
-        if (user.getId_role().getId()==6 || user.getId_role().getId()==5 || user.getId_role().getId()==7){
-            return "home-approval";
-        }
         return "home";
     }
 

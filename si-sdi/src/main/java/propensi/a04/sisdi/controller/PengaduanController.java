@@ -4,10 +4,14 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -107,29 +111,54 @@ public class PengaduanController {
                
     }
 
-    @GetMapping("/viewall")
-    public String listPengaduan(Model model) {
+    @RequestMapping(value = "/viewall", method = RequestMethod.GET)
+    public String listPengaduan(Model model, 
+    @RequestParam("page") Optional<Integer> page, 
+    @RequestParam("size")Optional<Integer> size){
+        
+        int currentPage = page.orElse(1);
+        int pageSize = size.orElse(5);
+
         UserModel user = userService.getCurrentUser();
         List<PengaduanModel> listPengaduan = user.getListPengaduan();
+
+        Page<PengaduanModel> pengaduanPage = pengaduanService.findPaginated(PageRequest.of(currentPage-1, pageSize),listPengaduan);
+        model.addAttribute("pengaduanPage", pengaduanPage);
+        int totalPages = pengaduanPage.getTotalPages();
+        if(totalPages>0){
+            List<Integer> pageNumbers= IntStream.rangeClosed(1, totalPages).boxed().collect(Collectors.toList());
+            model.addAttribute("pageNumbers", pageNumbers);
+        }
         model.addAttribute("listPengaduan",listPengaduan);
         return "viewall-pengaduan";
         
     }
 
     //mengelola
-    @GetMapping("/view-all")
-    public String listkasusPengaduan(Model model) {
+    @RequestMapping(value = "/view-all", method = RequestMethod.GET)
+    public String listkasusPengaduan(Model model, 
+    @RequestParam("page") Optional<Integer> page, 
+    @RequestParam("size")Optional<Integer> size){
+        int currentPage = page.orElse(1);
+        int pageSize = size.orElse(5);
+
         UserModel user = userService.getCurrentUser();
         if(user.getId_role().getId()==6){
             List<PengaduanModel> listPengaduan = pengaduanService.getPengaduanList();
             List<PengaduanModel> list = new ArrayList<PengaduanModel>();
         
-
             for (int i=0; i<listPengaduan.size();i++){
                 if(listPengaduan.get(i).getId_status().getId().equals(Long.valueOf(1))){
 
                     list.add(listPengaduan.get(i));
                 }
+            }
+            Page<PengaduanModel> pengaduanPage = pengaduanService.findPaginated(PageRequest.of(currentPage-1, pageSize),list);
+            model.addAttribute("pengaduanPage", pengaduanPage);
+            int totalPages = pengaduanPage.getTotalPages();
+            if(totalPages>0){
+                List<Integer> pageNumbers= IntStream.rangeClosed(1, totalPages).boxed().collect(Collectors.toList());
+                model.addAttribute("pageNumbers", pageNumbers);
             }
             model.addAttribute("list",list);
             return "view-all-pengaduan";
@@ -138,25 +167,37 @@ public class PengaduanController {
             List<PengaduanModel> listPengaduan = pengaduanService.getPengaduanList();
             List<PengaduanModel> list = new ArrayList<PengaduanModel>();
         
-
             for (int i=0; i<listPengaduan.size();i++){
                 if(listPengaduan.get(i).getId_status().getId().equals(Long.valueOf(8))){
 
                     list.add(listPengaduan.get(i));
                 }
             }
+            Page<PengaduanModel> pengaduanPage = pengaduanService.findPaginated(PageRequest.of(currentPage-1, pageSize),list);
+            model.addAttribute("pengaduanPage", pengaduanPage);
+            int totalPages = pengaduanPage.getTotalPages();
+            if(totalPages>0){
+                List<Integer> pageNumbers= IntStream.rangeClosed(1, totalPages).boxed().collect(Collectors.toList());
+                model.addAttribute("pageNumbers", pageNumbers);
+            }
             model.addAttribute("list",list);
             return "view-all-pengaduan";
         }
             List<PengaduanModel> listPengaduan = pengaduanService.getPengaduanList();
             List<PengaduanModel> list = new ArrayList<PengaduanModel>();
-        
 
             for (int i=0; i<listPengaduan.size();i++){
                 if(listPengaduan.get(i).getId_status().getId().equals(Long.valueOf(9))){
 
                     list.add(listPengaduan.get(i));
                 }
+            }
+            Page<PengaduanModel> pengaduanPage = pengaduanService.findPaginated(PageRequest.of(currentPage-1, pageSize),list);
+            model.addAttribute("pengaduanPage", pengaduanPage);
+            int totalPages = pengaduanPage.getTotalPages();
+            if(totalPages>0){
+                List<Integer> pageNumbers= IntStream.rangeClosed(1, totalPages).boxed().collect(Collectors.toList());
+                model.addAttribute("pageNumbers", pageNumbers);
             }
             model.addAttribute("list",list);
             return "view-all-pengaduan";
