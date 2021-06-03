@@ -34,10 +34,10 @@ public class OrangTuaModel implements Serializable{
         private SiswaModel id_siswa;
 
         @OneToOne(fetch = FetchType.LAZY)
-        @JoinColumn(name = "id_userOrtu", referencedColumnName = "id")
+        @JoinColumn(name = "iduserOrtu", referencedColumnName = "id")
         @OnDelete(action = OnDeleteAction.CASCADE)
         @JsonIgnore
-        private UserModel id_userOrtu;
+        private UserModel iduserOrtu;
         
         
 
@@ -101,14 +101,14 @@ public class OrangTuaModel implements Serializable{
      * @return UserModel return the id_userOrtu
      */
     public UserModel getId_userOrtu() {
-        return id_userOrtu;
+        return iduserOrtu;
     }
 
     /**
      * @param id_userOrtu the id_userOrtu to set
      */
     public void setId_userOrtu(UserModel id_userOrtu) {
-        this.id_userOrtu = id_userOrtu;
+        this.iduserOrtu = id_userOrtu;
     }
 
 }

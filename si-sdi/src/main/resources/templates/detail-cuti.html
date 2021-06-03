@@ -107,24 +107,42 @@
         <div class="card-body" id="pageBottom">
             <div class="pull-right" th:switch="${cuti.idstatus.id}">
                 <div style="padding: 0" th:case="1" >
-                    <a th:href="@{/cuti/edit(id=${cuti.id})}" class="btn backgroundGreen">Edit</a>
-                    <a th:href="@{/cuti/delete(id=${cuti.id})}" class="btn backgroundPurple">Cancel</a>
+                    <div class="pull-left">
                     <a type="button" class="btn backgroundOrange " th:href="@{/cuti}">Back</a>
+                    </div>
+                    <div class="pull-right">
+                    <a th:href="@{/cuti/edit(id=${cuti.id})}" class="btn backgroundPurple">Edit</a>
+                    <a th:href="@{/cuti/delete(id=${cuti.id})}" class="btn backgroundMerah">Batalkan</a>
+                    </div>
                 </div>
                 <div style="padding: 0" th:case="2" >
-                    <a th:href="@{/cuti/delete(id=${cuti.id})}" class="btn backgroundPurple">Cancel</a>
-                    <a type="button" class="btn backgroundOrange " th:href="@{/cuti}">Back</a>
+                    <div class="pull-left">
+                        <a type="button" class="btn backgroundOrange " th:href="@{/cuti}">Back</a>
+                    </div>
+                    <div class="pull-right">
+                    <a th:href="@{/cuti/delete(id=${cuti.id})}" class="btn backgroundMerah">Batalkan</a>
+                    </div>>
                 </div>
                 <div style="padding: 0" th:case="3" >
-                    <a th:href="@{/cuti/delete(id=${cuti.id})}" class="btn backgroundPurple">Cancel</a>
-                    <a type="button" class="btn backgroundOrange " th:href="@{/cuti}">Back</a>
+                    <div class="pull-left">
+                        <a type="button" class="btn backgroundOrange " th:href="@{/cuti}">Back</a>
+                    </div>
+                    <div class="pull-right">
+                        <a th:href="@{/cuti/delete(id=${cuti.id})}" class="btn backgroundMerah">Batalkan</a>
+                    </div>>
                 </div>
                 <div style="padding: 0" th:case="7" >
-                    <a th:href="@{/cuti/delete(id=${cuti.id})}" class="btn backgroundPurple">Cancel</a>
-                    <a type="button" class="btn backgroundOrange " th:href="@{/cuti}">Back</a>
+                    <div class="pull-left">
+                        <a type="button" class="btn backgroundOrange " th:href="@{/cuti}">Back</a>
+                    </div>
+                    <div class="pull-right">
+                        <a th:href="@{/cuti/delete(id=${cuti.id})}" class="btn backgroundMerah">Batalkan</a>
+                    </div>>
                 </div>
                 <div style="padding: 0" th:case="*" >
-                    <a type="button" class="btn backgroundOrange " th:href="@{/cuti}">Back</a>
+                    <div class="pull-left">
+                        <a type="button" class="btn backgroundOrange " th:href="@{/cuti}">Back</a>
+                    </div>
                 </div>
             </div>
         </div>

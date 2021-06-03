@@ -23,7 +23,8 @@
     <div class="row">
         <div class="card-body" id="pageTitle">
             <h3 class="colorGreen">Daftar Pengajuan Cuti/Izin</h3>
-            <h6 style="text-align: left" class="colorPurple"th:if="${sisaCuti}!=null"th:text="'Sisa cuti : ' + ${sisaCuti} + ' hari'"></h6>
+            <h6 style="text-align: left" class="colorPurple"th:text="'Sisa cuti : ' + ${sisaCuti} + ' hari'"></h6>
+            <h6 style="text-align: left" class="colorPurple"th:text="'Cuti sedang diproses : ' + ${cutiProses} + ' hari'"></h6>
         </div>
         <div class="card-body" id="buttonUP">
             <div class="pull-right">

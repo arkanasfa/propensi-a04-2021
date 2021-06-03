@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import propensi.a04.sisdi.model.OrangTuaModel;
+import propensi.a04.sisdi.model.UserModel;
 import propensi.a04.sisdi.repository.OrangTuaDb;
 
 @Service
@@ -22,5 +23,10 @@ public class OrangTuaServiceImpl implements OrangTuaService {
     public OrangTuaModel getOrangTuaById(Long id) {
 
         return orangTuaDb.findById(id).get();
+    }
+
+    @Override
+    public OrangTuaModel getByIduser(UserModel user) {
+        return orangTuaDb.findByIduserOrtu(user).get();
     }
 }

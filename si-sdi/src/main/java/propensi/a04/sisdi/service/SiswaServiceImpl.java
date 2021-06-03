@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import propensi.a04.sisdi.model.SiswaModel;
+import propensi.a04.sisdi.model.UserModel;
 import propensi.a04.sisdi.repository.SiswaDb;
 
 
@@ -30,5 +31,10 @@ public class SiswaServiceImpl implements SiswaService {
 
         return siswaDb.findById(id).get();
     }
-    
+
+    @Override
+    public SiswaModel getByIduser(UserModel user) {
+        return siswaDb.findByIduserSiswa(user).get();
+    }
+
 }
