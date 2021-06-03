@@ -50,7 +50,7 @@
 
 </style>
 
-<div class="container-fluid" >
+<div class="container-fluid noPrint" >
     <div class="col-auto" >
         <object th:replace="fragments/fragment :: sidebar(Payroll = 'highlight')" th:remove="tag"></object>
     </div>
@@ -76,62 +76,64 @@
     <input type="hidden" th:field="${dokumenDisplay.totalAnggaran}"/>
     <input type="hidden" th:field="${dokumenDisplay.id_status}"/>
     <input type="hidden" th:field="${dokumenDisplay.listGaji}"/>
-<div class="container-fluid toPDF">
+<div class="container-fluid toPDF" >
     <div class="row">
         <div class="card-body">
-            <table class="rounded table table-bordered">
-                <thead >
-                <tr>
-                    <th scope="col" >No.</th>
-                    <th scope="col">Unit</th>
-                    <th scope="col">Anggaran</th>
-                    <th scope="col" id="hideAction">Action</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>TKIT</td>
-                    <td
-                            th:text="'Rp. ' + ${#numbers.formatDecimal(unitDisplay.get(0), 0, 'POINT', 2, 'COMMA')}"></td>
-                    <td><a class="view" th:href="@{/payroll/detailPayroll(dokumenId=${dokumenDisplay.getId()}, unitName=${'TKIT'})}" > View </a></td>
-                </tr>
-                <tr>
-                    <th scope="row">2</th>
-                    <td>SDIT</td>
-                    <td
-                            th:text="'Rp. ' + ${#numbers.formatDecimal(unitDisplay.get(1), 0, 'POINT', 2, 'COMMA')}"></td>
-                    <td><a class="view" th:href="@{/payroll/detailPayroll(dokumenId=${dokumenDisplay.getId()}, unitName=${'SDIT'})}" > View </a></td>
-                </tr>
-                <tr>
-                    <th scope="row">3</th>
-                    <td>SMPIT</td>
-                    <td
-                            th:text="'Rp. ' + ${#numbers.formatDecimal(unitDisplay.get(2), 0, 'POINT', 2, 'COMMA')}"></td>
-                    <td><a class="view" th:href="@{/payroll/detailPayroll(dokumenId=${dokumenDisplay.getId()}, unitName=${'SMPIT'})}" > View </a></td>
-                </tr>
-                <tr>
-                    <th scope="row">4</th>
-                    <td>Supporting Unit</td>
-                    <td
-                            th:text="'Rp. ' + ${#numbers.formatDecimal(unitDisplay.get(3), 0, 'POINT', 2, 'COMMA')}"></td>
-                    <td><a class="view" th:href="@{/payroll/detailPayroll(dokumenId=${dokumenDisplay.getId()}, unitName=${'SU'})}" > View </a></td>
-                </tr>
-                <tr>
-                    <td colspan="2" class="backgroundGreen colorWhite">Total Anggaran</td>
-                    <td colspan="2" th:text="'Rp. ' + ${#numbers.formatDecimal(dokumenDisplay.getTotalAnggaran(), 0, 'POINT', 2, 'COMMA')}"></td>
-                </tr>
-                </tbody>
-            </table>
+            <div id="tablee">
+                <table class="rounded table table-bordered">
+                    <thead >
+                    <tr>
+                        <th scope="col" >No.</th>
+                        <th scope="col">Unit</th>
+                        <th scope="col">Anggaran</th>
+                        <th class="noPrint" scope="col" id="hideAction">Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>TKIT</td>
+                        <td
+                                th:text="'Rp. ' + ${#numbers.formatDecimal(unitDisplay.get(0), 0, 'POINT', 2, 'COMMA')}"></td>
+                        <td><a class="view noPrint" th:href="@{/payroll/detailPayroll(dokumenId=${dokumenDisplay.getId()}, unitName=${'TKIT'})}" > View </a></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">2</th>
+                        <td>SDIT</td>
+                        <td
+                                th:text="'Rp. ' + ${#numbers.formatDecimal(unitDisplay.get(1), 0, 'POINT', 2, 'COMMA')}"></td>
+                        <td><a class="view noPrint" th:href="@{/payroll/detailPayroll(dokumenId=${dokumenDisplay.getId()}, unitName=${'SDIT'})}" > View </a></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">3</th>
+                        <td>SMPIT</td>
+                        <td
+                                th:text="'Rp. ' + ${#numbers.formatDecimal(unitDisplay.get(2), 0, 'POINT', 2, 'COMMA')}"></td>
+                        <td><a class="view noPrint" th:href="@{/payroll/detailPayroll(dokumenId=${dokumenDisplay.getId()}, unitName=${'SMPIT'})}" > View </a></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">4</th>
+                        <td>Supporting Unit</td>
+                        <td
+                                th:text="'Rp. ' + ${#numbers.formatDecimal(unitDisplay.get(3), 0, 'POINT', 2, 'COMMA')}"></td>
+                        <td><a class="view noPrint" th:href="@{/payroll/detailPayroll(dokumenId=${dokumenDisplay.getId()}, unitName=${'SU'})}" > View </a></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="backgroundGreen colorWhite">Total Anggaran</td>
+                        <td colspan="2" th:text="'Rp. ' + ${#numbers.formatDecimal(dokumenDisplay.getTotalAnggaran(), 0, 'POINT', 2, 'COMMA')}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
 
 <!--            Buttons-->
             <br><br><br>
-            <div class="pull-right" id="buttons">
+            <div class="pull-right noPrint" id="buttons">
                 <a type="button" class="btn backgroundPurple" th:href="@{/payroll/komponenGaji}" id="kpg">Lihat Pengali Gaji</a>
                 <button onclick="document.getElementById('popUp').style.display='block'" type="button" class="btn backgroundGreen" style="display: inline;"
                         th:attrappend="data-target=${dokumenDisplay.id}" id="ajukan">Ajukan</button>
                 <button type="button" class="btn backgroundGreen" style="display: none;" id="downloadPDF"
-               onclick="gajiPDF()">Download PDF</button>
+               onclick="pleasePrint()">Download PDF</button>
                 <button onclick="document.getElementById('requestAksesPU').style.display='block'" type="button" class="btn backgroundPurple" style="display: inline;"
                         th:attrappend="data-target=${dokumenDisplay.id}" id="requestAkses">Request Akses</button>
                 <button onclick="document.getElementById('grantAksesPU').style.display='block'" type="button" class="btn backgroundGreen" style="display: inline;"
@@ -144,11 +146,11 @@
 </div>
 
 <!--    Container untuk bagian setelah abu abu-->
-<div class="container-fluid">
+<div class="container-fluid noPrint">
     <div class="row">
         <div class="card-body" id="pageBottom">
             <div class="pull-right">
-                <button type="button" class="btn backgroundOrange" th:href="@{/}">Back</button>
+                <a type="button" class="btn backgroundOrange" th:href="@{/}">Back</a>
             </div>
         </div>
     </div>
@@ -235,7 +237,7 @@
 
 
 <!--            Collapsible untuk bulan bulan yang udah lewat-->
-<div class="container-fluid" id="history">
+<div class="container-fluid noPrint" id="history">
     <div class="card-body">
         <div th:each="dokumen, i:${dokumenList}">
             <div id="clickables"></div>
@@ -294,23 +296,14 @@
 </div>
 
 <script th:inline="javascript">
-    function gajiPDF(){
-        var doc = new jsPDF();
-        var elementHandler = {
-            '#buttons': function (element, renderer) {
-                return true;
-            },
-        };
-        var source=$(".toPDF").html()
-        doc.fromHTML(
-            source,
-            10,
-            10,
-            {
-            'width':200, 'elementHandlers': elementHandler
-        });
-        doc.save("htmltopdf.pdf");
-        console.log(100);
+
+    function pleasePrint() {
+        $('.noPrint').hide();
+        $('.card-body').css("margin-left", "0px");
+        window.print();
+        $('.noPrint').show();
+        $('.card-body').css("margin-left", "250px");
+
     }
 
     var divId = $('div[id^="show"]');

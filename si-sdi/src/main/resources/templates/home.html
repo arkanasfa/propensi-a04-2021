@@ -16,11 +16,7 @@
             background-color:white;
         }
 
-        a{
-            margin-bottom: 20px;!important;
-        }
-
-        img{
+        .choice{
             max-width:60%; !important;
             height:auto;
         }
@@ -41,7 +37,7 @@
     </style>
 </head>
 
-<body>
+<body th:style="'background: url(/images/bg.png) no-repeat center center fixed; background-size: contain;'">
     <div class="container-fluid" >
         <div class="col-auto" >
             <!--    formatnya: sidebar([NamaHalaman] = 'highlight'). Buat nge highlight sidebar kalo lagi di halaman itu-->
@@ -54,7 +50,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="card-body" id="pageTitle">
-                <h2 class="colorGreen" th:text="'Halo ' + ${uname}"></h2>
+                <h2 class="colorGreen" th:text="'Halo, ' + ${nama} + '!'"></h2>
                 <h4 class="colorGreen">Sistem Informasi SDI SIT Ummu'l Quro Depok</h4>
             </div>
         </div>
@@ -65,28 +61,87 @@
         <div class="row">
             <div class="column" id="left">
                 <a th:href="@{/cuti/add}">
-                    <img style="display:block" class="downMargin" th:src="@{/images/ajukan-cutiIzin.png}"/>
+                    <img style="display:block" class="downMargin choice"
+                         id="ajukan-cutiizin"
+                         th:src="@{/images/ajukan-cutiIzin.png}"/>
+                </a>
+                <a th:href="@{/cuti/kelola}">
+                    <img style="display:block" class="downMargin choice"
+                         id="kelola-cutiizin"
+                         th:src="@{/images/kelola-cutiIzin.png}"/>
+                </a>
+                <a th:href="@{/pengaduan/add}">
+                    <img style="display:block" class="downMargin choice"
+                         id="eks-pengaduan"
+                         th:src="@{/images/eks-pengaduan.png}"/>
                 </a>
                 <a th:href="@{/lembur/add}">
-                    <img style="display:block" th:src="@{/images/ajukan-lemburInfal.png}"/>
+                    <img style="display:block" class="choice"
+                         id="ajukan-lemburinfal"
+                         th:src="@{/images/ajukan-lemburInfal.png}"/>
+                </a>
+                <a th:href="@{/lembur/list/verifikas}">
+                    <img style="display:block" class="choice"
+                         id="kelola-lemburinfal"
+                         th:src="@{/images/kelola-lemburInfal.png}"/>
                 </a>
             </div>
             <div class="column">
                 <a th:href="@{/pengaduan/add}">
-                    <img style="display:block" class="downMargin" th:src="@{/images/ajukan-pengaduan.png}"/>
+                    <img style="display:block" class="downMargin choice"
+                         id="ajukan-pengaduan"
+                         th:src="@{/images/ajukan-pengaduan.png}"/>
+                </a>
+                <a th:href="@{/pengaduan/view-all}">
+                    <img style="display:block" class="downMargin choice"
+                         id="kelola-pengaduan"
+                         th:src="@{/images/kelola-pengaduan.png}"/>
                 </a>
                 <a th:href="@{/payroll/listGaji(idKaryawan=${idKaryawan})}">
-                    <img style="display:block" th:src="@{/images/lihat-slipGaji.png}"/>
+                    <img style="display:block" class="choice"
+                         id="slipGaji"
+                         th:src="@{/images/lihat-slipGaji.png}"/>
+                </a>
+                <a th:href="@{/}">
+                    <img style="display:block" class="choice"
+                         id="eks-faq"
+                         th:src="@{/images/faq.png}"/>
                 </a>
             </div>
             <div class="column">
                 <a th:href="@{/}">
-                    <img style="display:block" th:src="@{/images/ajukan-dist.png}"/>
+                    <img style="display:block" class="choice"
+                         id="faq"
+                         th:src="@{/images/faq.png}"/>
                 </a>
             </div>
 
         </div>
     </div>
-
+<script th:inline="javascript">
+    var role =  /*[[${role}]]*/ 'default';
+    if(role==="Karyawan"){
+        $('#kelola-cutiizin').hide();
+        $('#kelola-lemburinfal').hide();
+        $('#kelola-pengaduan').hide();
+        $('#eks-faq').hide();
+        $('#eks-pengaduan').hide();
+    } else if((role==="Orang Tua") || (role==="Siswa")){
+        $('#kelola-cutiizin').hide();
+        $('#kelola-lemburinfal').hide();
+        $('#kelola-pengaduan').hide();
+        $('#ajukan-cutiizin').hide()
+        $('#ajukan-lemburinfal').hide();
+        $('#ajukan-pengaduan').hide()
+        $('#faq').hide();
+        $('#slipGaji').hide();
+    } else{
+        $('#ajukan-cutiizin').hide();
+        $('#ajukan-lemburinfal').hide();
+        $('#ajukan-pengaduan').hide();
+        $('#eks-faq').hide();
+        $('#eks-pengaduan').hide();
+    }
+</script>
 </body>
 </html>

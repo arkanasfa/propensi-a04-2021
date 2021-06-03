@@ -3,6 +3,12 @@
     width: 100%;
 }
 
+#profpic{
+    width:40%;
+    height:auto;
+    text-align: center;
+}
+
 #sidebar {
     width: 200px;
     position: fixed;
@@ -13,8 +19,8 @@
     background: #FAB14A;
     color: #fff;
     transition: all 0.3s;
-    overflow-y: auto;
-    overflow-x:hidden;
+    /*overflow-y: auto;*/
+    /*overflow-x:hidden;*/
 }
 
 @media (max-width: 768px) {
@@ -37,6 +43,7 @@
     color: #FAB14A;
     text-align: center;
     pointer-events: none;
+    margin-bottom:15px;
 }
 
 img {
@@ -79,8 +86,8 @@ a, a:hover, a:focus {
 }
 
 #sidebar ul.components {
-    padding: 20px 0;
-    border-bottom: 1px solid #47748b;
+    /*padding: 20px 0;*/
+    /*border-bottom: 1px solid #47748b;*/
 }
 
 #sidebar ul p {
@@ -92,6 +99,7 @@ a, a:hover, a:focus {
     padding: 10px;
     font-size: 1.1em;
     display: block;
+    margin-bottom:15px;
 }
 
 #sidebar ul li img {

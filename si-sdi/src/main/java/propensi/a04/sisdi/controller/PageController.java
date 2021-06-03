@@ -33,22 +33,21 @@ public class PageController {
     @Autowired
     UserService userService;
 
-
     @RequestMapping("/")
     public String home(
             Model model) {
-//        String uname = payrollService.findUser().getUsername();
-//        String role = payrollService.findUser().getId_role().getRole();
-//        Long idKaryawan;
-//        try{
-//            KaryawanModel karyawan = payrollService.findUser().getKaryawanModel();
-//            idKaryawan= karyawan.getId();
-//        }catch(NullPointerException e){
-//            idKaryawan=(long)0;
-//        }
-//        model.addAttribute("idKaryawan", idKaryawan);
-//        model.addAttribute("uname", uname);
-//        model.addAttribute("role", role);
+        String nama = payrollService.findUser().getUsername();
+        String role = payrollService.findUser().getId_role().getRole();
+        Long idKaryawan;
+        try{
+            KaryawanModel karyawan = payrollService.findUser().getKaryawanModel();
+            idKaryawan= karyawan.getId();
+        }catch(NullPointerException e){
+            idKaryawan=(long)0;
+        }
+        model.addAttribute("idKaryawan", idKaryawan);
+        model.addAttribute("nama", nama);
+        model.addAttribute("role", role);
         return "home";
     }
 
