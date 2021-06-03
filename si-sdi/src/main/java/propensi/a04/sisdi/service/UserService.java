@@ -8,4 +8,6 @@ public interface UserService {
     UserModel findByUUID(String UUID);
     UserModel findbyUsername(String username);
     UserModel getCurrentUser();
+    Boolean validatePass(UserModel user);
+    Boolean checkConfirmPass(String checkPass, String newPass);
 }
