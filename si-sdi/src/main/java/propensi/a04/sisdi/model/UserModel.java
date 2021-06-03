@@ -42,10 +42,10 @@ public class UserModel implements Serializable{
     @OneToOne(mappedBy = "iduser")
     private KaryawanModel karyawanModel;
 
-    @OneToOne(mappedBy = "id_userOrtu")
+    @OneToOne(mappedBy = "iduserOrtu")
     private OrangTuaModel orangTuaModel;
 
-    @OneToOne(mappedBy = "id_userSiswa")
+    @OneToOne(mappedBy = "iduserSiswa")
     private SiswaModel siswaModel;
 
 //    public KaryawanModel getKaryawan() {

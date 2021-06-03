@@ -108,10 +108,12 @@
 <div class="container-fluid">
     <div class="row">
         <div class="card-body" id="pageBottom">
+            <div class="pull-left">
+                <a type="button" class="btn backgroundOrange " th:href="@{/cuti/kelola}">Back</a>
+            </div>
             <div class="pull-right">
                 <a th:href="@{/cuti/setujui(id=${cuti.id})}" class="btn backgroundGreen">Approve</a>
-                <a th:href="@{/cuti/tolak(id=${cuti.id})}" class="btn backgroundPurple">Reject</a>
-                <a type="button" class="btn backgroundOrange " th:href="@{/cuti/kelola}">Back</a>
+                <a th:href="@{/cuti/tolak(id=${cuti.id})}" class="btn backgroundMerah">Reject</a>
             </div>
         </div>
     </div>

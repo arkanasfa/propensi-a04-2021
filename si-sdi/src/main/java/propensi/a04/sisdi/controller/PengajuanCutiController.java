@@ -1,6 +1,8 @@
 package propensi.a04.sisdi.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -17,7 +19,9 @@ import propensi.a04.sisdi.service.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 @Controller
@@ -46,8 +50,8 @@ public class PengajuanCutiController {
     @Autowired
     StatusDB statusDb;
 
-    @RequestMapping("/cuti/kelola")
-    public String viewAllCutiKelola(Model model) {
+    @RequestMapping(value = "/cuti/kelola", method = RequestMethod.GET)
+    public String viewAllCutiKelola(Model model, @RequestParam("page") Optional<Integer> page, @RequestParam("size")Optional<Integer> size) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String usern = auth.getName();
         UserModel user1 = userService.findbyUsername(usern);
@@ -60,39 +64,79 @@ public class PengajuanCutiController {
         StatusModel evalKB= statusService.getStatusById(Long.valueOf(11));
         StatusModel evalMSDI= statusService.getStatusById(Long.valueOf(16));
 
+        int currentPage = page.orElse(1);
+        int pageSize = size.orElse(5);
+
         if (roleName.equals("Pimpinan Unit")){
             List<PengajuanCutiModel> forPUA = pengajuanCutiService.getPengajuanCutiById_Status(diajukan);
             List<PengajuanCutiModel> forPUB = pengajuanCutiService.getPengajuanCutiById_Status(evalPU);
             List<PengajuanCutiModel> newList = Stream.concat(forPUA.stream(), forPUB.stream())
                     .collect(Collectors.toList());
-            model.addAttribute("cutiList", newList);
+            Page<PengajuanCutiModel> cutiPage = pengajuanCutiService.findPaginated(PageRequest.of(currentPage-1, pageSize),newList);
+            model.addAttribute("cutiPage", cutiPage);
+            int totalPages = cutiPage.getTotalPages();
+            if(totalPages>0){
+                List<Integer> pageNumbers= IntStream.rangeClosed(1, totalPages).boxed().collect(Collectors.toList());
+                model.addAttribute("pageNumbers", pageNumbers);
+            }
         }
         else if (roleName.equals("Kepala Bagian")){
             List<PengajuanCutiModel> forKBA = pengajuanCutiService.getPengajuanCutiById_Status(accPU);
             List<PengajuanCutiModel> forKBB = pengajuanCutiService.getPengajuanCutiById_Status(evalKB);
             List<PengajuanCutiModel> newList = Stream.concat(forKBA.stream(), forKBB.stream())
                     .collect(Collectors.toList());
-            model.addAttribute("cutiList", newList);
+            Page<PengajuanCutiModel> cutiPage = pengajuanCutiService.findPaginated(PageRequest.of(currentPage-1, pageSize),newList);
+            model.addAttribute("cutiPage", cutiPage);
+            int totalPages = cutiPage.getTotalPages();
+            if(totalPages>0){
+                List<Integer> pageNumbers= IntStream.rangeClosed(1, totalPages).boxed().collect(Collectors.toList());
+                model.addAttribute("pageNumbers", pageNumbers);
+            }
         }
         else {
             List<PengajuanCutiModel> forMSDIA = pengajuanCutiService.getPengajuanCutiById_Status(accKB);
             List<PengajuanCutiModel> forMSDIB = pengajuanCutiService.getPengajuanCutiById_Status(evalMSDI);
             List<PengajuanCutiModel> newList = Stream.concat(forMSDIA.stream(), forMSDIB.stream())
                     .collect(Collectors.toList());
-            model.addAttribute("cutiList", newList);
+            Page<PengajuanCutiModel> cutiPage = pengajuanCutiService.findPaginated(PageRequest.of(currentPage-1, pageSize),newList);
+            model.addAttribute("cutiPage", cutiPage);
+            int totalPages = cutiPage.getTotalPages();
+            if(totalPages>0){
+                List<Integer> pageNumbers= IntStream.rangeClosed(1, totalPages).boxed().collect(Collectors.toList());
+                model.addAttribute("pageNumbers", pageNumbers);
+            }
         }
         return "view-all-cuti-kelola";
     }
 
-    @RequestMapping("/cuti")
-    public String viewAllCuti(Model model){
+    @RequestMapping(value = "/cuti", method = RequestMethod.GET)
+    public String viewAllCuti(Model model, @RequestParam("page") Optional<Integer> page, @RequestParam("size")Optional<Integer> size){
+        int currentPage = page.orElse(1);
+        int pageSize = size.orElse(5);
+
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String usern = auth.getName();
         UserModel user1 = userService.findbyUsername(usern);
         KaryawanModel karyawan = karyawanService.getByIduser(user1);
         int sisaCuti = 12-karyawan.getJumlahCuti();
         List<PengajuanCutiModel> newList = karyawan.getListPengajuanCuti();
+
+        Page<PengajuanCutiModel> cutiPage = pengajuanCutiService.findPaginated(PageRequest.of(currentPage-1, pageSize),newList);
+        model.addAttribute("cutiPage", cutiPage);
+        int totalPages = cutiPage.getTotalPages();
+        if(totalPages>0){
+            List<Integer> pageNumbers= IntStream.rangeClosed(1, totalPages).boxed().collect(Collectors.toList());
+            model.addAttribute("pageNumbers", pageNumbers);
+        }
+        List<PengajuanCutiModel> listCutiKaryawan = karyawan.getListPengajuanCuti();
+        int durasi2 = 0;
+        for (int i=0;i<listCutiKaryawan.size();i++){
+            if((listCutiKaryawan.get(i).getIdstatus().getStatus().equals("Diajukan") || listCutiKaryawan.get(i).getIdstatus().getStatus().equals("Disetujui oleh Pimpinan Unit") || listCutiKaryawan.get(i).getIdstatus().getStatus().equals("Disetujui oleh Kepala Bagian"))){
+                durasi2=durasi2+listCutiKaryawan.get(i).getDurasi();
+            }
+        }
         model.addAttribute("sisaCuti", sisaCuti);
+        model.addAttribute("cutiProses", durasi2);
         model.addAttribute("cutiList", newList);
         return "view-all-cuti";
     }
@@ -125,7 +169,7 @@ public class PengajuanCutiController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String usern = auth.getName();
         UserModel user1 = userService.findbyUsername(usern);
-        KaryawanModel karyawan = karyawanService.getKaryawanbyId(user1.getId());
+        KaryawanModel karyawan = karyawanService.getByIduser(user1);
         cuti.setId_karyawan(karyawan);
             try {
                 String kodeCuti = pengajuanCutiService.generateKodeCuti(cuti);
@@ -137,29 +181,15 @@ public class PengajuanCutiController {
                 int durasi = pengajuanCutiService.generateDurasi(cuti);
                 int gap = pengajuanCutiService.generateStartValid(cuti);
 
-                StatusModel diajukan = statusService.getStatusById(Long.valueOf(1));
-                StatusModel accPU = statusService.getStatusById(Long.valueOf(2));
-                StatusModel accKB = statusService.getStatusById(Long.valueOf(3));
-
                 List<PengajuanCutiModel> listCutiKaryawan = karyawan.getListPengajuanCuti();
-                for (int i=0;i<listCutiKaryawan.size();i++){
-                    if(!listCutiKaryawan.get(i).getIdstatus().equals(diajukan) && !listCutiKaryawan.get(i).getIdstatus().equals(accPU) && !listCutiKaryawan.get(i).getIdstatus().equals(accKB)){
-                        listCutiKaryawan.remove(listCutiKaryawan.get(i));
-                    }
-                }
-
                 int durasi2 = 0;
-                for (int i=0; i<listCutiKaryawan.size();i++){
-                    durasi2 = durasi2 + listCutiKaryawan.get(i).getDurasi();
-                    if(listCutiKaryawan.get(i).getId()== cuti.getId()){
-                        durasi2 = durasi2 - listCutiKaryawan.get(i).getDurasi();
+                for (int i=0;i<listCutiKaryawan.size();i++){
+                    if((listCutiKaryawan.get(i).getIdstatus().getStatus().equals("Diajukan") || listCutiKaryawan.get(i).getIdstatus().getStatus().equals("Disetujui oleh Pimpinan Unit") || listCutiKaryawan.get(i).getIdstatus().getStatus().equals("Disetujui oleh Kepala Bagian"))){
+                        durasi2=durasi2+listCutiKaryawan.get(i).getDurasi();
                     }
                 }
-                System.out.print(durasi);
-                System.out.print(durasi2);
-                System.out.print(karyawan.getJumlahCuti());
 
-                if (gap < 0 && (durasi+karyawan.getJumlahCuti()+durasi2<13)) {
+                if (durasi>0 && gap <= 0 && (durasi+karyawan.getJumlahCuti()+durasi2<13)) {
                     cuti.setDurasi(durasi);
                     pengajuanCutiService.addCuti(cuti);
                     model.addAttribute("kode_cuti", cuti.getKode_cuti());
@@ -192,26 +222,18 @@ public class PengajuanCutiController {
             int durasi = pengajuanCutiService.generateDurasi(cuti);
             int gap = pengajuanCutiService.generateStartValid(cuti);
 
-            StatusModel diajukan = statusService.getStatusById(Long.valueOf(1));
-            StatusModel accPU = statusService.getStatusById(Long.valueOf(2));
-            StatusModel accKB = statusService.getStatusById(Long.valueOf(3));
-
             List<PengajuanCutiModel> listCutiKaryawan = karyawan.getListPengajuanCuti();
-            for (int i=0;i<listCutiKaryawan.size();i++){
-                if(!listCutiKaryawan.get(i).getIdstatus().equals(diajukan) && !listCutiKaryawan.get(i).getIdstatus().equals(accPU) && !listCutiKaryawan.get(i).getIdstatus().equals(accKB)){
-                    listCutiKaryawan.remove(listCutiKaryawan.get(i));
-                }
-            }
-
             int durasi2 = 0;
-            for (int i=0; i<listCutiKaryawan.size();i++){
-                durasi2 = durasi2 + listCutiKaryawan.get(i).getDurasi();
-                if(listCutiKaryawan.get(i).getId()== cuti.getId()){
-                    durasi2 = durasi2 - listCutiKaryawan.get(i).getDurasi();
+            for (int i=0;i<listCutiKaryawan.size();i++){
+                if((listCutiKaryawan.get(i).getIdstatus().getStatus().equals("Diajukan") || listCutiKaryawan.get(i).getIdstatus().getStatus().equals("Disetujui oleh Pimpinan Unit") || listCutiKaryawan.get(i).getIdstatus().getStatus().equals("Disetujui oleh Kepala Bagian"))){
+                    durasi2=durasi2+listCutiKaryawan.get(i).getDurasi();
+                    if(listCutiKaryawan.get(i).getId()== cuti.getId()){
+                        durasi2 = durasi2 - listCutiKaryawan.get(i).getDurasi();
+                    }
                 }
             }
 
-            if (gap < 0 && (durasi+karyawan.getJumlahCuti()+durasi2<13)) {
+            if (durasi>0 && gap <= 0 && (durasi+karyawan.getJumlahCuti()+durasi2<13)) {
                 cuti.setDurasi(durasi);
                 pengajuanCutiService.changeCuti(cuti);
                 model.addAttribute("kode_cuti", cuti.getKode_cuti());
