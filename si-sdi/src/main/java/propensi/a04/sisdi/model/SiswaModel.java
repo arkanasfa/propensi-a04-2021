@@ -34,7 +34,13 @@ public class SiswaModel implements Serializable{
     private String kelas;
 
     @OneToOne(mappedBy = "id_siswa")
-    private OrangTuaModel orangTuaModel;    
+    private OrangTuaModel orangTuaModel;
+    
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "iduserSiswa", referencedColumnName = "id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore
+    private UserModel iduserSiswa;
 
     /**
      * @return Long return the id
@@ -106,5 +112,20 @@ public class SiswaModel implements Serializable{
         this.orangTuaModel = orangTuaModel;
     }
 
+
+
+    /**
+     * @return UserModel return the id_userSiswa
+     */
+    public UserModel getId_userSiswa() {
+        return iduserSiswa;
+    }
+
+    /**
+     * @param id_userSiswa the id_userSiswa to set
+     */
+    public void setId_userSiswa(UserModel id_userSiswa) {
+        this.iduserSiswa = id_userSiswa;
+    }
 
 }

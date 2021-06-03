@@ -1,6 +1,10 @@
 package propensi.a04.sisdi.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import propensi.a04.sisdi.model.PengajuanCutiModel;
 import propensi.a04.sisdi.model.StatusModel;
@@ -12,6 +16,7 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
@@ -65,6 +70,12 @@ public class PengajuanCutiServiceImpl implements PengajuanCutiService{
     }
 
     @Override
+    public void batalkanCuti(PengajuanCutiModel cuti) {
+        StatusModel pembatalanPU = statusDB.findById(Long.valueOf(10)).get();
+        cuti.setIdstatus(pembatalanPU);
+    }
+
+    @Override
     public String generateKodeCuti(PengajuanCutiModel cuti) {
         Random rand = new Random();
         String generate = "CT" + "-" + Integer.toString(cuti.getJenis()) + "-" + Integer.toString(rand.nextInt(9)) + Integer.toString(rand.nextInt(9)) + Integer.toString(rand.nextInt(9)) + Integer.toString(rand.nextInt(9));
@@ -89,14 +100,63 @@ public class PengajuanCutiServiceImpl implements PengajuanCutiService{
 
     @Override
     public void setujuiCuti(PengajuanCutiModel cuti) {
-        StatusModel stat = statusDB.findById(Long.valueOf(4)).get();
-        cuti.setIdstatus(stat);
+        if(cuti.getIdstatus().getId()==1) {
+            StatusModel stat = statusDB.findById(Long.valueOf(2)).get();
+            cuti.setIdstatus(stat);
+        }
+        else if(cuti.getIdstatus().getId()==2){
+            StatusModel stat = statusDB.findById(Long.valueOf(3)).get();
+            cuti.setIdstatus(stat);
+        }
+        else if(cuti.getIdstatus().getId()==10){
+            StatusModel stat = statusDB.findById(Long.valueOf(11)).get();
+            cuti.setIdstatus(stat);
+        }
+        else if(cuti.getIdstatus().getId()==11){
+            StatusModel stat = statusDB.findById(Long.valueOf(16)).get();
+            cuti.setIdstatus(stat);
+        }
+        else if(cuti.getIdstatus().getId()==16){
+            StatusModel stat = statusDB.findById(Long.valueOf(4)).get();
+            cuti.setIdstatus(stat);
+        }
+        else {
+            StatusModel stat = statusDB.findById(Long.valueOf(7)).get();
+            cuti.setIdstatus(stat);
+        }
     }
 
     @Override
     public void tolakCuti(PengajuanCutiModel cuti) {
         StatusModel stat = statusDB.findById(Long.valueOf(5)).get();
         cuti.setIdstatus(stat);
+    }
+
+    @Override
+    public void tolakPembatalanCuti(PengajuanCutiModel cuti) {
+        StatusModel stat = statusDB.findById(Long.valueOf(7)).get();
+        cuti.setIdstatus(stat);
+    }
+
+    @Override
+    public Page<PengajuanCutiModel> findPaginated(Pageable pageable, List<PengajuanCutiModel> cuti) {
+        int pageSize = pageable.getPageSize();
+        int currentPage = pageable.getPageNumber();
+        int startItem = currentPage * pageSize;
+
+//        List<PengajuanCutiModel> cuti = pengajuanCutiDb.findAll();
+        List<PengajuanCutiModel> list;
+
+        if(cuti.size() < startItem){
+            list = Collections.emptyList();
+        }else {
+            int toIndex = Math.min(startItem + pageSize, cuti.size());
+            list = cuti.subList(startItem, toIndex);
+        }
+        Page<PengajuanCutiModel> cutiPage
+        = new PageImpl<PengajuanCutiModel>(list,
+                PageRequest.of(currentPage,pageSize), cuti.size());
+        return cutiPage;
     }
 
     @Override

@@ -1,10 +1,71 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <!--    Jangan Lupa diisi!-->
+    <title>Form Add Siswa</title>
+    <object th:include="fragments/fragment :: cssjs" th:remove="tag"></object>
+    <!--    Default Style untuk semua page-->
+    <link rel="stylesheet" th:href="@{/css/default-style.css}" />
+
 </head>
 <body>
+<div class="container-fluid" >
+    <div class="col-auto" >
+        <!--    formatnya: sidebar([NamaHalaman] = 'highlight'). Buat nge highlight sidebar kalo lagi di halaman itu-->
+        <!--                Kecuali buat cuti izin dan lembur infal. gak pake garing karena jadi eror kalo pake garing-->
+        <object th:replace="fragments/fragment :: sidebar(LemburInfal= 'highlight')" th:remove="tag"></object>
+    </div>
+</div>
 
+<!--    Container untuk bagian sebelum abu abu-->
+<div class="container-fluid">
+    <div class="row">
+        <div class="card-body" id="pageTitle">
+            <h3 class="colorGreen">Add Siswa</h3>
+        </div>
+    </div>
+</div>
+
+<!--    Dalem abu-abu-->
+<div class="container-fluid">
+    <div class="row">
+        <div class="card-body">
+            <form th:action="@{/user/addUser/InformasiKaryawan(username=${user.username})}" th:object="${siswa}" method="POST">
+                <input type="hidden" th:field="*{id}"/>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">ID Pengguna: </label>
+                    <div class="col-sm-3">
+                        <input class="form-control" type="text" th:field="*{id_userSiswa}" th:value="${user.id}" th:placeholder="${user.id}" readonly>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Nama Siswa: </label>
+                    <div class="col-sm-3">
+                        <input class="form-control" type="text" th:field="*{namaSiswa}">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Kelas: </label>
+                    <div class="col-sm-3">
+                        <input class="form-control" type="text" th:field="*{kelas}">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Jenis Kelamin: </label>
+                    <div class="col-sm-3">
+                        <select class="form-control" id="jenisKelamin" th:field="*{jenisKelamin}">
+                            <option value="1">Laki-Laki</option>
+                            <option value="2">Perempuan</option>
+                        </select>
+                    </div>
+                </div>
+                <a th:href="@{user/addUser/InformasiKaryawan(username=${user.username})}"><button type="submit" class="btn backgroundGreen ">Submit</button></a>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!--    Container untuk bagian setelah abu abu-->
 </body>
 </html>

@@ -7,6 +7,7 @@
     <object th:include="fragments/fragment :: cssjs" th:remove="tag"></object>
     <!--    Default Style untuk semua page-->
     <link rel="stylesheet" th:href="@{/css/default-style.css}" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
 <style>
@@ -36,6 +37,8 @@
     <div class="row">
         <div class="card-body">
             <img id="successLogo" th:src="@{/images/success.png}"/>
+            <img id="failedLogo" th:src="@{/images/failed.png}"
+                 style="display:none;"/>
             <br> <br>
             <h2 class="col d-flex justify-content-center mb-3" th:text="${message}"></h2>
         </div>
@@ -47,11 +50,35 @@
     <div class="row">
         <div class="card-body" id="pageBottom">
             <div class="pull-right">
-                <a type="button" class="btn backgroundOrange" th:href="@{/payroll}">Back</a>
+                <a type="button" class="btn backgroundOrange" th:href="@{/payroll(tanggalIsu=${#dates.format(#dates.createNow() , 'yyyy-MM-dd')})}">Back</a>
             </div>
         </div>
     </div>
 </div>
+
+<script th:inline="javascript">
+    var flag =  /*[[${flag}]]*/ 'default';
+    $(document).ready(function() {
+        $('#sucessLogo').css('display', 'none');
+        if(flag==="0"){
+            success();
+        }
+        else{
+            failed();
+        }
+    });
+
+    function success(){
+        $('#sucessLogo').css('display', 'block');
+        $('#failedLogo').css('display', 'none');
+        console.log('success');
+    }
+
+    function failed(){
+        $('#failedLogo').show();
+        console.log('fail');
+    }
+</script>
 
 </body>
 </html>

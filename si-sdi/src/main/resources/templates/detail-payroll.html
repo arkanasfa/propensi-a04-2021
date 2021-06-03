@@ -33,6 +33,8 @@
         <div class="card-body" id="pageTitle">
             <h3 class="colorGreen">Detail Payroll</h3>
             <h4 class="colorGreen" style="text-align: left"
+                th:text="${periodeDokumen}"></h4>
+            <h4 class="colorGreen" style="text-align: left"
                 th:text="'Unit - ' + ${unitName}"></h4>
         </div>
     </div>
@@ -58,7 +60,7 @@
                     <td th:text="${karyawan.getKaryawan()}"></td>
 <!--                    <td th:text=""></td>-->
                     <td th:text="'Rp. ' + ${#numbers.formatDecimal(karyawan.getGaji(), 0, 'POINT', 2, 'COMMA')}"></td>
-                    <td><a th:href="@{/payroll/detailGaji(idGaji=${karyawan.getGajiModel().getId()})}" > View </a></td>
+                    <td><a th:href="@{/payroll/detailGaji(idGaji=${karyawan.getGajibyDokumen(dokumen).getId()})}" > View </a></td>
                 </tr>
                 <tr>
                     <td colspan="3" class="backgroundGreen colorWhite">Total Anggaran</td>
@@ -81,7 +83,7 @@
     <div class="row">
         <div class="card-body" id="pageBottom">
             <div class="pull-right">
-                <a type="button" class="btn backgroundOrange" th:href="@{/payroll/}">Back</a>
+                <a type="button" class="btn backgroundOrange" th:href="@{/payroll(tanggalIsu=${#dates.format(#dates.createNow() , 'yyyy-MM-dd')})}">Back</a>
             </div>
         </div>
     </div>

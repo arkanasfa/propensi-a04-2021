@@ -39,9 +39,14 @@ public class UserModel implements Serializable{
     @JsonIgnore
     private RoleModel id_role;
 
-    @OneToOne(mappedBy = "id_user")
+    @OneToOne(mappedBy = "iduser")
     private KaryawanModel karyawanModel;
 
+    @OneToOne(mappedBy = "iduserOrtu")
+    private OrangTuaModel orangTuaModel;
+
+    @OneToOne(mappedBy = "iduserSiswa")
+    private SiswaModel siswaModel;
 
 //    public KaryawanModel getKaryawan() {
 //        return karyawan;
@@ -54,15 +59,9 @@ public class UserModel implements Serializable{
 //    @OneToOne(mappedBy = "user")
 //    private KaryawanModel karyawan;
 
-    // @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    // @OnDelete(action = OnDeleteAction.CASCADE)
-    // @JsonIgnore
-    // private List<PengaduanModel> listPengaduan;
 
-   /*  @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIgnore
-    private List<PengaduanModel> listPengaduan; */
+    @OneToMany(mappedBy = "id_user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<PengaduanModel> listPengaduan;
 
     public Long getId() {
         return id;
@@ -112,7 +111,22 @@ public class UserModel implements Serializable{
         this.karyawanModel = karyawanModel;
     }
 
-    /*
+    public OrangTuaModel getOrangTuaModel() {
+        return orangTuaModel;
+    }
+
+    public void setOrangTuaModel(OrangTuaModel orangTuaModel) {
+        this.orangTuaModel = orangTuaModel;
+    }
+
+    public SiswaModel getSiswaModel() {
+        return siswaModel;
+    }
+
+    public void setSiswaModel(SiswaModel siswaModel) {
+        this.siswaModel = siswaModel;
+    }
+    
     public List<PengaduanModel> getListPengaduan() {
         return listPengaduan;
     }
@@ -121,5 +135,6 @@ public class UserModel implements Serializable{
     public void setListPengaduan(List<PengaduanModel> listPengaduan) {
         this.listPengaduan = listPengaduan;
     }
- */
+
+
 }

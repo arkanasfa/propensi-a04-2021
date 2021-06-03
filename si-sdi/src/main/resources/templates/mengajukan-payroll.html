@@ -5,51 +5,36 @@
     <title>Mengajukan Payroll</title>
     <object th:include="fragments/fragment :: cssjs" th:remove="tag"></object>
     <link rel="stylesheet" th:href="@{/css/default-style.css}" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 </head>
 
 <body>
 <style>
     .collapsible {
         background-color: white;
-        cursor: pointer;
         width: 100%;
         height: 20%;
         border-width: 2px;
         border-color: #83BA70;
         text-align: center;
         border-radius: 20px;
-        height:30px;
     }
 
-    collapsible:hover {
+    .collapsActive{
         background-color: #83BA70;
-        color:white;
+        width: 100%;
+        height: 20%;
         border-width: 2px;
         border-color: white;
+        text-align: center;
+        border-radius: 20px;
+        color:white;
     }
 
-    .collapsible:after {
-        content: '\25BC';
-        color: #83BA70;
-        float: right;
-    }
-
-    .active{
-        background-color: white;
-        color: #83BA70;
-        border-width: 2px;
-        border-color: #83BA70;
-    }
-
-    .active:after {
-        content: "\25B2";
-        color: #83BA70;
-    }
 
     .content {
         padding: 0 18px;
-        max-height: 0;
-        overflow: hidden;
         transition: max-height 0.2s ease-out;
     }
 
@@ -62,9 +47,10 @@
     .colorWhite{
         color:white;
     }
+
 </style>
 
-<div class="container-fluid" >
+<div class="container-fluid noPrint" >
     <div class="col-auto" >
         <object th:replace="fragments/fragment :: sidebar(Payroll = 'highlight')" th:remove="tag"></object>
     </div>
@@ -76,7 +62,7 @@
         <div class="card-body" id="pageTitle">
             <h3 class="colorGreen">Mengajukan Payroll</h3>
             <h4 class="colorGreen" style="text-align: left"
-            th:text="'Total Anggaran: ' + ${now}"></h4>
+            th:text="'Total Anggaran: ' + ${dateDisplay}"></h4>
             <h5 class="colorPurple" style="text-align: left"
                 th:text="'Status - ' + ${dokumenDisplay.getId_status().getStatus()}"></h5>
         </div>
@@ -84,71 +70,87 @@
 </div>
 
 <!--    Dalem abu-abu-->
-<div class="container-fluid">
+<form th:action="@{/payroll}" th:object="${dokumenDisplay}" method="POST">
+    <input type="hidden" th:field="${dokumenDisplay.id}"/>
+    <input type="hidden" th:field="${dokumenDisplay.tanggalIsu}"/>
+    <input type="hidden" th:field="${dokumenDisplay.totalAnggaran}"/>
+    <input type="hidden" th:field="${dokumenDisplay.id_status}"/>
+    <input type="hidden" th:field="${dokumenDisplay.listGaji}"/>
+<div class="container-fluid toPDF" >
     <div class="row">
         <div class="card-body">
-            <table class="rounded table table-bordered">
-                <thead >
-                <tr>
-                    <th scope="col" >No.</th>
-                    <th scope="col">Unit</th>
-                    <th scope="col">Anggaran</th>
-                    <th scope="col">Action</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>TKIT</td>
-                    <td
-                            th:text="'Rp. ' + ${#numbers.formatDecimal(unitDisplay.get(0), 0, 'POINT', 2, 'COMMA')}"></td>
-                    <td><a th:href="@{/payroll/detailPayroll(dokumenId=${dokumenDisplay.getId()}, unitName=${'TKIT'})}" > View </a></td>
-                </tr>
-                <tr>
-                    <th scope="row">2</th>
-                    <td>SDIT</td>
-                    <td
-                            th:text="'Rp. ' + ${#numbers.formatDecimal(unitDisplay.get(1), 0, 'POINT', 2, 'COMMA')}"></td>
-                    <td><a th:href="@{/payroll/detailPayroll(dokumenId=${dokumenDisplay.getId()}, unitName=${'SDIT'})}" > View </a></td>
-                </tr>
-                <tr>
-                    <th scope="row">3</th>
-                    <td>SMPIT</td>
-                    <td
-                            th:text="'Rp. ' + ${#numbers.formatDecimal(unitDisplay.get(2), 0, 'POINT', 2, 'COMMA')}"></td>
-                    <td><a th:href="@{/payroll/detailPayroll(dokumenId=${dokumenDisplay.getId()}, unitName=${'SMPIT'})}" > View </a></td>
-                </tr>
-                <tr>
-                    <th scope="row">4</th>
-                    <td>Supporting Unit</td>
-                    <td
-                            th:text="'Rp. ' + ${#numbers.formatDecimal(unitDisplay.get(3), 0, 'POINT', 2, 'COMMA')}"></td>
-                    <td><a th:href="@{/payroll/detailPayroll(dokumenId=${dokumenDisplay.getId()}, unitName=${'SU'})}" > View </a></td>
-                </tr>
-                <tr>
-                    <td colspan="2" class="backgroundGreen colorWhite">Total Anggaran</td>
-                    <td colspan="2" th:text="'Rp. ' + ${#numbers.formatDecimal(dokumenDisplay.getTotalAnggaran(), 0, 'POINT', 2, 'COMMA')}"></td>
-                </tr>
-                </tbody>
-            </table>
+            <div id="tablee">
+                <table class="rounded table table-bordered">
+                    <thead >
+                    <tr>
+                        <th scope="col" >No.</th>
+                        <th scope="col">Unit</th>
+                        <th scope="col">Anggaran</th>
+                        <th class="noPrint" scope="col" id="hideAction">Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>TKIT</td>
+                        <td
+                                th:text="'Rp. ' + ${#numbers.formatDecimal(unitDisplay.get(0), 0, 'POINT', 2, 'COMMA')}"></td>
+                        <td><a class="view noPrint" th:href="@{/payroll/detailPayroll(dokumenId=${dokumenDisplay.getId()}, unitName=${'TKIT'})}" > View </a></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">2</th>
+                        <td>SDIT</td>
+                        <td
+                                th:text="'Rp. ' + ${#numbers.formatDecimal(unitDisplay.get(1), 0, 'POINT', 2, 'COMMA')}"></td>
+                        <td><a class="view noPrint" th:href="@{/payroll/detailPayroll(dokumenId=${dokumenDisplay.getId()}, unitName=${'SDIT'})}" > View </a></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">3</th>
+                        <td>SMPIT</td>
+                        <td
+                                th:text="'Rp. ' + ${#numbers.formatDecimal(unitDisplay.get(2), 0, 'POINT', 2, 'COMMA')}"></td>
+                        <td><a class="view noPrint" th:href="@{/payroll/detailPayroll(dokumenId=${dokumenDisplay.getId()}, unitName=${'SMPIT'})}" > View </a></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">4</th>
+                        <td>Supporting Unit</td>
+                        <td
+                                th:text="'Rp. ' + ${#numbers.formatDecimal(unitDisplay.get(3), 0, 'POINT', 2, 'COMMA')}"></td>
+                        <td><a class="view noPrint" th:href="@{/payroll/detailPayroll(dokumenId=${dokumenDisplay.getId()}, unitName=${'SU'})}" > View </a></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="backgroundGreen colorWhite">Total Anggaran</td>
+                        <td colspan="2" th:text="'Rp. ' + ${#numbers.formatDecimal(dokumenDisplay.getTotalAnggaran(), 0, 'POINT', 2, 'COMMA')}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
 
 <!--            Buttons-->
             <br><br><br>
-            <div class="pull-right" id="buttons">
-                <a type="button" class="btn backgroundPurple" th:href="@{/payroll/komponenGaji}">Lihat Pengali Gaji</a>
-                <button onclick="document.getElementById('popUp').style.display='block'" type="button" class="btn backgroundPurple" id="ajukan" style="display: inline;">Ajukan</button>
-                <button type="button" class="btn backgroundPurple" style="display: none;">Download PDF</button>
+            <div class="pull-right noPrint" id="buttons">
+                <a type="button" class="btn backgroundPurple" th:href="@{/payroll/komponenGaji}" id="kpg">Lihat Pengali Gaji</a>
+                <button onclick="document.getElementById('popUp').style.display='block'" type="button" class="btn backgroundGreen" style="display: inline;"
+                        th:attrappend="data-target=${dokumenDisplay.id}" id="ajukan">Ajukan</button>
+                <button type="button" class="btn backgroundGreen" style="display: none;" id="downloadPDF"
+               onclick="pleasePrint()">Download PDF</button>
+                <button onclick="document.getElementById('requestAksesPU').style.display='block'" type="button" class="btn backgroundPurple" style="display: inline;"
+                        th:attrappend="data-target=${dokumenDisplay.id}" id="requestAkses">Request Akses</button>
+                <button onclick="document.getElementById('grantAksesPU').style.display='block'" type="button" class="btn backgroundGreen" style="display: inline;"
+                        th:attrappend="data-target=${dokumenDisplay.id}" id="grantAkses">Berikan Akses</button>
+                <button onclick="document.getElementById('setujuiPU').style.display='block'" type="button" class="btn backgroundGreen" style="display: inline;"
+                        th:attrappend="data-target=${dokumenDisplay.id}" id="setujui">Setujui</button>
             </div>
         </div>
     </div>
 </div>
 
 <!--    Container untuk bagian setelah abu abu-->
-<div class="container-fluid">
+<div class="container-fluid noPrint">
     <div class="row">
         <div class="card-body" id="pageBottom">
             <div class="pull-right">
-                <button type="button" class="btn backgroundOrange" th:href="@{/}">Back</button>
+                <a type="button" class="btn backgroundOrange" th:href="@{/}">Back</a>
             </div>
         </div>
     </div>
@@ -156,18 +158,138 @@
 
 <!--Ini section yang bakal popup. Copy dari sini buat setiap halaman yang ada pop up-->
 <div id="popUp" class="modal">
-    <span onclick="document.getElementById('popup').style.display='none'"  title="Close Modal">×</span>
+    <span onclick="document.getElementById('popup').style.display='none'"  title="Close Modal"></span>
     <!--    Ini jangan lupa diisi actionnya-->
     <div class="modal-content">
         <div class="container">
             <img th:src="@{/images/warning.png}"/>
             <br><br>
             <!--            custom sendiri yaa-->
-            <p>Apakah anda yakin mengajukan dokumen total anggaran?</p>
+            <p>Apakah anda yakin ingin mengajukan dokumen total anggaran?</p>
             <div class="clearfix">
                 <button type="button" onclick="document.getElementById('popUp').style.display='none'" class="btn backgroundOrange">Cancel</button>
                 <!--                ini juga custom!-->
-                <button type="submit" onclick="document.getElementById('popUP').style.display='none'" class="btn backgroundPurple" th:href="@{/payroll/ajukan(idDok=${dokumenDisplay.getId()})}">Ajukan</button>
+                <button type="submit" onclick="document.getElementById('popUP').style.display='none'" class="btn backgroundGreen"
+                        name="action" value="ajukan">Ajukan</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="requestAksesPU" class="modal">
+    <span onclick="document.getElementById('requestAksesPU').style.display='none'"  title="Close Modal"></span>
+    <!--    Ini jangan lupa diisi actionnya-->
+    <div class="modal-content">
+        <div class="container">
+            <img th:src="@{/images/warning.png}"/>
+            <br><br>
+            <!--            custom sendiri yaa-->
+            <p>Apakah anda yakin ingin Request Akses kepada Manajer SDI?</p>
+            <div class="clearfix">
+                <button type="button" onclick="document.getElementById('requestAksesPU').style.display='none'" class="btn backgroundOrange">Cancel</button>
+                <!--                ini juga custom!-->
+                <button type="submit" onclick="document.getElementById('requestAksesPU').style.display='none'" class="btn backgroundPurple"
+                        name="action" value="requestAkses">Request Akses</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="grantAksesPU" class="modal">
+    <span onclick="document.getElementById('grantAksesPU').style.display='none'"  title="Close Modal"></span>
+    <!--    Ini jangan lupa diisi actionnya-->
+    <div class="modal-content">
+        <div class="container">
+            <img th:src="@{/images/warning.png}"/>
+            <br><br>
+            <!--            custom sendiri yaa-->
+            <p>Apakah anda yakin ingin memberikan Akses kepada Wakil Pengurus Harian?</p>
+            <div class="clearfix">
+                <button type="button" onclick="document.getElementById('grantAksesPU').style.display='none'" class="btn backgroundOrange">Cancel</button>
+                <!--                ini juga custom!-->
+                <button type="submit" onclick="document.getElementById('grantAksesPU').style.display='none'" class="btn backgroundGreen"
+                        name="action" value="grantAkses">Beri Akses</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="setujuiPU" class="modal">
+    <span onclick="document.getElementById('setujuiPU').style.display='none'"  title="Close Modal"></span>
+    <!--    Ini jangan lupa diisi actionnya-->
+    <div class="modal-content">
+        <div class="container">
+            <img th:src="@{/images/warning.png}"/>
+            <br><br>
+            <!--            custom sendiri yaa-->
+            <p th:text="'Apakah anda yakin ingin menyetujui Payroll untuk ' + ${dateDisplay} + ' ?'"></p>
+            <div class="clearfix">
+                <button type="button" onclick="document.getElementById('setujuiPU').style.display='none'" class="btn backgroundOrange">Cancel</button>
+                <!--                ini juga custom!-->
+                <button type="submit" onclick="document.getElementById('setujuiPU').style.display='none'" class="btn backgroundGreen"
+                        name="action" value="setujui">Setujui</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+</form>
+
+
+<!--            Collapsible untuk bulan bulan yang udah lewat-->
+<div class="container-fluid noPrint" id="history">
+    <div class="card-body">
+        <div th:each="dokumen, i:${dokumenList}">
+            <div id="clickables"></div>
+            <button  type="button" class="collapsible toggles colorGreen"
+                     th:text="${dateList.get(i.index)}" th:id="${i.index}" ></button>
+            <div class="content" th:id="'show' + ${i.index}">
+                <table class="rounded table table-bordered"
+                       th:object="${total}">
+                    <thead>
+                    <tr>
+                        <th scope="col" >No.</th>
+                        <th scope="col">Unit</th>
+                        <th scope="col">Anggaran</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>TKIT</td>
+                        <td
+                                th:text="'Rp. ' + ${#numbers.formatDecimal(total.get(i.index).get(0), 0, 'POINT', 2, 'COMMA')}"></td>
+                        <td><a th:href="@{/payroll/detailPayroll(dokumenId=${dokumen.getId()}, unitName=${'TKIT'})}" >View</a></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">2</th>
+                        <td>SDIT</td>
+                        <td
+                                th:text="'Rp. ' + ${#numbers.formatDecimal(total.get(i.index).get(1), 0, 'POINT', 2, 'COMMA')}"></td>
+                        <td><a th:href="@{/payroll/detailPayroll(dokumenId=${dokumen.getId()}, unitName=${'SDIT'})}" >View</a></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">3</th>
+                        <td>SMPIT</td>
+                        <td
+                                th:text="'Rp. ' + ${#numbers.formatDecimal(total.get(i.index).get(2), 0, 'POINT', 2, 'COMMA')}"></td>
+                        <td><a th:href="@{/payroll/detailPayroll(dokumenId=${dokumen.getId()}, unitName=${'SMPIT'})}" >View</a></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">4</th>
+                        <td>Supporting Unit</td>
+                        <td
+                                th:text="'Rp. ' + ${#numbers.formatDecimal(total.get(i.index).get(3), 0, 'POINT', 2, 'COMMA')}"></td>
+                        <td><a th:href="@{/payroll/detailPayroll(dokumenId=${dokumen.getId()}, unitName=${'SU'})}" >View</a></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="backgroundGreen colorWhite">Total Anggaran</td>
+                        <td colspan="2"
+                            th:text="'Rp. ' + ${#numbers.formatDecimal(dokumen.getTotalAnggaran(), 0, 'POINT', 2, 'COMMA')}"></td>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
@@ -175,28 +297,100 @@
 
 <script th:inline="javascript">
 
-    //collapsible
-    var coll = document.getElementsByClassName("collapsible");
-    var i;
+    function pleasePrint() {
+        $('.noPrint').hide();
+        $('.card-body').css("margin-left", "0px");
+        window.print();
+        $('.noPrint').show();
+        $('.card-body').css("margin-left", "250px");
 
-    for (i = 0; i < coll.length; i++) {
-        coll[i].addEventListener("click", function() {
-            this.classList.toggle("active");
-            var content = this.nextElementSibling;
-            if (content.style.maxHeight){
-                content.style.maxHeight = null;
-            } else {
-                content.style.maxHeight = content.scrollHeight + "px";
+    }
+
+    var divId = $('div[id^="show"]');
+    var docCount = /*[[${dokumenList}]]*/ 'default';
+    var role =  /*[[${role}]]*/ 'default';
+    var status =  /*[[${dokumenDisplay.getId_status().getStatus()}]]*/ 'default';
+    $(document).ready(function() {
+        for(i=0; i<docCount.length; i++){
+            $('#show' + i).hide();
+        }
+        $('.toggles').on('click',
+            function(){
+                var clickedId = jQuery(this).attr("id");
+                $('div[id^="show"]').eq(clickedId).toggle();
+                $(this).toggleClass('collapsActive');
+            });
+    });
+
+    $(document).ready(function(){
+        //Authorization for Wakil Pengurus Harian
+        if(role==="Wakil Pengurus Harian"){
+            //Gak bisa lihat history
+            $('#history').hide();
+            //Gak bisa lihat tombol Download PDF
+            $('#downloadPDF').hide();
+            //Gak bisa lihat tombol komponen pengali gaji
+            $('#kpg').hide();
+            //Gak bisa lihat tombol ajukan
+            $('#ajukan').hide();
+            //Bisa lihat tombol Request Akses
+            if((status==="Menunggu Akses") || (status==="Akses Diberikan")){
+                $('#requestAkses').hide();
+            }else{
+                $('#requestAkses').show();
             }
-        });
-    }
+            //Gak bisa lihat tombol berikan persetujuan
+            $('#grantAkses').hide();
+            //Bisa lihat tombol Setujui
+            if(status==="Disetujui"){
+                $('#setujui').hide();
+                $('#requestAkses').hide();
+            }else{
+                $('#setujui').show();
+            }
+            //Gak bisa lihat detail (viewPayroll) (kecuali kalo udah dapet akses)
+            if((status==="Akses Diberikan")){
+                $('.view').attr("href");
+                $('.view').css("color", "#83BA70");
+            }else{
+                $('.view').removeAttr("href");
+                $('.view').css("color", "black");
+            }
 
-    var status = [${dokumenDisplay.getId_status().getStatus()}]
-    if (status === "Menunggu Pengajuan"){
-        document.getElementById("ajukan").style.display = "block";
-    } else{
-        document.getElementById("ajukan").style.display = "none";
-    }
+
+        }
+        if(role==="Manajer SDI"){
+            //Bisa lihat history bulan-bulan sebelumnya
+            $('#history').show();
+            //Gak bisa lihat tombol Download PDF kecuali kalau sudah disetujui
+            if(status==="Disetujui"){
+                $('#downloadPDF').show();
+            }else{
+                $('#downloadPDF').hide();
+            }
+            //Gak bisa lihat tombol Request Akses
+            $('#requestAkses').hide();
+            //Gak bisa lihat tombol setujui
+            $('#setujui').hide();
+            //Gak bisa lihat tombol ajukan kalau statusnya udah Diajukan
+            if(status==="Menunggu Pengajuan"){
+                $('#ajukan').show();
+            }else{
+                $('#ajukan').hide();
+            }
+            //Bisa lihat komponen pengali gaji
+            $('#kpg').show();
+            //Bisa memberikan akses
+            if(status==="Menunggu Akses"){
+                $('#grantAkses').show();
+            }else{
+                $('#grantAkses').hide();
+            }
+
+        }
+    });
+
+
 </script>
 
 </body>

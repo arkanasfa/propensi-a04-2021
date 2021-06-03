@@ -1,5 +1,6 @@
 package propensi.a04.sisdi.controller;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -14,11 +15,14 @@ import propensi.a04.sisdi.repository.KomponenPengaliDb;
 import propensi.a04.sisdi.service.PayrollService;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.time.YearMonth;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Controller
 @RequestMapping("/payroll")
@@ -38,61 +42,125 @@ public class PayrollController {
     @Autowired
     GajiDb gajiDb;
 
+    //Request Param tanggal dari button payroll yang ada di navbar
     @GetMapping("")
-    private String requestPayrollForm(Model model) {
-        YearMonth now = YearMonth.now();
-        final Date date =
-                Date.from(now.atDay(1).atStartOfDay(ZoneId.systemDefault()).toInstant());
-        // Generate Dokumen Total Anggaran baru kalau belum ada untuk periode itu
-        if(!payrollService.compareDokumenTotalByTanggalIsu(now) || dokumenTotalDb.findAll().isEmpty()){
-            // Buat dokumen baru dan populate+save datanya
-            DokumenTotalModel dokumenBaru = new DokumenTotalModel();
-            payrollService.makeDokumenTotal(dokumenBaru);
-        }
-        DokumenTotalModel dokumen = dokumenTotalDb.findDokumenTotalByTanggalIsu(date).get();
-        payrollService.updateDokumenTotal(dokumen);
-        List<DokumenTotalModel> dokumenList = dokumenTotalDb.findAll();
-        int lastIndex = dokumenList.size()-1;
-        DokumenTotalModel dokumenDisplay = dokumenList.get(lastIndex);
-        List<List<Integer>> total = payrollService.totalPerDokPerUnit();
-        List<Integer> unitDisplay = total.get(lastIndex);
-        model.addAttribute("now", now);
-        model.addAttribute("dokumenDisplay", dokumenDisplay);
-        model.addAttribute("dokumenList", dokumenList);
-        model.addAttribute("unitDisplay", unitDisplay);
-        model.addAttribute("total", total);
-        return "mengajukan-payroll";
-    }
-
-    // Notifikasi Pengajuan Dokumen Total Gaji
-    @GetMapping(value="/ajukan")
-    private String ajukanDokumenGaji(
-            @RequestParam(value="idDok") Long idDok,
+    private String requestPayrollForm(
+            @RequestParam(value="tanggalIsu") @DateTimeFormat(pattern="yyyy-MM-dd") Date tanggalIsu,
             HttpServletRequest request,
             Model model) {
-        Long dokId = Long.valueOf(request.getParameter("idDok"));
-        DokumenTotalModel ajukan = dokumenTotalDb.findById(dokId).get();
-        payrollService.ajukanDokumenTotalGaji(ajukan);
-        Date date = ajukan.getTanggalIsu();
-        String message = "Dokumen Total Gaji untuk isu" + date + "berhasil diajukan";
+        //Initiate Page
+        YearMonth reset = payrollService.datetoYM(tanggalIsu);
+        Date tanggal_isu = payrollService.YMtoDate(reset);
+        try{
+            payrollService.getDokumenByTanggal_Isu(tanggal_isu);
+        }catch(NoSuchElementException exception){
+            DokumenTotalModel dokumenBaru = new DokumenTotalModel();
+            payrollService.makeDokumenTotal(dokumenBaru, tanggal_isu);
+        }
+        DokumenTotalModel dokumen = payrollService.getDokumenByTanggal_Isu(tanggal_isu);
+        payrollService.updateDokumenTotal(dokumen);
+
+        //Authorization Control
+        String role = payrollService.findUser().getId_role().getRole();
+
+        if((role.equals("Wakil Pengurus Harian"))&&
+                (dokumen.getId_status().getStatus().equals("Menunggu Pengajuan"))){
+            String message="Mohon maaf, Anda belum memiliki akses ke halaman ini " +
+                    "karena Manajer SDI belum mengajukan dokumen total anggaran";
+            model.addAttribute("message", message);
+            return "payroll-access";
+        } else{
+            //List Attribute
+            List<DokumenTotalModel> dokumenList = dokumenTotalDb.findAll();
+            int lastIndex = dokumenList.size()-1;
+            List<List<Integer>> total = payrollService.totalPerDokPerUnit();
+            List<String> dateList = payrollService.displayYearMonth();
+            model.addAttribute("role", role);
+            model.addAttribute("dateList", dateList);
+            model.addAttribute("dateDisplay", dateList.get(lastIndex));
+            model.addAttribute("dokumenDisplay", dokumenList.get(lastIndex));
+            model.addAttribute("dokumenList", dokumenList);
+            model.addAttribute("unitDisplay", total.get(lastIndex));
+            model.addAttribute("total", total);
+            return "mengajukan-payroll";
+        }
+    }
+
+
+    // Notifikasi Pengajuan Dokumen Total Gaji
+    @RequestMapping(value="", method = RequestMethod.POST)
+    private String ajukanDokumenGaji(
+            @ModelAttribute DokumenTotalModel dokumenSubmit,
+            @RequestParam(value="action", required=true) String action,
+            Model model) {
+        String message;
+        String flag;
+        String date = payrollService.displayYearMonth(dokumenSubmit.getTanggalIsu());
+        switch(action){
+            case "ajukan":
+                try{
+                    payrollService.statusToAjukan(dokumenSubmit);
+                    message = "Dokumen Total Gaji untuk isu " + date + " berhasil diajukan";
+                    flag="0";
+                }catch(Exception e){
+                    message = "Mohon maaf, Dokumen Total Gaji untuk isu " + date + " gagal diajukan";
+                    flag="1";
+                }
+                break;
+            case "requestAkses":
+                try{
+                    payrollService.statusToMenungguAkses(dokumenSubmit);
+                    message = "Request untuk melihat dokumen total anggaran " +
+                            "untuk isu " + date + " berhasil diajukan";
+                    flag="0";
+                }catch(Exception e){
+                    message = "Mohon maaf, Request untuk melihat dokumen total anggaran " + date + " gagal diajukan";
+                    flag="1";
+                }
+                break;
+            case "grantAkses":
+                try{
+                    payrollService.statusToAksesDiberikan(dokumenSubmit);
+                    message = "Request untuk melihat dokumen total anggaran " +
+                            "untuk isu " + date + " berhasil diberikan";
+                    flag="0";
+                }catch(Exception e){
+                    message = "Mohon maaf, Request untuk melihat dokumen total anggaran " + date + " gagal diberikan";
+                    flag="1";
+                }
+                break;
+            default:
+                try{
+                    payrollService.statusToDisetujui(dokumenSubmit);
+                    message = "Payroll untuk " + date + " berhasil disetujui";
+                    flag="0";
+                }catch(Exception e){
+                    message = "Mohon maaf, Payroll untuk " + date + " gagal disetujui";
+                    flag="1";
+                }
+                break;
+        }
+
         model.addAttribute("message", message);
+        model.addAttribute("flag", flag);
         return "payroll-notifs";
     }
 
     @GetMapping("/detailPayroll")
     private String detailPayroll(@RequestParam(value="dokumenId") Long dokumenId,
                                  @RequestParam(value="unitName") String unitName,
-                                 HttpServletRequest request,
                                  Model model) {
-        Long idDokumen = Long.valueOf(request.getParameter("dokumenId"));
-        DokumenTotalModel dokumen = dokumenTotalDb.findById(idDokumen).get();
-        String namaUnit = String.valueOf(request.getParameter("unitName"));
-        List<GajiModel> gajiList = gajiDb.findByUnitAndDokumen(namaUnit, dokumen);
+        DokumenTotalModel dokumen = dokumenTotalDb.findById(dokumenId).get();
+        List<GajiModel> gajiList = gajiDb.findByUnitAndDokumen(unitName, dokumen);
         List<KaryawanModel> karyawanList = new ArrayList<>();
         for(GajiModel gaji:gajiList){
             karyawanList.add(gaji.getId_karyawan());
         }
-        Integer totalAnggaranUnit = payrollService.totalAnggaranUnit(namaUnit, dokumen);
+        Integer totalAnggaranUnit = payrollService.totalAnggaranUnit(unitName, dokumen);
+        model.addAttribute("periodeDokumen", payrollService.displayYearMonth(
+                dokumen.getTanggalIsu()
+        ));
+        model.addAttribute("dokumen", dokumen);
         model.addAttribute("totalAnggaranUnit", totalAnggaranUnit);
         model.addAttribute("karyawanList", karyawanList);
         model.addAttribute("unitName", unitName);
@@ -100,32 +168,72 @@ public class PayrollController {
         return "detail-payroll";
     }
 
+    @GetMapping("/listGaji")
+    private String listGajiKaryawan(
+            @RequestParam(value="idKaryawan") Long idKaryawan,
+            Model model){
+        KaryawanModel karyawan = payrollService.findUser().getKaryawanModel();
+        Long karyawanId = karyawan.getId();
+        if (idKaryawan != karyawanId) {
+            String message = "Mohon maaf, Anda tidak memiliki akses ke halaman ini";
+            model.addAttribute("message", message);
+            return "payroll-access";
+        }else if(karyawan.getGajiModel()==null){
+            String message = "Mohon maaf, Anda belum memiliki Gaji";
+            model.addAttribute("message", message);
+            return "payroll-access";
+        }else{
+            List<GajiModel> gajiList = karyawan.getGajiModel();
+            List<GajiModel> gajiFix = new ArrayList<>();
+            List<String> dateList = new ArrayList<>();
+            for(GajiModel gaji:gajiList){
+                if(gaji.getDokumen().getId_status().getStatus().equals("Disetujui")){
+                    gajiFix.add(gaji);
+                    dateList.add(payrollService.displayYearMonth(gaji.getDokumen().getTanggalIsu()));
+                }
+            }
+            model.addAttribute("gajiList", gajiFix);
+            model.addAttribute("dateList", dateList);
+            model.addAttribute("karyawan", karyawan);
+            return "payroll-list";
+
+        }
+
+    }
+
     // View Detail Gaji per Karyawan
     @GetMapping("/detailGaji")
     private String detailGaji(
             @RequestParam(value="idGaji") Long idGaji,
-            HttpServletRequest request,
             Model model){
-        Long gajiId = Long.valueOf(request.getParameter("idGaji"));
-       GajiModel gaji = gajiDb.findById(gajiId).get();
-       KaryawanModel karyawan = karyawanDb.findByGajiModel(gaji).get();
-       Date date = gaji.getDokumen().getTanggalIsu();
-        YearMonth yearMonth =
-                YearMonth.from(date.toInstant()
-                        .atZone(ZoneId.systemDefault())
-                        .toLocalDate());
-        String status;
-        status="Tetap";
-        if(karyawan.getStatusKaryawan()==2){
-            status="Kontrak";
-        } else if(karyawan.getStatusKaryawan()==3){
-            status="Tenaga Ahli";
-        }
-       model.addAttribute("yearMonth", yearMonth);
-       model.addAttribute("status", status);
-       model.addAttribute("karyawan", karyawan);
-       model.addAttribute("gaji", gaji);
-       return "detail-gaji";
+       GajiModel gaji = gajiDb.findById(idGaji).get();
+       KaryawanModel karyawanParam = gaji.getId_karyawan();
+       KaryawanModel karyawanUser = payrollService.findUser().getKaryawanModel();
+       String date = payrollService.displayYearMonth(gaji.getDokumen().getTanggalIsu());
+       String status = payrollService.displayStatus(karyawanParam.getStatusKaryawan());
+       String role = payrollService.findUser().getId_role().getRole();
+       String statusDokumen = gaji.getDokumen().getId_status().getStatus();
+       if((role.equals("Karyawan")) && (!statusDokumen.equals("Disetujui"))){
+           String message="Mohon maaf, slip gaji untuk " + date + " belum dapat diakses. Silahkan hubungi Manajer SDI" +
+                   " untuk keterangan lebih lanjut.";
+           model.addAttribute("message", message);
+           return "payroll-access";
+       }else if(role.equals("Karyawan")){
+           if(!karyawanParam.getKaryawan().equals(karyawanUser.getKaryawan())){
+                String message="Mohon maaf, Anda tidak memiliki akses ke halaman ini";
+                model.addAttribute("message", message);
+                return "payroll-access";
+            }
+       } else{
+       }
+        model.addAttribute("statusDokumen", statusDokumen);
+        model.addAttribute("tahunAngkat", payrollService.displayYearMonth(karyawanParam.getTanggalMasuk()));
+        model.addAttribute("role", role);
+        model.addAttribute("date", date);
+        model.addAttribute("status", status);
+        model.addAttribute("karyawan", karyawanParam);
+        model.addAttribute("gaji", gaji);
+        return "detail-gaji";
     }
 
     @GetMapping("/detailGaji/ubah")
@@ -166,6 +274,7 @@ public class PayrollController {
         model.addAttribute("gaji", gaji);
         String message = "Gaji berhasil diubah.";
         model.addAttribute("message", message);
+        model.addAttribute("flag", "0");
         return "payroll-notifs";
     }
 

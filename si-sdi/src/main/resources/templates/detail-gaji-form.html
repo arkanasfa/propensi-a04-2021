@@ -271,7 +271,7 @@
     <div class="row">
         <div class="card-body" id="pageBottom">
             <div class="pull-right">
-                <a type="button" class="btn backgroundOrange" th:href="@{/payroll/}">Back</a>
+                <a type="button" class="btn backgroundOrange" th:href="@{/payroll(tanggalIsu=${#dates.format(#dates.createNow() , 'yyyy-MM-dd')})}">Back</a>
             </div>
         </div>
     </div>

@@ -7,9 +7,17 @@
     <object th:include="fragments/fragment :: cssjs" th:remove="tag"></object>
     <!--    Default Style untuk semua page-->
     <link rel="stylesheet" th:href="@{/css/default-style.css}" />
-
-
 </head>
+<style>
+    th, td {
+        border-radius: 3em;
+        color:#000000;
+        text-align: start;
+        background-color: #F6F6F6; !important;
+        font-size: 1.15em;
+    }
+</style>
+
 <body>
 <div class="container-fluid" >
     <div class="col-auto" >
@@ -24,75 +32,57 @@
     <div class="row">
         <div class="card-body" id="pageTitle">
             <h3 class="colorGreen">Detail Pengaduan</h3>
-            <!-- <form class="float-right" id="FORMskor">
-                <a type="button" class="btn backgroundPurple " disabled>Skor</a>
-                <select name="skor" id="skor">
-                <option value="0" selected>0</option>
-                <option value="25">25</option>
-                <option value="50">50</option>
-                <option value="75">75</option>
-                <option value="100">100</option>
-                </select>
-            </form> -->
         </div>
     </div>
 </div>
 
-<!--    Dalem abu-abu-->
+
+<!--    Dalem abu-abu [Karyawan] -->
 <div class="container-fluid">
     <div class="row">
         <div class="card-body">
-            <h2  class="col d-flex justify-content-center mb-3"> Detail Pengaduan: </h2>
-            <br>
-            <div class="row">
-                <div class="col-25">
-                  <h5>Kode Pengaduan&emsp;&ensp; : &emsp;</h5>
-                </div>
-                <div class="col-75">
-                    <h5 th:text="${pengaduan.kode_pengaduan}"></h5>
-                </div>
-            </div>
-            <br>
-            <div class="row">
-                <div class="col-25">
-                  <h5>Tanggal Diajukan&ensp;&emsp;: &emsp; </h5>
-                </div>
-                <div class="col-75">
-                    <h5 th:text="${pengaduan.tanggalPengaduan}"></h5>
-                </div>
-            </div>
-            <br>
-            <div class="row">
-                <div class="col-25">
-                  <h5 >Nama Karyawan &emsp; &ensp;: &emsp;</h5>
-                </div>
-                <div class="col-75">
-                    <h5 th:text="${pengaduan.no_karyawan.karyawan}"></h5>
-                </div>
-            </div>
-            <br>
-            <div class="row">
-                <div class="col-25">
-                  <h5>Status &emsp; &emsp; &emsp; &emsp; &ensp; : &ensp;</h5>
-                </div>
-                <div class="col-75">
-                    <h5 class="col d-flex justify-content-center">
-                        <div th:text="${pengaduan.id_status.status}"></div>
-                    </h5>
-                </div>
-            </div>
-            <br>
-            <div class="row">
-                <div class="col-25">
-                  <h5>Detail Pengaduan &emsp;: &emsp;</h5>
-                </div>
-                <div class="col-75">
-                    <h5 th:text="${pengaduan.detailPengaduan}"></h5>
-                </div>
+            <div class="col-md-8">
+                <table width="100%" border="0">
+                        <td>
+                            <table border="0" width="100%" style="padding-left:2px;">
+                                <tbody>
+                                <tr>
+                                    <td width="35%"align="top">Kode pengaduan</td>
+                                    <td width="2%">:</td>
+                                    <td style="font-weight: bold" th:text="${pengaduan.kode_pengaduan}"></td>
+                                </tr>
+                                <tr>
+                                    <td>Tanggal Diajukan</td>
+                                    <td>:</td>
+                                    <td th:text="${pengaduan.tanggalPengaduan}"></td>
+
+                                </tr>
+                                <tr>
+                                    <td>Nama Karyawan</td>
+                                    <td>:</td>
+                                    <td th:text="${pengaduan.no_karyawan.karyawan}"></td>
+
+                                </tr>
+                                <tr>
+                                    <td>Status</td>
+                                    <td>:</td>
+                                    <td th:text="${pengaduan.id_status.status}"></td>
+
+                                </tr>
+                                <tr>
+                                    <td>Detail Pengaduan</td>
+                                    <td>:</td>
+                                    <td th:text="${pengaduan.detailPengaduan}"></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                </table>
             </div>
         </div>
     </div>
 </div>
+
 
 <!--    Container untuk bagian setelah abu abu-->
 <div class="container-fluid">

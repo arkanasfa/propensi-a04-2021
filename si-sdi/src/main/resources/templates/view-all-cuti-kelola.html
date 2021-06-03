@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <!--    Jangan Lupa diisi!-->
+    <title>List Pengajuan Cuti</title>
+    <object th:include="fragments/fragment :: cssjs" th:remove="tag"></object>
+    <!--    Default Style untuk semua page-->
+    <link rel="stylesheet" th:href="@{/css/default-style.css}" />
+
+
+</head>
+<body>
+<div class="container-fluid" >
+    <div class="col-auto" >
+        <!--    formatnya: sidebar([NamaHalaman] = 'highlight'). Buat nge highlight sidebar kalo lagi di halaman itu-->
+        <!--                Kecuali buat cuti izin dan lembur infal. gak pake garing karena jadi eror kalo pake garing-->
+        <object th:replace="fragments/fragment :: sidebar(CutiIzin = 'highlight')" th:remove="tag"></object>
+    </div>
+</div>
+
+<!--    Container untuk bagian sebelum abu abu-->
+<div class="container-fluid">
+    <div class="row">
+        <div class="card-body" id="pageTitle">
+            <h3 class="colorGreen">Daftar Pengajuan Cuti/Izin</h3>
+        </div>
+    </div>
+</div>
+
+<!--    Dalem abu-abu [Approval]-->
+<div class="container-fluid">
+    <div class="row">
+        <div class="card-body">
+            <table class="rounded table table-bordered">
+                <thead style="color: #7BB662">
+                <tr>
+                    <th scope="col">No.</th>
+                    <th scope="col">Tanggal Pengajuan</th>
+                    <th scope="col">Kode Cuti/Izin</th>
+                    <th scope="col">Nama Pengaju</th>
+                    <th scope="col">Status</th>
+                    <th scope="col" colspan="3">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="cuti, iStat: ${cutiPage.content}">
+                    <td th:text="${iStat.count}"></td>
+                    <td th:text="${cuti.tanggalRequest.getDate()} + '-' + ${cuti.tanggalRequest.getMonth()} + '-' + ${cuti.tanggalRequest.getYear()+1900}"></td>
+                    <td th:text="${cuti.kode_cuti}"></td>
+                    <td th:text="${cuti.getId_karyawan().getKaryawan()}"></td>
+
+                    <td th:if="${cuti.idstatus.getStatus()}=='Diajukan'" style="color:#FAB14A;" th:text="${cuti.idstatus.getStatus()}"></td>
+                    <td th:if="${cuti.idstatus.getStatus()}=='Disetujui oleh Pimpinan Unit'" style="color:#FAB14A;" th:text="${cuti.idstatus.getStatus()}"></td>
+                    <td th:if="${cuti.idstatus.getStatus()}=='Disetujui oleh Kepala Bagian'" style="color:#FAB14A;" th:text="${cuti.idstatus.getStatus()}"></td>
+                    <td th:if="${cuti.idstatus.getStatus()}=='Disetujui'" style="color:#83BA70;" th:text="${cuti.idstatus.getStatus()}"></td>
+                    <td th:if="${cuti.idstatus.getStatus()}=='Pembatalan | Diproses oleh Pimpinan Unit'" style="color:#D84242;" th:text="${cuti.idstatus.getStatus()}"></td>
+                    <td th:if="${cuti.idstatus.getStatus()}=='Pembatalan | Diproses oleh Kepala Bagian'" style="color:#D84242;" th:text="${cuti.idstatus.getStatus()}"></td>
+                    <td th:if="${cuti.idstatus.getStatus()}=='Pembatalan | Diproses oleh Manajer SDI'" style="color:#D84242;" th:text="${cuti.idstatus.getStatus()}"></td>
+                    <td th:if="${cuti.idstatus.getStatus()}=='Dibatalkan'" style="color:#000000;" th:text="${cuti.idstatus.getStatus()}"></td>
+                    <td th:if="${cuti.idstatus.getStatus()}=='Ditolak'" style="color:#D84242;" th:text="${cuti.idstatus.getStatus()}"></td>
+
+                    <td style="background-color: #83BA70"><a class="backgroundBtnViewAll" type="button" role="button"  th:href="@{/cuti/detail/kelola(id=${cuti.id})}">View</a></td>
+                </tr>
+                </tbody>
+            </table>
+            <div th:if="${cutiPage.totalPages > 0}" class="pagination"
+                 th:each="pageNumber : ${pageNumbers}" style="align-items: center">
+                <a th:href="@{/cuti(size=${cutiPage.size}, page=${pageNumber})}"
+                   th:text=${pageNumber}
+                   th:class="${pageNumber==cutiPage.number + 1} ? active" th:style="'color:#83BA70'" ></a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--    Container untuk bagian setelah abu abu-->
+<div class="container-fluid">
+    <div class="row">
+        <div class="card-body" id="pageBottom">
+            <div class="pull-right">
+                <a type="button" class="btn backgroundOrange " th:href="@{/}">Back</a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

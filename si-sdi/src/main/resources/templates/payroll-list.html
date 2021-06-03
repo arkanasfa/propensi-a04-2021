@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Detail Payroll</title>
+    <object th:include="fragments/fragment :: cssjs" th:remove="tag"></object>
+    <link rel="stylesheet" th:href="@{/css/default-style.css}" />
+</head>
+
+<body>
+
+<style>
+    #buttons{
+        margin-top: 20px;
+        text-align: right; !important;
+        background-color:#F6F6F6;
+    }
+
+    .colorWhite{
+        color:white;
+    }
+</style>
+
+<div class="container-fluid" >
+    <div class="col-auto" >
+        <object th:replace="fragments/fragment :: sidebar" th:remove="tag"></object>
+    </div>
+</div>
+
+<!--    Container untuk bagian sebelum abu abu-->
+<div class="container-fluid">
+    <div class="row">
+        <div class="card-body" id="pageTitle">
+            <h3 class="colorGreen">List Gaji</h3>
+            <h4 class="colorPurple" style="text-align: left"
+                th:text="${karyawan.getKaryawan()}"></h4>
+            <br>
+            <h5 class="colorOrange">Mohon tidak menggunakan slip gaji ini untuk keperluan formal.
+                Slip Gaji dengan stempel basah bisa didapatkan melalui bagian SDI.
+            </h5>
+        </div>
+    </div>
+</div>
+
+<!--    Dalem abu-abu-->
+<div class="container-fluid">
+    <div class="row">
+        <div class="card-body">
+            <table class="rounded table table-bordered">
+                <thead >
+                <tr>
+                    <th scope="col" >No.</th>
+                    <th scope="col">Isu</th>
+                    <th scope="col">Take Home Pay</th>
+                    <th scope="col">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="gaji, iterationStatus : ${gajiList}">
+                    <th scope="row" th:text="${iterationStatus.count}"></th>
+                    <td th:text="${dateList.get(iterationStatus.index)}"></td>
+                    <td th:text="'Rp. ' + ${#numbers.formatDecimal(gaji.getTHPA(), 0, 'POINT', 2, 'COMMA')}"></td>
+                    <td><a id="view" th:href="@{/payroll/detailGaji(idGaji=${gaji.getId()})}" > View </a></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!--    Container untuk bagian setelah abu abu-->
+<div class="container-fluid">
+    <div class="row">
+        <div class="card-body" id="pageBottom">
+            <div class="pull-right">
+                <a type="button" class="btn backgroundOrange" th:href="@{/}">Back</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

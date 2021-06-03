@@ -5,6 +5,8 @@
     <title>Detail Gaji</title>
     <object th:include="fragments/fragment :: cssjs" th:remove="tag"></object>
     <link rel="stylesheet" th:href="@{/css/default-style.css}" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 </head>
 
 <body>
@@ -47,13 +49,13 @@
 </style>
 
 <div class="container-fluid" >
-    <div class="col-auto" >
-        <object th:replace="fragments/fragment :: sidebar(Payroll = 'highlight')" th:remove="tag"></object>
+    <div class="col-auto noPrint" >
+        <object th:replace="fragments/fragment :: sidebar" th:remove="tag"></object>
     </div>
 </div>
 
 <!--    Container untuk bagian sebelum abu abu-->
-<div class="container-fluid">
+<div class="container-fluid" id="top">
     <div class="row">
         <div class="card-body" id="pageTitle">
             <h3 class="colorGreen">Detail Gaji</h3>
@@ -62,18 +64,18 @@
 </div>
 
 <!--    Container untuk bagian sebelum abu abu-->
-<div class="container-fluid">
+<div class="container-fluid" >
     <div class="card-body backgroundGreen">
         <div class="card-group text-left">
             <div class="card-body text-left backgroundGreen" id="leftCard">
-                <p class="card-text" th:text="'Periode: ' + ${yearMonth}"></p>
+                <p class="card-text" th:text="'Periode: ' + ${date}"></p>
                 <p class="card-text" th:text="'Nama: ' + ${karyawan.getKaryawan()}"></p>
                 <p class="card-text" th:text="'Unit Kerja: ' + ${karyawan.getUnit()}"></p>
-                <p class="card-text">Jabatan/Fungsi: [Jabatan/Fungsi]</p>
-                <p class="card-text" th:text="'Status: ' + ${status}">Status: [status kepegawaian]</p>
-                <p class="card-text" th:text="'Tahun Pengangkatan: ' + ${karyawan.getTanggalMasuk()}"></p>
+                <p class="card-text"th:text="'Jabatan/Fungsi: ' + ${role}"> </p>
+                <p class="card-text" th:text="'Status: ' + ${status}"></p>
+                <p class="card-text" th:text="'Tahun Pengangkatan: ' + ${tahunAngkat}"></p>
                 <p class="card-text">Masa Keja Pegawai Tetap: [tahun] Tahun</p>
-                <p class="card-text" th:text="'Golongan: ' + ${karyawan.getGolongan()}">Golognan: [Golongan]</p>
+                <p class="card-text" th:text="'Golongan: ' + ${karyawan.getGolongan()}"></p>
             </div>
             <div class="card-body text-left backgroundGreen" id="rightCard">
                 <p class="card-text">Sakit: [xx] Hari</p>
@@ -247,25 +249,80 @@
 
             <br><br>
             <!--            Buttons-->
-            <div class="pull-right" id="buttons">
-                <a type="button" class="btn backgroundPurple"
+            <div class="pull-right noPrint" id="buttons">
+                <a type="button" class="btn backgroundPurple" id="edit"
                    th:href="@{/payroll/detailGaji/ubah(idGaji=${gaji.id})}">Edit</a>
-                <button type="button" class="btn backgroundPurple" style="display: none;">Download PDF</button>
+                <button type="button" class="btn backgroundPurple" id="downloadPDF"
+                onclick="pleasePrint()">Download PDF</button>
             </div>
         </div>
     </div>
 </div>
 
 <!--    Container untuk bagian setelah abu abu-->
-<div class="container-fluid">
+<div class="container-fluid noPrint">
     <div class="row">
         <div class="card-body" id="pageBottom">
             <div class="pull-right">
-                <a type="button" class="btn backgroundOrange" th:href="@{/payroll/}">Back</a>
+                <a type="button" class="btn backgroundOrange"
+                   id="back" th:href="@{/payroll(tanggalIsu=${#dates.format(#dates.createNow() , 'yyyy-MM-dd')})}">Back</a>
+                <a type="button" class="btn backgroundOrange" id="home" th:href="@{/}">Back</a>
             </div>
         </div>
     </div>
 </div>
 
+<script th:inline="javascript">
+function pleasePrint() {
+    $('.noPrint').hide();
+    $('.card-body').css("margin-left", "50px");
+    $('.card-body').css("margin-right", "50px");
+    $('#top').css("margin-top", "50px");
+    window.print();
+    $('.noPrint').show();
+    $('.card-body').css("margin-left", "250px");
+    $('.card-body').css("margin-top", "0px");
+    $('#top').css("margin-top", "0px");
+    location.reload();
+
+}
+var role =  /*[[${role}]]*/ 'default';
+var statusDokumen =  /*[[${statusDokumen}]]*/ 'default';
+$(document).ready(function() {
+    if(role==="Karyawan"){
+        console.log(20);
+        $('#edit').hide();
+        $('#downloadPDF').show();
+        $('#back').hide();
+        $('#home').show();
+    } else if (role==="Manajer SDI"){
+        $('#back').show();
+        $('#home').hide();
+        console.log(12);
+        if(statusDokumen==="Disetujui"){
+            $('#edit').hide();
+            $('#downloadPDF').show();
+        }else{
+            $('#edit').show();
+            $('#downloadPDF').hide();
+        }
+    } else if((role==="Wakil Pengurus Harian") && (statusDokumen!=="Disetujui")){
+        $('#edit').hide();
+        $('#downloadPDF').hide();
+        $('#back').show();
+        $('#home').hide();
+    } else if((role==="Wakil Pengurus Harian") && (statusDokumen==="Disetujui")){
+        $('#edit').hide();
+        $('#downloadPDF').show();
+        $('#back').hide();
+        $('#home').show();
+    }
+    else{
+        $('#edit').hide();
+        $('#back').show();
+        $('#home').hide();
+    }
+});
+</script>
 </body>
 </html>

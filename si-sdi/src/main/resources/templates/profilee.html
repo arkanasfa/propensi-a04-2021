@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Profile</title>
+    <object th:include="fragments/fragment :: cssjs" th:remove="tag"></object>
+    <link rel="stylesheet" th:href="@{/css/default-style.css}" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+</head>
+<style>
+    th, td {
+        color:#F6F6F6;
+        text-align: start;
+        background-color: #83BA70; !important;
+        font-size: 1.15em;
+    }
+    .profile-pic-div{
+        height: 250px;
+        width: 188px;
+        position: relative;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+        overflow: hidden;
+    }
+    #photoo{
+        position: center;
+        height: 100%;
+        width:100%;
+    }
+    #filee{
+        display: none;
+    }
+    #uploadBtn{
+        height: 30px;
+        width: 100%;
+        position: absolute;
+        left: 50%;
+        bottom: -10px;
+        transform: translate(-50%);
+        text-align: center;
+        color: #FAB14A;
+        background: #F6F6F6;
+        line-height: 30px;
+        font-size: 15px;
+        cursor: pointer;
+    }
+
+
+</style>
+<body>
+
+
+<div class="container-fluid" >
+    <div class="col-auto" >
+        <object th:replace="fragments/fragment :: sidebar(Profile = 'highlight')" th:remove="tag"></object>
+    </div>
+</div>
+
+<!--    Container untuk bagian sebelum abu abu-->
+<div class="container-fluid">
+    <div class="row">
+        <div class="card-body" id="pageTitle">
+            <h3 class="colorGreen">Profil Pengguna</h3>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid" >
+    <div class="card-body backgroundGreen">
+        <div class="row">
+            <div class="col-md-4" >
+                <div class="profile-pic-div">
+                    <image style="height: 200px" src="/images/foto-formal.jpg" id="photoo"/>
+                    <input type="file" id="filee" name="profile_photo" placeholder="Photo" required="" capture>
+                    <label for="filee" id="uploadBtn">Choose Photo</label>
+                </div>
+            </div>
+
+            <div th:if="${user.id_role.id==1}">
+                <div class="col">
+                    <table>
+                        <tbody>
+                        <tr style="height: 20px">
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr style="height: 35px">
+                            <td style="width: 230px">Nama Orang Tua</td>
+                            <td style="width: 20px">:</td>
+                            <td style="font-weight: bold;width: 200px" th:text="${user1.namaOrangTua}"></td>
+                        </tr>
+                        <tr style="height: 35px">
+                            <td>Jenis Kelamin</td>
+                            <td>:</td>
+                            <td th:if="${user1.jenisKelamin==1}" th:text="Laki-Laki"></td>
+                            <td th:if="${user1.jenisKelamin==2}" th:text="Perempuan"></td>
+                        </tr>
+                        <tr style="height: 35px">
+                            <td>Nama Siswa</td>
+                            <td>:</td>
+                            <td th:text="${user1.id_siswa.namaSiswa}"></td>
+                        </tr>
+                        <tr style="height: 35px">
+                            <td>ID Siswa</td>
+                            <td>:</td>
+                            <td th:text="${user1.id_siswa.id}"></td>
+                        </tr>
+                        <tr style="height: 30px">
+                            <td>Kelas Siswa</td>
+                            <td>:</td>
+                            <td th:text="${user1.id_siswa.kelas}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div th:if="${user.id_role.id==2}">
+                <div class="col-" >
+                    <table>
+                        <tbody>
+                        <tr style="height: 35px">
+                            <td style="width: 230px">Nama Siswa</td>
+                            <td style="width: 20px">:</td>
+                            <td style="font-weight: bold;width: 200px" th:text="${user2.namaSiswa}"></td>
+                        </tr>
+                        <tr style="height: 35px">
+                            <td>Jenis Kelamin</td>
+                            <td>:</td>
+                            <td th:if="${user2.jenisKelamin==1}" th:text="Laki-Laki"></td>
+                            <td th:if="${user2.jenisKelamin==2}" th:text="Perempuan"></td>
+                        </tr>
+                        <tr style="height: 35px">
+                            <td>Kelas Siswa</td>
+                            <td>:</td>
+                            <td th:text="${user2.kelas}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div th:if="${user.id_role.id!=1} and ${user.id_role.id!=2}">
+                <div class="col">
+                    <table>
+                        <tbody>
+                        <tr>
+                            <td style="width: 230px">Nama</td>
+                            <td style="width: 20px">:</td>
+                            <td style="font-weight: bold;width: 200px" th:text="${user3.karyawan}"></td>
+                        </tr>
+                        <tr>
+                            <td>No Karyawan</td>
+                            <td>:</td>
+                            <td th:text="${user3.noKaryawan}"></td>
+                        </tr>
+                        <tr>
+                            <td>Email</td>
+                            <td>:</td>
+                            <td th:text="${user3.email}"></td>
+                        </tr>
+                        <tr>
+                            <td>Golongan</td>
+                            <td>:</td>
+                            <td th:text="${user3.golongan}"></td>
+                        </tr>
+                        <tr>
+                            <td>Jabatan</td>
+                            <td>:</td>
+                            <td th:text="${user.id_role.getRole()}"></td>
+                        </tr>
+                        <tr>
+                            <td>Unit</td>
+                            <td>:</td>
+                            <td th:if="${user3.unit}==0" th:text="TKIT"></td>
+                            <td th:if="${user3.unit}==1" th:text="SDIT"></td>
+                            <td th:if="${user3.unit}==2" th:text="SMPIT"></td>
+                            <td th:if="${user3.unit}==3" th:text="SU"></td>
+                        </tr>
+                        <tr>
+                            <td>Tanggal Masuk</td>
+                            <td>:</td>
+                            <td th:text="${user3.tanggalMasuk.getDate()} + '-' + ${user3.tanggalMasuk.getMonth()} + '-' + ${user3.tanggalMasuk.getYear()+1900}"></td>
+
+                        </tr>
+                        <tr>
+                            <td>Status Menikah</td>
+                            <td>:</td>
+                            <td th:if="${user3.statusMenikah}==1" th:text="'Sudah Menikah'"></td>
+                            <td th:if="${user3.statusMenikah}==0" th:text="'Belum Menikah'"></td>
+                        </tr>
+                        <tr>
+                            <td>Jumlah Anak</td>
+                            <td>:</td>
+                            <td th:text="${user3.jumlahAnak}+ ' orang'"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:if="${user.id_role.id!=1} and ${user.id_role.id!=2}">
+<div class="container-fluid">
+    <div class="row">
+        <div class="card-body" id="pageTitle">
+            <h3 class="colorPurple">Evaluasi Performa</h3>
+        </div>
+    </div>
+</div>
+<div class="container-fluid" >
+<div class="card-body">
+    <div class="row">
+        <div class="col" >
+            <h6 class="d-flex align-items-center mb-3">Cuti/Izin:</h6>
+            <div th:text="${user3.jumlahCuti}+'/12 hari'"></div>
+            <div class="progress mb-3" style="height: 22px">
+                <div id="pcuti"  class="progress-bar progress-bar-striped " role="progressbar" style="background-color: #B357D2"></div>
+            </div>
+            <h6 class="d-flex align-items-center mb-3" style="padding-top: 30px">Lembur/Infal:</h6>
+            <div th:text="${user3.jumlahLembur}+'/10 jam'"></div>
+            <div class="progress mb-3" style="height: 22px">
+                <div  id="plembur" class="progress-bar progress-bar-striped"  role="progressbar" style="background-color: #B357D2"></div>
+            </div>
+            <h6 class="d-flex align-items-center mb-3"style="padding-top: 30px">Absensi:</h6>
+            <div th:text="${user3.jumlahAbsensi}+'/12 hari'"></div>
+            <div class="progress mb-3" style="height: 22px">
+                <div id="pabsensi"  class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="background-color: #B357D2" ></div>
+            </div>
+        </div>
+        <div class="col" >
+            <h6 class="d-flex align-items-center mb-3">Skor Pengaduan:</h6>
+            <div th:text="${user3.skorPengaduan}+'/100'"></div>
+            <div class="progress mb-3" style="height: 22px">
+                <div id="ppengaduan"  class="progress-bar" role="progressbar" style="background-color: #ff5262"></div>
+            </div>
+            <h6 class="d-flex align-items-center mb-3"style="padding-top: 30px">Nilai Rapor Internal:</h6>
+            <div th:text="${user3.skorPerforma}+'/100'"></div>
+            <div class="progress mb-3" style="height: 22px">
+                <div id="prapor" class="progress-bar" role="progressbar" style="background-color: #589C47"></div>
+            </div>
+            <h6  class="d-flex align-items-center mb-3"style="padding-top: 30px">Performa Keseluruhan:</h6>
+            <div th:text="${user3.skorPerforma}+'/100'"></div>
+            <div class="progress" style="height: 22px">
+                <div id="pperforma"  class="progress-bar" role="progressbar" style="background-color: #589C47"></div>
+            </div>
+        </div>
+
+        <span id="cutip" style="display: none;"  th:text="${cuti}"></span>
+        <span id="lemburp" style="display: none;"  th:text="${lembur}"></span>
+        <span id="pengaduanp" style="display: none;"  th:text="${pengaduan}"></span>
+        <span id="performap" style="display: none;"  th:text="${performa}"></span>
+        <span id="absensip" style="display: none;"  th:text="${absensi}"></span>
+    </div>
+</div>
+</div>
+</div>
+
+<script>
+$("#photoo").click(function(e) {
+$("#filee").click();
+});
+
+function fasterPreview( uploader ) {
+if ( uploader.files && uploader.files[0] ){
+$('#photoo').attr('src',
+window.URL.createObjectURL(uploader.files[0]) );
+}
+}
+
+$("#filee").change(function(){
+fasterPreview( this );
+});
+
+var cuti = document.getElementById("cutip").innerHTML;
+var lembur= document.getElementById("lemburp").innerHTML;
+var absensi= document.getElementById("absensip").innerHTML;
+var pengaduan= document.getElementById("pengaduanp").innerHTML;
+var performa= document.getElementById("performap").innerHTML;
+
+$('#pcuti').css("width", cuti+'%');
+$('#plembur').css("width", lembur+'%');
+$('#pabsensi').css("width", absensi+'%');
+$('#ppengaduan').css("width", pengaduan+'%');
+$('#pperforma').css("width", performa+'%');
+$('#prapor').css("width", performa+'%');
+
+</script>
+
+</body>
+</html>

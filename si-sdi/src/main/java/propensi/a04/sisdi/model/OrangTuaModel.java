@@ -8,6 +8,7 @@ import org.hibernate.annotations.OnDeleteAction;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.List;
 
 
 @Entity
@@ -32,6 +33,12 @@ public class OrangTuaModel implements Serializable{
         @JsonIgnore
         private SiswaModel id_siswa;
 
+        @OneToOne(fetch = FetchType.LAZY)
+        @JoinColumn(name = "iduserOrtu", referencedColumnName = "id")
+        @OnDelete(action = OnDeleteAction.CASCADE)
+        @JsonIgnore
+        private UserModel iduserOrtu;
+        
         
 
     /**
@@ -89,4 +96,19 @@ public class OrangTuaModel implements Serializable{
     public void setId_siswa(SiswaModel id_siswa) {
         this.id_siswa = id_siswa;
     }
+
+    /**
+     * @return UserModel return the id_userOrtu
+     */
+    public UserModel getId_userOrtu() {
+        return iduserOrtu;
+    }
+
+    /**
+     * @param id_userOrtu the id_userOrtu to set
+     */
+    public void setId_userOrtu(UserModel id_userOrtu) {
+        this.iduserOrtu = id_userOrtu;
+    }
+
 }
