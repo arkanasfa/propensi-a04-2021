@@ -41,5 +41,4 @@ public class KepalaBagianModel implements Serializable{
         this.idkaryawan = id_karyawan;
     }
 
-
 }

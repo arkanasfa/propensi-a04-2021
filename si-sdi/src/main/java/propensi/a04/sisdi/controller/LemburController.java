@@ -1,5 +1,8 @@
 package propensi.a04.sisdi.controller;
 
+import org.apache.tomcat.jni.User;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import propensi.a04.sisdi.model.*;
 import propensi.a04.sisdi.repository.KaryawanDb;
 import propensi.a04.sisdi.repository.StatusDB;
@@ -10,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -20,6 +24,12 @@ public class LemburController {
     LemburService lemburService;
 
     @Autowired
+    UserService userService;
+
+    @Autowired
+    StatusService statusService;
+
+    @Autowired
     KaryawanDb karyawanDB;
 
     @Autowired
@@ -28,7 +38,15 @@ public class LemburController {
     @GetMapping("/tambah")
     private String addLemburForm(
             Model model) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();
         List<KaryawanModel> karyawanList = karyawanDB.findAll();
+        UserModel user = userService.findbyUsername(username);
+        for(int i=0;i<karyawanList.size();i++){
+            if(karyawanList.get(i).getId()==(user.getKaryawanModel().getId())){
+                karyawanList.remove(i);
+            }
+        }
         model.addAttribute("lembur", new LemburModel());
         model.addAttribute("karyawanList",karyawanList);
         return "form-add-lembur";
@@ -37,14 +55,26 @@ public class LemburController {
     @RequestMapping(value="/tambah", method = RequestMethod.POST)
     private String addLowonganSubmit(
             @ModelAttribute LemburModel lembur,
-            @RequestParam("infalID") String infalID,
+            @RequestParam(value="infalID") String infalID,
             HttpServletRequest request,
             Model model) {
-        KaryawanModel id_karyawan = karyawanDB.findById(Long.valueOf(3)).get();
-        lembur.setId_karyawan(id_karyawan);
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();
+        UserModel user = userService.findbyUsername(username);
+        lembur.setId_karyawan(user.getKaryawanModel());
+        Date date = new Date();
+        lembur.setTanggalRequest(date);
         if(lemburService.generateDurasi(lembur)<=0){
             String action = "dibuat";
             String reason = "Jam selesai lebih dulu dari jam mulai";
+            model.addAttribute("action", action);
+            model.addAttribute("reason", reason);
+            return "notifikasi-gagal-lembur";
+        }
+
+        if(lembur.getTanggalLembur().before(lembur.getTanggalRequest())){
+            String action = "dibuat";
+            String reason = "Tanggal lembur lebih dulu dari tanggal hari ini";
             model.addAttribute("action", action);
             model.addAttribute("reason", reason);
             return "notifikasi-gagal-lembur";
@@ -59,10 +89,8 @@ public class LemburController {
         }
         String kode_lembur = lemburService.generateKodeLembur(lembur);
         lembur.setKode_lembur(kode_lembur);
-        StatusModel id_status = statusDB.findById(Long.valueOf(1)).get();
+        StatusModel id_status = statusService.getStatusById(Long.valueOf(1));
         lembur.setId_status(id_status);
-        Date date = new Date();
-        lembur.setTanggalRequest(date);
         lemburService.addLembur(lembur);
         model.addAttribute("kode", lembur.getKode_lembur());
         return "add-lembur";
@@ -73,7 +101,13 @@ public class LemburController {
             @RequestParam(value="id") Long id,
             Model model) {
         LemburModel lembur = lemburService.getLemburById(id);
+        KaryawanModel karyawan = lembur.getId_karyawan();
         List<KaryawanModel> karyawanList = karyawanDB.findAll();
+        for(int i=0;i<karyawanList.size();i++){
+            if(karyawanList.get(i).getId()==(karyawan.getId())){
+                karyawanList.remove(i);
+            }
+        }
         model.addAttribute("lembur", lembur);
         model.addAttribute("karyawanList",karyawanList);
         return "form-change-lembur";
@@ -85,11 +119,22 @@ public class LemburController {
             @RequestParam("infalID") String infalID,
             HttpServletRequest request,
             Model model) {
-        KaryawanModel id_karyawan = karyawanDB.findById(Long.valueOf(3)).get();
-        lembur.setId_karyawan(id_karyawan);
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();
+        UserModel user = userService.findbyUsername(username);
+        lembur.setId_karyawan(user.getKaryawanModel());
+        Date date = new Date();
+        lembur.setTanggalRequest(date);
         if(lemburService.generateDurasi(lembur)<=0){
             String action = "diubah";
             String reason = "Jam selesai lebih dulu dari jam mulai";
+            model.addAttribute("action", action);
+            model.addAttribute("reason", reason);
+            return "notifikasi-gagal-lembur";
+        }
+        if(lembur.getTanggalLembur().before(lembur.getTanggalRequest())){
+            String action = "diubah";
+            String reason = "Tanggal lembur lebih dulu dari tanggal hari ini";
             model.addAttribute("action", action);
             model.addAttribute("reason", reason);
             return "notifikasi-gagal-lembur";
@@ -141,32 +186,88 @@ public class LemburController {
         return "detail-lembur-verifikasi";
     }
 
-    @GetMapping("/verifikasi")
+    @GetMapping("/verifikasi/terima")
     private String verifikasiLembur(
             @RequestParam(value="id") Long id,
-            @RequestParam(value="status") Long status,
             Model model){
         LemburModel lembur = lemburService.getLemburById(id);
         String kode = lembur.getKode_lembur();
-        lembur.setId_status(statusDB.findById(status).get());
+        if(lembur.getId_status().getId()==1){
+            lembur.setId_status(statusService.getStatusById(Long.valueOf(2)));
+        }
+        else if(lembur.getId_status().getId()==2){
+            lembur.setId_status(statusService.getStatusById(Long.valueOf(3)));
+        }
+        else if(lembur.getId_status().getId()==3){
+            lembur.setId_status(statusService.getStatusById(Long.valueOf(6)));
+        }
         lemburService.changeLembur(lembur);
         model.addAttribute("kode",kode);
-        model.addAttribute("status",statusDB.findById(status).get().getStatus());
+        model.addAttribute("status",lembur.getId_status().getStatus());
+        return "verifikasi-lembur";
+    }
+
+    @GetMapping("/verifikasi/tolak")
+    private String verifikasiLemburDitolak(
+            @RequestParam(value="id") Long id,
+            Model model){
+        LemburModel lembur = lemburService.getLemburById(id);
+        String kode = lembur.getKode_lembur();
+        lembur.setId_status(statusService.getStatusById(Long.valueOf(5)));
+        lemburService.changeLembur(lembur);
+        model.addAttribute("kode",kode);
+        model.addAttribute("status",lembur.getId_status().getStatus());
         return "verifikasi-lembur";
     }
 
     @GetMapping("/list")
     private String listLembur(
             Model model){
-        List<LemburModel> listLembur = lemburService.getLemburList();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();
+        List<LemburModel> allListLembur = lemburService.getLemburList();
+        List<LemburModel> listLembur = new ArrayList<LemburModel>();
+        UserModel user = userService.findbyUsername(username);
+        for(LemburModel lembur : allListLembur){
+            if(lembur.getId_karyawan().getId().equals(user.getKaryawanModel().getId())){
+                listLembur.add(lembur);
+            }
+        }
+        System.out.println(user.getId_role().getId());
         model.addAttribute("listLembur",listLembur);
+        model.addAttribute("user",user);
         return "list-lembur";
     }
 
     @GetMapping("/list/verifikasi")
     private String listVerifikasiLembur(
             Model model){
-        List<LemburModel> listLembur = lemburService.getLemburList();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();
+        UserModel user = userService.findbyUsername(username);
+        List<LemburModel> allListLembur = lemburService.getLemburList();
+        List<LemburModel> listLembur = new ArrayList<LemburModel>();
+        if(user.getId_role().getId()==6){
+            for(LemburModel lembur : allListLembur){
+                if(lembur.getId_status().getId()==1){
+                    listLembur.add(lembur);
+                }
+            }
+        }
+        else if(user.getId_role().getId()==5){
+            for(LemburModel lembur : allListLembur){
+                if(lembur.getId_status().getId()==2){
+                    listLembur.add(lembur);
+                }
+            }
+        }
+        else if(user.getId_role().getId()==7){
+            for(LemburModel lembur : allListLembur){
+                if(lembur.getId_status().getId()==3){
+                    listLembur.add(lembur);
+                }
+            }
+        }
         model.addAttribute("listLembur",listLembur);
         return "list-lembur-verifikasi";
     }

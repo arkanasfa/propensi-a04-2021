@@ -54,7 +54,7 @@ public class UserController {
     private UserDb userDb;
 
     @GetMapping("/addUser")
-    private String addLemburForm(
+    private String addUserForm(
             Model model) {
         List<RoleModel> roleList = roleService.findAll();
         model.addAttribute("user", new UserModel());
@@ -63,8 +63,20 @@ public class UserController {
     }
 
     @RequestMapping(value ="/addUser", method = RequestMethod.POST)
-    public String addUserSubmit(@ModelAttribute UserModel user, @RequestParam("roleID") String roleID, Model model){
+    public String addUserSubmit(@ModelAttribute UserModel user,
+                                @RequestParam("roleID") String roleID,
+                                @RequestParam("confirm_new_password") String newPasswordConfirm,
+                                Model model){
         user.setId_role(roleService.findRolebyId(Long.valueOf(roleID)));
+        Boolean checkConfirm = userService.checkConfirmPass(user.getPassword(),newPasswordConfirm);
+        Boolean checkVal = userService.validatePass(user);
+        if(checkVal == false && checkConfirm == false){
+            String action = "dibuat";
+            String reason = "Password dan konfirmasi password tidak sama";
+            model.addAttribute("action", action);
+            model.addAttribute("reason", reason);
+            return "notifikasi-gagal-user";
+        }
         userService.addUser(user);
         model.addAttribute("user", user);
         return "add-user";

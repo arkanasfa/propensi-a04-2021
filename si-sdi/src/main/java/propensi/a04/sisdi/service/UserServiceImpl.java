@@ -62,4 +62,23 @@ public class UserServiceImpl implements UserService {
         return userDb.findByUsername(username);
     }
 
+    @Override
+    public Boolean validatePass(UserModel user){
+        String checkPass = user.getPassword();
+        System.out.println(checkPass);
+        if(checkPass.matches("[a-zA-Z0-9]+") && checkPass.length()>=8){
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public Boolean checkConfirmPass(String checkPass, String newPass){
+        if(checkPass.equals(newPass)){
+            return true;
+        }
+        return false;
+    }
+
+
 }

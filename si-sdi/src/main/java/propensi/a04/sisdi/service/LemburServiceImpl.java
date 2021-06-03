@@ -22,10 +22,12 @@ public class LemburServiceImpl implements LemburService{
     public LemburModel changeLembur(LemburModel lembur) {
         LemburModel targetLembur= lemburDB.findById(lembur.getId()).get();
         try{
+            targetLembur.setId_status(lembur.getId_status());
             targetLembur.setAlasan(lembur.getAlasan());
             targetLembur.setJamMulai(lembur.getJamMulai());
             targetLembur.setJamSelesai(lembur.getJamSelesai());
             targetLembur.setTanggalLembur(lembur.getTanggalLembur());
+            targetLembur.setTanggalRequest(lembur.getTanggalRequest());
             targetLembur.setJenis(lembur.getJenis());
             targetLembur.setId_infal(lembur.getId_infal());
             targetLembur.setKode_lembur(lembur.getKode_lembur());
