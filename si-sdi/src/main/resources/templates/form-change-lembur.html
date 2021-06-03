@@ -40,7 +40,7 @@
 <div class="container-fluid">
     <div class="row">
         <div class="card-body">
-            <form th:action="@{/lembur/ubah(username=${#httpServletRequest.remoteUser})}" th:object="${lembur}" method="POST">
+            <form th:action="@{/lembur/ubah}" th:object="${lembur}" method="POST">
                 <input type="hidden" th:field="${lembur.id}"/>
                 <br>
                     <div class="form-group row">

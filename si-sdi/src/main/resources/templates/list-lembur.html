@@ -27,7 +27,10 @@
         </div>
         <div class="card-body" id="buttonUP">
             <div class="pull-right">
-                <a type="button" class="btn backgroundOrange " th:href="@{/lembur/tambah(username=${#httpServletRequest.remoteUser})}">+ Tambah Pengajuan</a>
+                <div th:if="${user.getId_role().getId()==5||user.getId_role().getId()==6||user.getId_role().getId()==7}">
+                    <a type="button" class="btn backgroundOrange " th:href="@{/lembur/list/verifikasi}">Verifikasi</a>
+                </div>
+                <a type="button" class="btn backgroundOrange " th:href="@{/lembur/tambah}">+ Tambah Pengajuan</a>
             </div>
         </div>
     </div>
@@ -56,8 +59,10 @@
                     <td th:text="${lembur.kode_lembur}"></td>
                     <td th:text="${lembur.id_status.getStatus()}"></td>
                     <td><a type="button" role="button"  th:href="@{/lembur/detail(id=${lembur.id})}">View</a></td>
-                    <td><a type="button" role="button"  th:href="@{/lembur/ubah/(id=${lembur.id})}">Edit</a></td>
-                    <td><a type="button" role="button"  th:href="@{/lembur/delete(id=${lembur.id})}">Delete</a></td>
+                    <div th:if="${lembur.id_status.getId()==1}">
+                        <td><a type="button" role="button"  th:href="@{/lembur/ubah/(id=${lembur.id})}">Edit</a></td>
+                        <td><a type="button" role="button"  th:href="@{/lembur/delete(id=${lembur.id})}">Delete</a></td>
+                    </div>
                 </tr>
                 </tbody>
             </table>
