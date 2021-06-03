@@ -11,6 +11,11 @@
 
 </head>
 <body>
+<style>
+    #hov:hover{
+        color:black;
+    }
+</style>
 <div class="container-fluid" >
     <div class="col-auto" >
         <!--    formatnya: sidebar([NamaHalaman] = 'highlight'). Buat nge highlight sidebar kalo lagi di halaman itu-->
@@ -60,7 +65,7 @@
                     <td th:if="${cuti.idstatus.getStatus()}=='Dibatalkan'" style="color:#000000;" th:text="${cuti.idstatus.getStatus()}"></td>
                     <td th:if="${cuti.idstatus.getStatus()}=='Ditolak'" style="color:#D84242;" th:text="${cuti.idstatus.getStatus()}"></td>
 
-                    <td style="background-color: #83BA70"><a class="backgroundBtnViewAll" type="button" role="button"  th:href="@{/cuti/detail/kelola(id=${cuti.id})}">View</a></td>
+                    <td style="background-color: #83BA70"><a id="hov" class="backgroundGreen" type="button" role="button"  th:href="@{/cuti/detail/kelola(id=${cuti.id})}">View</a></td>
                 </tr>
                 </tbody>
             </table>
