@@ -108,7 +108,7 @@
             <div class="pull-right" th:switch="${cuti.idstatus.id}">
                 <div style="padding: 0" th:case="1" >
                     <div class="pull-left">
-                    <a type="button" class="btn backgroundOrange " th:href="@{/cuti}">Back</a>
+                    <a type="button" class="btn backgroundOrange float-left" th:href="@{/cuti}">Back</a>
                     </div>
                     <div class="pull-right">
                     <a th:href="@{/cuti/edit(id=${cuti.id})}" class="btn backgroundPurple">Edit</a>
@@ -117,7 +117,7 @@
                 </div>
                 <div style="padding: 0" th:case="2" >
                     <div class="pull-left">
-                        <a type="button" class="btn backgroundOrange " th:href="@{/cuti}">Back</a>
+                        <a type="button" class="btn backgroundOrange float-left" th:href="@{/cuti}">Back</a>
                     </div>
                     <div class="pull-right">
                     <a th:href="@{/cuti/delete(id=${cuti.id})}" class="btn backgroundMerah">Batalkan</a>
@@ -125,7 +125,7 @@
                 </div>
                 <div style="padding: 0" th:case="3" >
                     <div class="pull-left">
-                        <a type="button" class="btn backgroundOrange " th:href="@{/cuti}">Back</a>
+                        <a type="button" class="btn backgroundOrange float-left" th:href="@{/cuti}">Back</a>
                     </div>
                     <div class="pull-right">
                         <a th:href="@{/cuti/delete(id=${cuti.id})}" class="btn backgroundMerah">Batalkan</a>
@@ -133,7 +133,7 @@
                 </div>
                 <div style="padding: 0" th:case="7" >
                     <div class="pull-left">
-                        <a type="button" class="btn backgroundOrange " th:href="@{/cuti}">Back</a>
+                        <a type="button" class="btn backgroundOrange float-left" th:href="@{/cuti}">Back</a>
                     </div>
                     <div class="pull-right">
                         <a th:href="@{/cuti/delete(id=${cuti.id})}" class="btn backgroundMerah">Batalkan</a>
@@ -141,7 +141,7 @@
                 </div>
                 <div style="padding: 0" th:case="*" >
                     <div class="pull-left">
-                        <a type="button" class="btn backgroundOrange " th:href="@{/cuti}">Back</a>
+                        <a type="button" class="btn backgroundOrange float-left" th:href="@{/cuti}">Back</a>
                     </div>
                 </div>
             </div>
