@@ -3,14 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <!--    Jangan Lupa diisi!-->
-    <title>Form Pengajuan Lembur</title>
+    <title>Payroll Notification</title>
     <object th:include="fragments/fragment :: cssjs" th:remove="tag"></object>
     <!--    Default Style untuk semua page-->
     <link rel="stylesheet" th:href="@{/css/default-style.css}" />
-
-
 </head>
 <body>
+
+<style>
+    #statusLogo {
+        max-width: 10%; !important;
+        height: auto;
+        text-align: center;
+    }
+</style>
+
 <div class="container-fluid" >
     <div class="col-auto" >
         <!--    formatnya: sidebar([NamaHalaman] = 'highlight'). Buat nge highlight sidebar kalo lagi di halaman itu-->
@@ -23,24 +30,30 @@
 <div class="container-fluid">
     <div class="row">
         <div class="card-body" id="pageTitle">
-            <h3 class="colorGreen">Buat Pengajuan Lembur/Infal Baru</h3>
+            <h3 class="colorGreen">User Notification</h3>
         </div>
     </div>
 </div>
-
-<!--    Dalem abu-abu-->
 <div class="container-fluid">
     <div class="row">
         <div class="card-body">
-            <img id="statusLogo" th:src="@{/images/success.png}"/>
+            <img id="statusLogo" th:src="@{/images/failed.png}"/>
             <br> <br>
-            <h2 class="col d-flex justify-content-center mb-3" th:text="'Lembur dengan kode ' + ${kode} + ' berhasil diubah.'"></h2>
-            <br><br><br>
-            <a th:href="@{/}" class="btn btn-light col d-flex justify-content-center ml-1 mr-1">Kembali</a>
+            <h2 class="col d-flex justify-content-center mb-3" th:text="'User gagal ' + ${action} + ' karena '  + ${reason}"></h2>
         </div>
     </div>
 </div>
 
+<!--    Container untuk bagian setelah abu abu-->
+<div class="container-fluid">
+    <div class="row">
+        <div class="card-body" id="pageBottom">
+            <div class="pull-right">
+                <a type="button" class="btn backgroundOrange" th:href="@{/lembur/list}">Back</a>
+            </div>
+        </div>
+    </div>
+</div>
 
 </body>
 </html>

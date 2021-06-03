@@ -229,7 +229,7 @@ public class LemburController {
         List<LemburModel> listLembur = new ArrayList<LemburModel>();
         UserModel user = userService.findbyUsername(username);
         for(LemburModel lembur : allListLembur){
-            if(lembur.getId_karyawan().getId()==user.getKaryawanModel().getId()){
+            if(lembur.getId_karyawan().getId().equals(user.getKaryawanModel().getId())){
                 listLembur.add(lembur);
             }
         }
