@@ -14,7 +14,7 @@
     <div class="col-auto" >
         <!--    formatnya: sidebar([NamaHalaman] = 'highlight'). Buat nge highlight sidebar kalo lagi di halaman itu-->
         <!--                Kecuali buat cuti izin dan lembur infal. gak pake garing karena jadi eror kalo pake garing-->
-        <object th:replace="fragments/fragment :: sidebar(LemburInfal= 'highlight')" th:remove="tag"></object>
+        <object th:replace="fragments/fragment :: sidebar(Profile= 'highlight')" th:remove="tag"></object>
     </div>
 </div>
 
@@ -22,7 +22,7 @@
 <div class="container-fluid">
     <div class="row">
         <div class="card-body" id="pageTitle">
-            <h3 class="colorGreen">Buat Pengajuan Lembur/Infal Baru</h3>
+            <h3 class="colorGreen">Buat Pengguna Baru</h3>
         </div>
     </div>
 </div>
@@ -65,7 +65,7 @@
                         </select>
                     </div>
                 </div>
-                <a type="button" class="btn backgroundOrange " th:href="@{/lembur/list}">Back</a>
+                <a type="button" class="btn backgroundOrange " th:href="@{/}">Back</a>
                 <button type="submit" class="btn backgroundGreen ">Submit</button>
             </form>
         </div>
