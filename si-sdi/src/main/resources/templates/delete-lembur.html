@@ -29,14 +29,15 @@
 </div>
 
 <!--    Dalem abu-abu-->
-<div  class="container d-flex justify-content-center align-middle">
+<div class="container-fluid">
     <div class="row">
-        <div class="w-100"></div>
-        <h2 class="col d-flex justify-content-center mb-3"
-            th:text="'Lembur dengan kode ' + ${kode} + ' berhasil dihapus.'"></h2>
-        <div class="w-100"></div>
-        <br><br><br>
-        <a th:href="@{/}" class="btn btn-light col d-flex justify-content-center ml-1 mr-1">Back</a>
+        <div class="card-body">
+            <img id="statusLogo" th:src="@{/images/Success.png}"/>
+            <br> <br>
+            <h2 class="col d-flex justify-content-center mb-3" th:text="'Lembur dengan kode ' + ${kode} + ' berhasil dihapus.'"></h2>
+            <br><br><br>
+            <a th:href="@{/list/lembur}" class="btn btn-light col d-flex justify-content-center ml-1 mr-1">Back</a>
+        </div>
     </div>
 </div>
 

@@ -78,6 +78,9 @@ public class UserController {
             return "notifikasi-gagal-user";
         }
         userService.addUser(user);
+        if(user.getId_role().getId()==10){
+            return "add-admin";
+        }
         model.addAttribute("user", user);
         return "add-user";
     }

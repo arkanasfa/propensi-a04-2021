@@ -32,45 +32,70 @@
 <div class="container-fluid">
     <div class="row">
         <div class="card-body">
-            <br>
-            <h2  class="col d-flex justify-content-center mb-3"> Detail Lembur: </h2>
-            <br>
-            <div class="col d-flex justify-content-center">
-                <h5 class="col d-flex justify-content-center" th:text="'Kode Lembur: ' + ${lembur.kode_lembur}"></h5>
+            <div class="col-md-8">
+                <table width="100%" border="0">
+                    <td>
+                        <table border="0" width="100%" style="padding-left:2px;">
+                            <tbody>
+                            <tr>
+                                <td width="35%"align="top">Kode Lembur</td>
+                                <td width="2%">:</td>
+                                <td style="font-weight: bold" th:text="${lembur.kode_lembur}"></td>
+                            </tr>
+                            <tr>
+                                <td>Waktu Pengajuan</td>
+                                <td>:</td>
+                                <td th:text="${lembur.getTanggalRequest().getDate()} + '-' + ${lembur.getTanggalRequest().getMonth()+1} + '-' + ${lembur.getTanggalRequest().getYear()+1900} + ' ' + ${lembur.getTanggalRequest().getHours()} + ':' + ${lembur.getTanggalRequest().getMinutes()}"></td>
+
+                            </tr>
+                            <tr>
+                                <td>Waktu Pengajuan</td>
+                                <td>:</td>
+                                <td th:text="${lembur.getTanggalRequest().getDate()} + '-' + ${lembur.getTanggalRequest().getMonth()+1} + '-' + ${lembur.getTanggalRequest().getYear()+1900} + ' ' + ${lembur.getTanggalRequest().getHours()} + ':' + ${lembur.getTanggalRequest().getMinutes()}"></td>
+
+                            </tr>
+                            <tr>
+                                <td>Tanggal Lembur</td>
+                                <td>:</td>
+                                <td th:text="${lembur.getTanggalLembur().getDate()} + '-' + ${lembur.getTanggalLembur().getMonth()+1} + '-' + ${lembur.getTanggalLembur().getYear()+1900}"></td>
+
+                            </tr>
+                            <tr>
+                                <td>Jam Mulai</td>
+                                <td>:</td>
+                                <td th:text="${lembur.getJamMulai().getHours()} + ':' + ${lembur.getJamMulai().getMinutes()}"></td>
+                            </tr>
+                            <tr>
+                                <td>Jam Selesai</td>
+                                <td>:</td>
+                                <td th:text="${lembur.getJamSelesai().getHours()} + ':' + ${lembur.getJamSelesai().getMinutes()}"></td></td>
+
+                            </tr>
+                            <tr>
+                                <td>Menggantikan</td>
+                                <td>:</td>
+                                <td th:text="${menggantikan}"></td>
+                            </tr>
+                            <tr>
+                                <td>Durasi</td>
+                                <td>:</td>
+                                <td th:text="${durasi} + ' Jam'"></td>
+                            </tr>
+                            <tr>
+                                <td>Alasan</td>
+                                <td>:</td>
+                                <td th:text="${lembur.alasan}"></td>
+                            </tr>
+                            <tr>
+                                <td>Status</td>
+                                <td>:</td>
+                                <td th:text="${lembur.id_status.getStatus()}"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </table>
             </div>
-            <br>
-            <div class="col d-flex justify-content-center">
-                <h5 class="col d-flex justify-content-center" th:text="'Nama Pengaju: ' + ${lembur.id_karyawan.karyawan}"></h5>
-            </div>
-            <br>
-            <div class="col d-flex justify-content-center">
-                <h5 class="col d-flex justify-content-center" th:text="'Nomor Karyawan: ' + ${lembur.id_karyawan.noKaryawan}"></h5>
-            </div>
-            <br>
-            <div class="col d-flex justify-content-center">
-                <h5 class="col d-flex justify-content-center" th:text="'Tanggal Pengajuan: ' + ${lembur.tanggalRequest}"></h5>
-            </div>
-            <br>
-            <div class="col d-flex justify-content-center">
-                <h5 class="col d-flex justify-content-center" th:text="'Tanggal Lembur/Infal: ' + ${lembur.tanggalLembur}"></h5>
-            </div>
-            <br>
-            <div class="col d-flex justify-content-center">
-                <h5 class="col d-flex justify-content-center" th:text="'Menggantikan: ' + ${menggantikan}"></h5>
-            </div>
-            <br>
-            <div class="col d-flex justify-content-center">
-                <h5 class="col d-flex justify-content-center" th:text="'Durasi: ' + ${durasi} + ' Jam'"></h5>
-            </div>
-            <br>
-            <div class="col d-flex justify-content-center">
-                <h5 class="col d-flex justify-content-center" th:text="'Alasan: ' + ${lembur.alasan}"></h5>
-            </div>
-            <br>
-            <div class="col d-flex justify-content-center">
-                <h5  class="col d-flex justify-content-center" th:text="'Status: ' + ${lembur.id_status.status}"></h5>
-            </div>
-            <br>
         </div>
     </div>
 </div>

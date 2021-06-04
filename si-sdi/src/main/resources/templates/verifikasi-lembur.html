@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <!--    Jangan Lupa diisi!-->
-    <title>Form Pengajuan Lembur</title>
+    <title>Lembur/Infal Notification</title>
     <object th:include="fragments/fragment :: cssjs" th:remove="tag"></object>
     <!--    Default Style untuk semua page-->
     <link rel="stylesheet" th:href="@{/css/default-style.css}" />
@@ -36,7 +36,7 @@
             th:text="'Status Lembur dengan kode ' + ${kode} + ' berhasil diubah menjadi ' + ${status} "></h2>
         <div class="w-100"></div>
         <br><br><br>
-        <a th:href="@{/}" class="btn btn-light col d-flex justify-content-center ml-1 mr-1">Back</a>
+        <a th:href="@{/list/lembur/verifikasi}" class="btn btn-light col d-flex justify-content-center ml-1 mr-1">Back</a>
     </div>
 </div>
 

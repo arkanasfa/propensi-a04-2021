@@ -11,6 +11,11 @@
 
 </head>
 <body>
+<style>
+    #hov:hover{
+        color:black;
+    }
+</style>
 <div class="container-fluid" >
     <div class="col-auto" >
         <!--    formatnya: sidebar([NamaHalaman] = 'highlight'). Buat nge highlight sidebar kalo lagi di halaman itu-->
@@ -54,17 +59,34 @@
                 <tbody>
                 <tr th:each="lembur, iterationStatus : ${listLembur}">
                     <td th:text="${iterationStatus.count}"></td>
-                    <td th:text="${lembur.tanggalRequest}"></td>
+                    <td th:text="${lembur.getTanggalRequest().getDate()} + '-' + ${lembur.getTanggalRequest().getMonth()+1} + '-' + ${lembur.getTanggalRequest().getYear()+1900} + ' ' + ${lembur.getTanggalRequest().getHours()} + ':' + ${lembur.getTanggalRequest().getMinutes()}"></td>
                     <td th:text="${lembur.id_karyawan.getKaryawan()}"></td>
                     <td th:text="${lembur.kode_lembur}"></td>
                     <td th:text="${lembur.id_status.getStatus()}"></td>
-                    <td><a type="button" role="button"  th:href="@{/lembur/detail(id=${lembur.id})}">View</a></td>
+                    <td style="background-color: #83BA70"><a id="hov" class="backgroundGreen" type="button" role="button"  th:href="@{/lembur/detail(id=${lembur.id})}">View</a></td>
                     <div th:if="${lembur.id_status.getId()==1}">
-                        <td><a type="button" role="button"  th:href="@{/lembur/ubah/(id=${lembur.id})}">Edit</a></td>
-                        <td><a type="button" role="button"  th:href="@{/lembur/delete(id=${lembur.id})}">Delete</a></td>
+                        <td style="background-color: #FAB14A"><a id="hov" class="backgroundOrange" type="button" role="button"  th:href="@{/lembur/ubah/(id=${lembur.id})}">Edit</a></td>
+                        <td style="background-color: #F52323"><a id="hov" onclick="document.getElementById('popUp').style.display='block'" class="backgroundMerah" type="button" role="button"  th:href="@{/lembur/delete(id=${lembur.id})}">Delete</a></td>
                     </div>
                 </tr>
                 </tbody>
+                <div id="popUp" class="modal">
+                    <span onclick="document.getElementById('popup').style.display='none'"  title="Close Modal"></span>
+                    <!--    Ini jangan lupa diisi actionnya-->
+                    <div class="modal-content">
+                        <div class="container">
+                            <img th:src="@{/images/warning.png}"/>
+                            <br><br>
+                            <!--            custom sendiri yaa-->
+                            <p>Apakah Anda yakin ingin membuat pengajuan lembur/infal ini?</p>
+                            <div class="clearfix">
+                                <button type="button" onclick="document.getElementById('popUp').style.display='none'" class="btn backgroundOrange">Cancel</button>
+                                <!--                ini juga custom!-->
+                                <button type="submit" onclick="document.getElementById('popUP').style.display='none'" class="btn backgroundGreen">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </table>
         </div>
     </div>

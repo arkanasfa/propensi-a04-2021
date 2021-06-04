@@ -45,28 +45,28 @@
                 <div class="form-group row">
                     <label class="col-sm-3 col-form-label">Tanggal Lembur: </label>
                     <div class="col-sm-3">
-                        <input class="form-control" type="date" th:field="*{tanggalLembur}" placeholder="yyyy/MM/dd" required="required">
+                        <input style="background-color:#c8e5be" class="form-control" type="date" th:field="*{tanggalLembur}" placeholder="yyyy/MM/dd" required="required">
                     </div>
                 </div>
                     <div class="form-group row">
                         <label class="col-sm-3 col-form-label">Jam Mulai: </label>
                         <div class="col-sm-3">
-                            <input class="form-control" type="time" th:field="*{jamMulai}" required="required">
+                            <input style="background-color:#c8e5be" class="form-control" type="time" th:field="*{jamMulai}" required="required">
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-sm-3 col-form-label">Jam Selesai: </label>
                         <div class="col-sm-3">
-                            <input class="form-control" type="time" th:field="*{jamSelesai}" required="required">
+                            <input  style="background-color:#c8e5be" class="form-control" type="time" th:field="*{jamSelesai}" required="required">
                         </div>
                     </div>
                 <div class="form-group-row">
                     <div class="custom-control col-sm-1 custom-radio custom-control-inline">
-                        <input type="radio" id="customRadioInline1" name="customRadioInline1" onclick="radio(0)" class="custom-control-input" value="1" th:field="*{jenis}" checked="checked" required="required">
+                        <input style="background-color:#c8e5be" type="radio" id="customRadioInline1" name="customRadioInline1" onclick="radio(0)" class="custom-control-input" value="1" th:field="*{jenis}" checked="checked" required="required">
                         <label class="custom-control-label" for="customRadioInline1">Lembur</label>
                     </div>
                     <div class="custom-control col-sm-1 custom-radio custom-control-inline">
-                        <input type="radio" id="customRadioInline2" name="customRadioInline1" onclick="radio(1)" class="custom-control-input" value="2" th:field="*{jenis}" required="required">
+                        <input style="background-color:#c8e5be" type="radio" id="customRadioInline2" name="customRadioInline1" onclick="radio(1)" class="custom-control-input" value="2" th:field="*{jenis}" required="required">
                         <label class="custom-control-label" for="customRadioInline2">Infal</label>
                     </div>
                 </div>
@@ -74,18 +74,18 @@
                     <label class="col-sm-3 col-form-label">Karyawan Yang Diinfalkan</label>
                     <div class="col-sm-3">
                         <select name="infalID" class="form-control" >
-                            <option th:each="karyawan : ${karyawanList}" th:value="${karyawan.id}" th:text="${karyawan.karyawan}"></option>
+                            <option style="background-color:#c8e5be" th:each="karyawan : ${karyawanList}" th:value="${karyawan.id}" th:text="${karyawan.karyawan}"></option>
                         </select>
                     </div>
                 </div>
                     <div class="form-group row">
                             <label class="col-sm-3" for="formGroupExampleInput">Alasan</label>
                             <div class="col-sm-3">
-                                <input type="text" class="form-control" id="formGroupExampleInput" th:field="*{alasan}" required="required">
+                                <input style="background-color:#c8e5be" type="text" class="form-control" id="formGroupExampleInput" th:field="*{alasan}" required="required">
                             </div>
                     </div>
-                <a type="button" class="btn backgroundOrange " th:href="@{/lembur/list}">Back</a>
-                <button type="submit" class="btn backgroundGreen ">Submit</button>
+                <a type="button"  class="btn backgroundOrange " th:href="@{/lembur/list}">Back</a>
+                <button onclick="document.getElementById('popUp').style.display='block'" type="submit" class="btn backgroundGreen ">Submit</button>
 
                 <!--Ini section yang bakal popup. Copy dari sini buat setiap halaman yang ada pop up-->
                 <div id="popUp" class="modal">

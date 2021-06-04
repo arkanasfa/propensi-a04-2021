@@ -149,6 +149,8 @@ public class LemburController {
         }
         String kode_lembur = lemburService.generateKodeLembur(lembur);
         lembur.setKode_lembur(kode_lembur);
+        StatusModel id_status = statusService.getStatusById(Long.valueOf(1));
+        lembur.setId_status(id_status);
         lemburService.changeLembur(lembur);
         model.addAttribute("kode", lembur.getKode_lembur());
         return "change-lembur";
