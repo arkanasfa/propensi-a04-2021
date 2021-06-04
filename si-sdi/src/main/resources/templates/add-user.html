@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <!--    Jangan Lupa diisi!-->
-    <title>Payroll Notification</title>
+    <title>User Notification</title>
     <object th:include="fragments/fragment :: cssjs" th:remove="tag"></object>
     <!--    Default Style untuk semua page-->
     <link rel="stylesheet" th:href="@{/css/default-style.css}" />
@@ -28,18 +28,18 @@
 <div class="container-fluid">
     <div class="row">
         <div class="card-body" id="pageTitle">
-            <h3 class="colorGreen">Payroll Notification</h3>
+            <h3 class="colorGreen">User Notification</h3>
         </div>
     </div>
 </div>
 <div class="container-fluid">
     <div class="row">
         <div class="card-body">
-            <img id="statusLogo" th:src="@{/images/success.png}"/>
+            <img id="statusLogo" th:src="@{/images/Success.png}"/>
             <br> <br>
             <h2 class="col d-flex justify-content-center mb-3" th:text="'Pengguna dengan username ' + ${user.username} + ' berhasil dibuat. Tekan tombol lanjutkan untuk mengisi informasi pengguna.'"></h2>
             <br><br><br>
-            <a th:href="@{/user/addUser/Informasi(username=${user.username})}" class="btn btn-light col d-flex justify-content-center ml-1 mr-1">Lanjutkan</a>
+            <a th:href="@{/user/addUser/Informasi(username=${user.username})}" class="btn btn-light col d-flex justify-content-center ml-1 mr-1">Continue</a>
         </div>
     </div>
 </div>

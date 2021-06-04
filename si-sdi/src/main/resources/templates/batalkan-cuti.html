@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <!--    Jangan Lupa diisi!-->
-    <title>Detail Pengajuan Cuti/Lembur</title>
+    <title>Detail Pengajuan Cuti/Izin</title>
     <object th:include="fragments/fragment :: cssjs" th:remove="tag"></object>
     <!--    Default Style untuk semua page-->
     <link rel="stylesheet" th:href="@{/css/default-style.css}" />
@@ -29,7 +29,7 @@
 </div>
 
 <!--    Dalem abu-abu-->
-<div  class="container d-flex justify-content-center align-middle">
+<div  class="card-body">
     <div class="row">
         <div class="w-100"></div>
         <h2 class="col d-flex justify-content-center mb-3"
@@ -37,6 +37,7 @@
         <div class="w-100"></div>
         <br><br><br>
         <a th:href="@{/cuti}" class="btn btn-light col d-flex justify-content-center ml-1 mr-1">Back</a>
+        </div>
     </div>
 </div>
 <!--Ini section yang bakal popup. Copy dari sini buat setiap halaman yang ada pop up-->
