@@ -49,7 +49,7 @@
                     <td th:text="${lembur.id_karyawan.getKaryawan()}"></td>
                     <td th:text="${lembur.kode_lembur}"></td>
                     <td th:text="${lembur.id_status.getStatus()}"></td>
-                    <td><a type="button" role="button"  th:href="@{/lembur/detail/verifikasi(id=${lembur.id})}">View</a></td>
+                    <td style="background-color: #83BA70"><a d="hov" class="backgroundGreen" type="button" role="button"  th:href="@{/lembur/detail/verifikasi(id=${lembur.id})}">View</a></td>
                 </tr>
                 </tbody>
             </table>
@@ -62,7 +62,7 @@
     <div class="row">
         <div class="card-body" id="pageBottom">
             <div class="pull-right">
-                <a type="button" class="btn backgroundOrange " th:href="@{/}">Back</a>
+                <a type="button" class="btn backgroundOrange " th:href="@{/lembur/list}">Back</a>
             </div>
         </div>
     </div>
