@@ -118,10 +118,12 @@
                 <a type="button" class="btn backgroundOrange " th:href="@{/lembur/list}">Back</a>
             </div>
         </div>
-        <div class="card-body" id="pageBottom">
-            <div class="pull-right">
-                <a th:href="@{/lembur/ubah/(id=${lembur.id})}" class="btn backgroundPurple">Edit</a>
-                <a th:href="@{/lembur/delete(id=${lembur.id})}" class="btn backgroundMerah">Delete</a>
+        <div th:if="${lembur.id_status.getId()==1}">
+            <div class="card-body" id="pageBottom">
+                <div class="pull-right">
+                    <a th:href="@{/lembur/ubah/(id=${lembur.id})}" class="btn backgroundPurple">Edit</a>
+                    <a th:href="@{/lembur/delete(id=${lembur.id})}" class="btn backgroundMerah">Delete</a>
+                </div>
             </div>
         </div>
     </div>
