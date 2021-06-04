@@ -72,9 +72,9 @@
                 </tbody>
             </table>
             <div th:if="${pengaduanPage.totalPages > 0}" class="pagination"
-                th:each="pageNumber : ${pageNumbers}" style="align-items: center">
+                th:each="pageNumber : ${pageNumbers}" style="align-items: center; display: inline">
                <a th:href="@{/pengaduan/view-all(size=${pengaduanPage.size}, page=${pageNumber})}"
-                  th:text=${pageNumber}
+                  th:text="${pageNumber}+'&nbsp'"
                   th:class="${pageNumber==pengaduanPage.number + 1} ? active" th:style="'color:#83BA70'" ></a>
            </div>
         </div>

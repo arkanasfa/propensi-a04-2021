@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <!--    Jangan Lupa diisi!-->
-    <title>Payroll Notification</title>
+    <title>User Notification</title>
     <object th:include="fragments/fragment :: cssjs" th:remove="tag"></object>
     <!--    Default Style untuk semua page-->
     <link rel="stylesheet" th:href="@{/css/default-style.css}" />
@@ -39,7 +39,7 @@
             <br> <br>
             <h2 class="col d-flex justify-content-center mb-3" th:text="'Informasi Orangtua dari Pengguna dengan username ' + ${user.username} + ' berhasil dibuat.'"></h2>
             <br><br><br>
-            <a th:href="@{/}" class="btn btn-light col d-flex justify-content-center ml-1 mr-1">Kembali</a>
+            <a th:href="@{/}" class="btn btn-light col d-flex justify-content-center ml-1 mr-1">Back</a>
         </div>
     </div>
 </div>

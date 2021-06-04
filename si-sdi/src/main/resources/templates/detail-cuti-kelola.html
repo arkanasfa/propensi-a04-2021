@@ -59,17 +59,17 @@
                             <tr>
                                 <td>Waktu Pengajuan</td>
                                 <td>:</td>
-                                <td th:text="${cuti.tanggalRequest.getDate()} + '-' + ${cuti.tanggalRequest.getMonth()} + '-' + ${cuti.tanggalRequest.getYear()+1900} + ' ' + ${cuti.tanggalRequest.getHours()} + ':' + ${cuti.tanggalRequest.getMinutes()}"></td>
+                                <td th:text="${cuti.tanggalRequest.getDate()} + '-' + ${cuti.tanggalRequest.getMonth()+1} + '-' + ${cuti.tanggalRequest.getYear()+1900} + ' ' + ${cuti.tanggalRequest.getHours()} + ':' + ${cuti.tanggalRequest.getMinutes()}"></td>
                             </tr>
                             <tr>
                                 <td>Tanggal Mulai</td>
                                 <td>:</td>
-                                <td th:text="${cuti.tanggalMulai.getDate()} + '-' + ${cuti.tanggalMulai.getMonth()} + '-' + ${cuti.tanggalMulai.getYear()+1900}"></td>
+                                <td th:text="${cuti.tanggalMulai.getDate()} + '-' + ${cuti.tanggalMulai.getMonth()+1} + '-' + ${cuti.tanggalMulai.getYear()+1900}"></td>
                             </tr>
                             <tr>
                                 <td>Tanggal Selesai</td>
                                 <td>:</td>
-                                <td th:text="${cuti.tanggalSelesai.getDate()} + '-' + ${cuti.tanggalSelesai.getMonth()} + '-' + ${cuti.tanggalSelesai.getYear()+1900}"></td>
+                                <td th:text="${cuti.tanggalSelesai.getDate()} + '-' + ${cuti.tanggalSelesai.getMonth()+1} + '-' + ${cuti.tanggalSelesai.getYear()+1900}"></td>
                             </tr>
                             <tr>
                                 <td>Durasi</td>

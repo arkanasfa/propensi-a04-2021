@@ -51,7 +51,7 @@
                 <tbody>
                 <tr th:each="cuti, iStat: ${cutiPage.content}">
                     <td th:text="${iStat.count}"></td>
-                    <td th:text="${cuti.tanggalRequest.getDate()} + '-' + ${cuti.tanggalRequest.getMonth()} + '-' + ${cuti.tanggalRequest.getYear()+1900}"></td>
+                    <td th:text="${cuti.tanggalRequest.getDate()} + '-' + ${cuti.tanggalRequest.getMonth()+1} + '-' + ${cuti.tanggalRequest.getYear()+1900}"></td>
                     <td th:text="${cuti.kode_cuti}"></td>
                     <td th:text="${cuti.getId_karyawan().getKaryawan()}"></td>
 
@@ -70,9 +70,9 @@
                 </tbody>
             </table>
             <div th:if="${cutiPage.totalPages > 0}" class="pagination"
-                 th:each="pageNumber : ${pageNumbers}" style="align-items: center">
-                <a th:href="@{/cuti(size=${cutiPage.size}, page=${pageNumber})}"
-                   th:text=${pageNumber}
+                 th:each="pageNumber : ${pageNumbers}" style="align-items: center;display: inline;">
+                <a th:href="@{/cuti/kelola(size=${cutiPage.size}, page=${pageNumber})}"
+                   th:text="${pageNumber}+'&nbsp'"
                    th:class="${pageNumber==cutiPage.number + 1} ? active" th:style="'color:#83BA70'" ></a>
             </div>
         </div>
