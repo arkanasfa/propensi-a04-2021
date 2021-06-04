@@ -39,7 +39,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/pengaduan/kelola/view").hasAnyAuthority("Pimpinan Unit", "Kepala Bagian", "Manajer SDI")
                 .antMatchers("/pengaduan/view-all").hasAnyAuthority("Pimpinan Unit", "Kepala Bagian", "Manajer SDI")
                 .antMatchers("/payroll").hasAnyAuthority("Manajer SDI", "Wakil Pengurus Harian")
-                //.antMatchers("/user/**").hasAnyAuthority("Admin")
+                .antMatchers("/user/**").hasAnyAuthority("Admin")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
